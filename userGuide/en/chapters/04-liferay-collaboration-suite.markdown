@@ -22,13 +22,13 @@ We will discuss how these features can work together to provide an enhanced expe
 
 ## Scopes
 
-As we learned earlier, roles can be scoped by the portal, by a site, or by an organization. A role will only take effect within its scope. For example, a Message Boards Administrator role with complete access to the Message Boards portlet will have different permissions based on the role's scope. If it's a portal role, members will have permission to administer message boards across the entire portal. If it's a site role, members will only have permission to administer message boards within the site that assigned the role to them. If it's an organization role, members will only have permission to administer message boards within the site of the organization that assigned the role to them.
+As we learned earlier, roles can be scoped by the portal, by a site, or by an organization. A role will only take effect within its scope. For example, a Message Boards Administrator role with complete access to the Message Boards portlet will have different permissions based on the role's scope. If it's a portal role, members will have permission to administer message boards across the entire portal. As a site role, members would only have permission to administer message boards within the site that assigned the role to them, and only within the site of a specific organization, if it's an organization role.
 
-We also use the word *scope* to refer to the data set of a portlet. By default, when a portlet is added to a page in a site, it is *scoped* for that site. This means that its data belongs to that site. If the portlet is added to a page in a different site, it will employ a completely different data set. This is how the Message Boards portlet can be placed in one site and have one set of categories and threads, and also be placed in a different site and contain a completely different set of categories and threads.
+We also use the word *scope* to refer to the data set of a portlet. By default, when a portlet is added to a page in a site, it is *scoped* for that site, page, or in some cases, just that specific instance of the portlet. If you add the same portlet outside of that portlets scope, it will employ a completely different data set. This is how the Message Boards portlet can be placed in one site and have one set of categories and threads, and also be placed in a different site and contain a completely different set of categories and threads.
 
-A consequence of scoping by site is that you can only have one Message Boards portlet per site. If you add one Message Boards portlet to a page in a site and you add another Message Boards portlet to a different page in the same site, the second Message Boards portlet will contain exactly the same data as the first. This is because, by default, the Message Boards portlet is scoped by site. Many of Liferay's other portlets, by default, are scoped by site.
+One downside to portlets scoped by site is that you could, for example only have one Message Boards portlet per site. If you add one Message Boards portlet to a page in a site and you add another Message Boards portlet to a different page in the same site, the second Message Boards portlet will contain exactly the same data as the first. This is because, by default, the Message Boards portlet is scoped by site. Many of Liferay's other portlets, by default, are scoped by site.
 
-To avoid this limitation, some Liferay portlets can be scoped by page. The data sets of page-scoped portlets serve a single page, not an entire site. If you set the scope of a portlet to *page* instead of *site*, you can add any number of these portlets to different pages, and they will have different sets of data. This allows you to have more than one message board per site if you wish. All portlets, however, default to the “native” configuration, and have their scopes set to the site where they are placed.
+To avoid this limitation, some Liferay portlets give you the option to scope by page (others are scoped by page by default). The data sets of page-scoped portlets serve a single page, not an entire site. If you set the scope of a portlet to *page* instead of *site*, you can add any number of these portlets to different pages, and they will have different sets of data. This allows you to have more than one message board per site if you wish.
 
 Unless otherwise noted, all of the portlets in this chapter support scoping by portal (global), site (default), or page (select layout &rarr; current page). This grants you some flexibility in how you want to set up your portal. If you want to change the scope, it only takes a few simple steps.
 
@@ -48,7 +48,7 @@ That's all it takes to change the scope for a particular portlet instance. By se
 
 ## Archived Setups
 
-Another useful feature of Liferay's portlets is Archived Setups. Once you have configured a portlet, Archived Setups enables you to save those settings in an “archive”. If someone goes in and changes the settings of a particular portlet, it then becomes easy to revert those changes back to the original, archived configuration.
+Another useful feature of Liferay's portlets is Archived Setups. Once you have configured a portlet, Archived Setups enables you to save those settings in an "archive". If someone goes in and changes the settings of a particular portlet, it then becomes easy to revert those changes back to the original, archived configuration.
 
 To create an archived setup, click the *Configuration* option from the menu in the portlet's title bar. If the current settings of the portlet you are configuring are the ones you want to archive, click the *Archive/Restore Setup* link. If not, change and save the settings until you have the portlet configured the way you want it, and then click the *Archive/Restore Setup* link.
 
@@ -62,7 +62,7 @@ All of Liferay's portlets support Liferay's robust, fine-grained permissions sys
 
 ## Sharing
 
-The web was once thought of as a number of islands of applications in a vast universe of “cyberspace.” Many web sites tried to make their island the biggest. Some succeeded and some failed. More recently, the concept of the web as an application itself has taken hold, and so widgets have become very popular nowadays. This concept is part of the “Web 2.0” concept and is very much enabled by widgets. So what is a widget? A widget is a small piece of code which provides a piece of functionality, can be included on any web site, but does not necessarily have to be hosted by that web site. If you have ever embedded a YouTube video on your own web site so that users could watch a video without actually having to visit [http://youtube.com](http://youtube.com/), then you have already used a widget.
+The web was once thought of as a number of islands of applications in a vast universe of "cyberspace." Many web sites tried to make their island the biggest. Some succeeded and some failed. More recently, the concept of the web as an application itself has taken hold, and so widgets have become very popular nowadays. This concept is part of the "Web 2.0" concept and is very much enabled by widgets. So what is a widget? A widget is a small piece of code which provides a piece of functionality, can be included on any web site, but does not necessarily have to be hosted by that web site. If you have ever embedded a YouTube video on your own web site so that users could watch a video without actually having to visit [youtube.com](http://youtube.com), then you have already used a widget.
 
 Liferay supports serving its portlets as widgets. You can embed a particular instance of a portlet running on your site into another site, such as Facebook. This opens up a whole new avenue of exposure to your web site that you would not otherwise have had. In fact, this is how all those Facebook games work.
 
@@ -88,7 +88,7 @@ This feature could be useful to allow users to view what's happening on your por
 
 ### Netvibes
 
-Netvibes offers a similar service to iGoogle – users can log in, create their own personal portal, called a *dashboard*, and add customizable widgets to the dashboard that they create. To set up Netvibes support for a particular portlet, check the *Allow users to add [portlet-name] to Netvibes pages* box. You can then use the provided URL to create a custom Netvibes widget based on the instance of the portlet that you're using.
+Netvibes offers a similar service to iGoogle - users can log in, create their own personal portal, called a *dashboard*, and add customizable widgets to the dashboard that they create. To set up Netvibes support for a particular portlet, check the *Allow users to add [portlet-name] to Netvibes pages* box. You can then use the provided URL to create a custom Netvibes widget based on the instance of the portlet that you're using.
 
 ### Friends
 
@@ -96,17 +96,17 @@ The final sub-tab in the *Sharing* tab is called *Friends*. This tab has a singl
 
 ## Blogs
 
-The word *Blog* is an apostrophe-less contraction of the two words *web* and *log*. Blogs were first popularized by web sites such as Slashdot ([http://slashdot.org](http://slashdot.org/)) which have the format of a running list of entries to which users could attach comments. Over time, more and more sites such as Digg, delicious, and Newsvine adopted the format, empowering users to share their opinions and generating lively discussions.
+The word *Blog* is an apostrophe-less contraction of the two words *web* and *log*. Blogs were first popularized by web sites such as Slashdot ([slashdot.org](http://slashdot.org)) which have the format of a running list of entries to which users could attach comments. Over time, more and more sites such as Digg, delicious, and Newsvine adopted the format, empowering users to share their opinions and generating lively discussions.
 
 Over the course of time, blogging sites and applications began to appear, such as blogger.com, blogspot.com. TypePad, WordPress, and Web Roller. These applications allow *individuals* to run their own web sites in the same format: a running list of short articles to which readers who are registered with the site can attach threaded comments. People who run a blog are called *bloggers*, and sometimes they build a whole community of readers who are interested in their blog posts. Additionally, there are several famous people who run their own blogs. It gives people an outlet for self-expression which they would not otherwise have, and the ubiquity and wide reach of the Internet ensures that if you have something important and interesting to say, somebody will read it.
 
 ![Figure 4.3: Slashdot, one of the first blogs on the Internet](../../images/05-slashdot.jpg)
 
-Liferay Portal has a portlet called the Blogs portlet which allows you to provide a blogging service to users of your web site. In fact, Liferay extensively uses the Blogs portlet on [http://www.liferay.com](http://www.liferay.com/) to provide employees with blogs of their own. In addition to the Blogs portlet, there is also a Blogs Aggregator portlet which can take entries from multiple users' blogs and put them all in one larger list. We will go over how to use both of these portlets to create a blogging site for your users.
+Liferay Portal has a portlet called the Blogs portlet which allows you to provide a blogging service to users of your web site. In fact, Liferay extensively uses the Blogs portlet on [liferay.com](http://www.liferay.com) to provide employees with blogs of their own. In addition to the Blogs portlet, there is also a Blogs Aggregator portlet which can take entries from multiple users' blogs and put them all in one larger list. We will go over how to use both of these portlets to create a blogging site for your users.
 
 ### The Blogs Portlet
 
-The Blogs portlet is available from the *Collaboration* section of the *Add &rarr; More* menu. You will notice that it is an instanceable portlet, meaning that it can only be added once to a site. This allows you to use the Blogs portlet to create a shared blog to build a site like Slashdot or to create multiple personal blogs to build a site like [http://blogger.com](http://blogger.com/). What's the difference? Adding the Blogs portlet to a site page creates a shared blog for members of the site that the page belongs to. Adding the Blogs portlet to a user's personal site creates a blog for just that user. The Blogs portlet works the same way in both cases. And of course, you can change the Blog portlet's scope to have different blogs on different pages in the same site.
+The Blogs portlet is available from the *Collaboration* section of the *Add &rarr; More* menu. You will notice that it is an instanceable portlet, meaning that it can only be added once to a site. This allows you to use the Blogs portlet to create a shared blog to build a site like Slashdot or to create multiple personal blogs to build a site like [blogger.com](http://blogger.com). What's the difference? Adding the Blogs portlet to a site page creates a shared blog for members of the site that the page belongs to. Adding the Blogs portlet to a user's personal site creates a blog for just that user. The Blogs portlet works the same way in both cases. And of course, you can change the Blog portlet's scope to have different blogs on different pages in the same site.
 
 ![Figure 4.4: Initial View of the Blogs Portlet](../../images/05-initial-view-blogs-portlet.jpg)
 
@@ -134,7 +134,7 @@ The Blogs portlet is easy to configure. Click on the *Menu* icon in the portlet'
 
 *Enable Related Assets:* allows bloggers to select related content from other portlets to pull into their blog entry for readers to view.
 
-[Figure 4.6: Related Assets](../../images/05-related-assets.png)
+![Figure 4.6: Related Assets](../../images/05-related-assets.png)
 
 *Enable Ratings:* allows you to enable your users to rate your blog entries from one to five stars.
 
@@ -661,7 +661,7 @@ The Knowledge Base portlet is based on the Wiki portlet. It provides a means for
 
 ### Knowledge Base Display Portlet
 
-The Knowledge Base app actually consists of four portlets that can be placed on site pages as well as one that adds a page to the control panel. The four portlets that can be placed on a page are Knowledge Base (Display), Knowledge Base Search, Knowledge Base Article, and Knowledge Base Section. When placed on a page, the Knowledge Base display portlet presents many of the same options to an administrator that are available from the Knowledge Base page of the control panel.
+The Knowledge Base app actually consists of four portlets that can be placed on a page as well as one that can only be accessed via the control panel. The four portlets that can be placed on a page are Knowledge Base (Display), Knowledge Base Search, Knowledge Base Article, and Knowledge Base Section. When placed on a page, the Knowledge Base display portlet presents many of the same options to an administrator that are available from the Knowledge Base page of the control panel.
 
 ![Figure 4.x: Knowledge Base Display Portlet](../../images/liferay-collaboration-kb-display-portlet.png)
 
@@ -675,7 +675,7 @@ You can use the four links at the top of the Knowledge Base display portlet to c
 
 *My Subscriptions:* shows you a list of articles you are subscribed to.
 
-The *Add Article* button is available from the Knowledge Base Home or Administrator view of the Knowledge Base display portlet or from the Articles tab of the Knowledge Base page of the control panel. Use this button to create an article for the knowledge base. When creating an article, you can use the same WYSIWYG editor that you used to create wiki pages. Articles, however, are not the same as wiki pages: you have to use HTML to create them, not MediaWiki or Creole. Click the *Source* button in the editor to view the HTML source of what you've written or write some HTML yourself.
+The *Add Article* button is available from the Knowledge Base Home or Administrator view of the Knowledge Base display portlet or from the Articles tab of the Knowledge Base page of the control panel. Use this button to create an article for the knowledge base. When creating an article, you can use the same WYSIWYG editor that you used to create Blogs, Web Content, and wiki pages. The editor is most similar to the standard. Click the *Source* button in the editor to view the HTML source of what you've written or write some HTML yourself.
 
 ![Figure 4.x: New Knowledge Base Article](../../images/liferay-collaboration-kb-new-article.png)
 
