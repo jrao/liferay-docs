@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="com.liferay.portlet.simpleblog.model.impl.AuthorModelImpl">
+		<attributes>
+			<id name="authorId" />
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="name" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.simpleblog.model.impl.PostModelImpl">
+		<attributes>
+			<id name="postId" />
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="title" />
+			<basic name="content" />
+			<basic name="authorId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="com.liferay.portlet.simpleblog.model.impl.AuthorImpl" name="Author">
+		<table name="SimpleBlog_Author" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portlet.simpleblog.model.impl.PostImpl" name="Post">
+		<table name="SimpleBlog_Post" />
+		<attributes />
+	</entity>
+</entity-mappings>

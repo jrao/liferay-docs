@@ -1,0 +1,1 @@
+Liferay.Service.register("Liferay.Service.SimpleBlog", "com.liferay.portlet.simpleblog.service", "simple-blog-portlet");

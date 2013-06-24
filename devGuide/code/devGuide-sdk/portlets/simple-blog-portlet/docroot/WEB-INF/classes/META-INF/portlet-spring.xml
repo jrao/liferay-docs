@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.liferay.portlet.simpleblog.service.AuthorLocalService" class="com.liferay.portlet.simpleblog.service.impl.AuthorLocalServiceImpl" />
+	<bean id="com.liferay.portlet.simpleblog.service.AuthorService" class="com.liferay.portlet.simpleblog.service.impl.AuthorServiceImpl" />
+	<bean id="com.liferay.portlet.simpleblog.service.persistence.AuthorPersistence" class="com.liferay.portlet.simpleblog.service.persistence.AuthorPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.simpleblog.service.PostLocalService" class="com.liferay.portlet.simpleblog.service.impl.PostLocalServiceImpl" />
+	<bean id="com.liferay.portlet.simpleblog.service.PostService" class="com.liferay.portlet.simpleblog.service.impl.PostServiceImpl" />
+	<bean id="com.liferay.portlet.simpleblog.service.persistence.PostPersistence" class="com.liferay.portlet.simpleblog.service.persistence.PostPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.simpleblog.service.persistence.PostFinder" class="com.liferay.portlet.simpleblog.service.persistence.PostFinderImpl" parent="basePersistence" />
+</beans>
