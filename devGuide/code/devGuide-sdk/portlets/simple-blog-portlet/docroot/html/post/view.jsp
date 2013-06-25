@@ -14,12 +14,14 @@ This is the <b>Post Portlet</b> portlet in View mode.
 %>
 
 <h3>Posts</h3>
-<% for (Post post : posts) { %>
-	<h2><%= post.getTitle() %></h2>
-	<% if (post.getAuthor() != null) { %>
-	<p><small>By <%= post.getAuthor().getName() %></small></p>
-	<% } %>
-	<div>
-		<%= post.getContent() %>
-	</div>
-<% } %>
+<% if (posts != null) {
+	for (Post post : posts) { %>
+		<h2><%= post.getTitle() %></h2>
+		<% if (post.getAuthor() != null) { %>
+		<p><small>By <%= post.getAuthor().getName() %></small></p>
+		<% } %>
+		<div>
+			<%= post.getContent() %>
+		</div>
+<% }
+} %>

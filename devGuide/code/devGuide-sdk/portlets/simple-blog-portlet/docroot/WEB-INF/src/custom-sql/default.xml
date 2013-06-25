@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql id="com.liferay.portlet.simpleblog.service.persistence.PostFinder.findByTitleContentAuthor">
+        SELECT SimpleBlog_Post.*
+        FROM SimpleBlog_Post
+        INNER JOIN 
+            SimpleBlog_Author ON SimpleBlog_Post.authorId = SimpleBlog_Author.authorId
+        WHERE
+            (SimpleBlog_Post.title LIKE ?) AND
+            (SimpleBlog_Post.content LIKE ?) AND
+            (SimpleBlog_Author.name LIKE ?)
+    </sql>
+</custom-sql>
