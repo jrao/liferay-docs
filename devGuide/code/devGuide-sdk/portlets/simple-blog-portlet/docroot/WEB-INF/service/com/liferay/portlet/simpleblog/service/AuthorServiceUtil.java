@@ -62,6 +62,20 @@ public class AuthorServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.portlet.simpleblog.model.Author addAuthor() {
+		return getService().addAuthor();
+	}
+
+	public static com.liferay.portlet.simpleblog.model.Author updateAuthor(
+		long authorId, java.lang.String name) {
+		return getService().updateAuthor(authorId, name);
+	}
+
+	public static com.liferay.portlet.simpleblog.model.Author deleteAuthor(
+		long authorId) {
+		return getService().deleteAuthor(authorId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

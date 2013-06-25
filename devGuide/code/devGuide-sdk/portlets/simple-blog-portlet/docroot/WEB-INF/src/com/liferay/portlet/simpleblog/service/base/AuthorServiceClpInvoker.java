@@ -30,6 +30,18 @@ public class AuthorServiceClpInvoker {
 		_methodName31 = "setBeanIdentifier";
 
 		_methodParameterTypes31 = new String[] { "java.lang.String" };
+
+		_methodName36 = "addAuthor";
+
+		_methodParameterTypes36 = new String[] {  };
+
+		_methodName37 = "updateAuthor";
+
+		_methodParameterTypes37 = new String[] { "long", "java.lang.String" };
+
+		_methodName38 = "deleteAuthor";
+
+		_methodParameterTypes38 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -44,6 +56,22 @@ public class AuthorServiceClpInvoker {
 			AuthorServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
+		if (_methodName36.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
+			return AuthorServiceUtil.addAuthor();
+		}
+
+		if (_methodName37.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes37, parameterTypes)) {
+			return AuthorServiceUtil.updateAuthor(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
+		}
+
+		if (_methodName38.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes38, parameterTypes)) {
+			return AuthorServiceUtil.deleteAuthor(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -51,4 +79,10 @@ public class AuthorServiceClpInvoker {
 	private String[] _methodParameterTypes30;
 	private String _methodName31;
 	private String[] _methodParameterTypes31;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
+	private String _methodName38;
+	private String[] _methodParameterTypes38;
 }

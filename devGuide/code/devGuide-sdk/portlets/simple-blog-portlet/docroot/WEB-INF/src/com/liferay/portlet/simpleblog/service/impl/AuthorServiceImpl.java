@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.simpleblog.service.impl;
 
+import java.util.Date;
+
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.simpleblog.model.Author;
+import com.liferay.portlet.simpleblog.service.AuthorLocalServiceUtil;
 import com.liferay.portlet.simpleblog.service.base.AuthorServiceBaseImpl;
 
 /**
@@ -36,4 +43,76 @@ public class AuthorServiceImpl extends AuthorServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link com.liferay.portlet.simpleblog.service.AuthorServiceUtil} to access the author remote service.
 	 */
+	
+	public Author addAuthor() {
+		
+		long authorId = 0;
+		
+		try {
+			authorId = CounterLocalServiceUtil.increment(Author.class.getName());
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		Author author = AuthorLocalServiceUtil.createAuthor(authorId);
+		
+		Date now = new Date();
+		
+		author.setCreateDate(now);
+		
+		author.setModifiedDate(now);
+		
+		try {
+			return AuthorLocalServiceUtil.addAuthor(author);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public Author updateAuthor(long authorId, String name) {
+		
+		Author author = null;
+		
+		try {
+			author = AuthorLocalServiceUtil.fetchAuthor(authorId);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		author.setName(name);
+		
+		Date now = new Date();
+		
+		author.setModifiedDate(now);
+		
+		try {
+			return AuthorLocalServiceUtil.updateAuthor(author);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		return author;
+	}
+	
+	public Author deleteAuthor (long authorId) {
+		
+		Author author = null;
+		
+		try {
+			author = AuthorLocalServiceUtil.fetchAuthor(authorId);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		try {
+			return AuthorLocalServiceUtil.deleteAuthor(author);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		return author;
+	}
+	
 }

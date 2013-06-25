@@ -55,6 +55,19 @@ public class PostServiceWrapper implements PostService,
 		return _postService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public com.liferay.portlet.simpleblog.model.Post addPost() {
+		return _postService.addPost();
+	}
+
+	public com.liferay.portlet.simpleblog.model.Post updatePost(long postId,
+		java.lang.String title, java.lang.String content, long authorId) {
+		return _postService.updatePost(postId, title, content, authorId);
+	}
+
+	public com.liferay.portlet.simpleblog.model.Post deletePost(long postId) {
+		return _postService.deletePost(postId);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

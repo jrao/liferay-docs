@@ -62,4 +62,11 @@ public interface PostService extends BaseService, InvokableService {
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public com.liferay.portlet.simpleblog.model.Post addPost();
+
+	public com.liferay.portlet.simpleblog.model.Post updatePost(long postId,
+		java.lang.String title, java.lang.String content, long authorId);
+
+	public com.liferay.portlet.simpleblog.model.Post deletePost(long postId);
 }

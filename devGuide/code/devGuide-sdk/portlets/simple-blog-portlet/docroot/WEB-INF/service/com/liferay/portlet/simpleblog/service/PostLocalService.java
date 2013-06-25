@@ -242,4 +242,16 @@ public interface PostLocalService extends BaseLocalService, InvokableLocalServic
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public com.liferay.portlet.simpleblog.model.Post addPost(
+		java.lang.String title, java.lang.String content, long authorId,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public com.liferay.portlet.simpleblog.model.Post updatePost(long postId,
+		java.lang.String title, java.lang.String content, long authorId);
+
+	public java.util.List<com.liferay.portlet.simpleblog.model.Post> findByTitleContentAuthor(
+		java.lang.String title, java.lang.String content,
+		java.lang.String author, int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

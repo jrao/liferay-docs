@@ -62,6 +62,21 @@ public class PostServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.portlet.simpleblog.model.Post addPost() {
+		return getService().addPost();
+	}
+
+	public static com.liferay.portlet.simpleblog.model.Post updatePost(
+		long postId, java.lang.String title, java.lang.String content,
+		long authorId) {
+		return getService().updatePost(postId, title, content, authorId);
+	}
+
+	public static com.liferay.portlet.simpleblog.model.Post deletePost(
+		long postId) {
+		return getService().deletePost(postId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

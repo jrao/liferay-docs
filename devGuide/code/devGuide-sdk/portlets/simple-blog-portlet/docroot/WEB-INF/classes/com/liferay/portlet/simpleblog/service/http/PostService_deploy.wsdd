@@ -2,8 +2,20 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Plugin_SimpleBlog_PostService" provider="java:RPC" style="rpc" use="encoded">
-		<parameter name="allowedMethods" value="*" />
+		<typeMapping xmlns:ns="http://model.simpleblog.portlet.liferay.com" qname="ns:PostSoap" type="java:com.liferay.portlet.simpleblog.model.PostSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.simpleblog.portlet.liferay.com" xmlns:rtns="http://model.simpleblog.portlet.liferay.com" name="addPost" qname="operNS:addPost" returnQName="addPostReturn" returnType="rtns:PostSoap" soapAction=""> </operation>
+		<operation xmlns:operNS="urn:http.service.simpleblog.portlet.liferay.com" xmlns:rtns="http://model.simpleblog.portlet.liferay.com" name="deletePost" qname="operNS:deletePost" returnQName="deletePostReturn" returnType="rtns:PostSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="postId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.simpleblog.portlet.liferay.com" xmlns:rtns="http://model.simpleblog.portlet.liferay.com" name="updatePost" qname="operNS:updatePost" returnQName="updatePostReturn" returnType="rtns:PostSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="postId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="title" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="content" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="authorId" type="tns:long"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="addPost deletePost updatePost" />
 		<parameter name="className" value="com.liferay.portlet.simpleblog.service.http.PostServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.simpleblog.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="PostServiceSoap" />
 		<parameter name="wsdlServiceElement" value="PostServiceSoapService" />

@@ -55,6 +55,20 @@ public class AuthorServiceWrapper implements AuthorService,
 		return _authorService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public com.liferay.portlet.simpleblog.model.Author addAuthor() {
+		return _authorService.addAuthor();
+	}
+
+	public com.liferay.portlet.simpleblog.model.Author updateAuthor(
+		long authorId, java.lang.String name) {
+		return _authorService.updateAuthor(authorId, name);
+	}
+
+	public com.liferay.portlet.simpleblog.model.Author deleteAuthor(
+		long authorId) {
+		return _authorService.deleteAuthor(authorId);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

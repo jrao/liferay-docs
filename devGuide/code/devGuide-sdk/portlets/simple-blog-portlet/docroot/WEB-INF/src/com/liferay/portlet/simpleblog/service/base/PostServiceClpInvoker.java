@@ -30,6 +30,20 @@ public class PostServiceClpInvoker {
 		_methodName31 = "setBeanIdentifier";
 
 		_methodParameterTypes31 = new String[] { "java.lang.String" };
+
+		_methodName36 = "addPost";
+
+		_methodParameterTypes36 = new String[] {  };
+
+		_methodName37 = "updatePost";
+
+		_methodParameterTypes37 = new String[] {
+				"long", "java.lang.String", "java.lang.String", "long"
+			};
+
+		_methodName38 = "deletePost";
+
+		_methodParameterTypes38 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -44,6 +58,23 @@ public class PostServiceClpInvoker {
 			PostServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
+		if (_methodName36.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
+			return PostServiceUtil.addPost();
+		}
+
+		if (_methodName37.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes37, parameterTypes)) {
+			return PostServiceUtil.updatePost(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				((Long)arguments[3]).longValue());
+		}
+
+		if (_methodName38.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes38, parameterTypes)) {
+			return PostServiceUtil.deletePost(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -51,4 +82,10 @@ public class PostServiceClpInvoker {
 	private String[] _methodParameterTypes30;
 	private String _methodName31;
 	private String[] _methodParameterTypes31;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
+	private String _methodName38;
+	private String[] _methodParameterTypes38;
 }

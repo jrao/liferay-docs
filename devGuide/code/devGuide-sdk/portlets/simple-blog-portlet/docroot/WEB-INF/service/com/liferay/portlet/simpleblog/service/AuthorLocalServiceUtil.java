@@ -273,6 +273,17 @@ public class AuthorLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.portlet.simpleblog.model.Author addAuthor(
+		java.lang.String name,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().addAuthor(name, serviceContext);
+	}
+
+	public static com.liferay.portlet.simpleblog.model.Author updateAuthor(
+		long authorId, java.lang.String name) {
+		return getService().updateAuthor(authorId, name);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

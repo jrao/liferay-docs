@@ -271,6 +271,26 @@ public class PostLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.portlet.simpleblog.model.Post addPost(
+		java.lang.String title, java.lang.String content, long authorId,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().addPost(title, content, authorId, serviceContext);
+	}
+
+	public static com.liferay.portlet.simpleblog.model.Post updatePost(
+		long postId, java.lang.String title, java.lang.String content,
+		long authorId) {
+		return getService().updatePost(postId, title, content, authorId);
+	}
+
+	public static java.util.List<com.liferay.portlet.simpleblog.model.Post> findByTitleContentAuthor(
+		java.lang.String title, java.lang.String content,
+		java.lang.String author, int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByTitleContentAuthor(title, content, author, begin, end);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

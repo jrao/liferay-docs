@@ -2,8 +2,18 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Plugin_SimpleBlog_AuthorService" provider="java:RPC" style="rpc" use="encoded">
-		<parameter name="allowedMethods" value="*" />
+		<typeMapping xmlns:ns="http://model.simpleblog.portlet.liferay.com" qname="ns:AuthorSoap" type="java:com.liferay.portlet.simpleblog.model.AuthorSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.simpleblog.portlet.liferay.com" xmlns:rtns="http://model.simpleblog.portlet.liferay.com" name="addAuthor" qname="operNS:addAuthor" returnQName="addAuthorReturn" returnType="rtns:AuthorSoap" soapAction=""> </operation>
+		<operation xmlns:operNS="urn:http.service.simpleblog.portlet.liferay.com" xmlns:rtns="http://model.simpleblog.portlet.liferay.com" name="deleteAuthor" qname="operNS:deleteAuthor" returnQName="deleteAuthorReturn" returnType="rtns:AuthorSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="authorId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.simpleblog.portlet.liferay.com" xmlns:rtns="http://model.simpleblog.portlet.liferay.com" name="updateAuthor" qname="operNS:updateAuthor" returnQName="updateAuthorReturn" returnType="rtns:AuthorSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="authorId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="addAuthor deleteAuthor updateAuthor" />
 		<parameter name="className" value="com.liferay.portlet.simpleblog.service.http.AuthorServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.simpleblog.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="AuthorServiceSoap" />
 		<parameter name="wsdlServiceElement" value="AuthorServiceSoapService" />

@@ -245,4 +245,11 @@ public interface AuthorLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public com.liferay.portlet.simpleblog.model.Author addAuthor(
+		java.lang.String name,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public com.liferay.portlet.simpleblog.model.Author updateAuthor(
+		long authorId, java.lang.String name);
 }

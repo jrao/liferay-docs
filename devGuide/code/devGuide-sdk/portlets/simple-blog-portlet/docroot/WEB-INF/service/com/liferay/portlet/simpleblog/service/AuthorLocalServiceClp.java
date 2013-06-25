@@ -111,6 +111,16 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		_methodName17 = "setBeanIdentifier";
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
+
+		_methodName19 = "addAuthor";
+
+		_methodParameterTypes19 = new String[] {
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName20 = "updateAuthor";
+
+		_methodParameterTypes20 = new String[] { "long", "java.lang.String" };
 	}
 
 	public com.liferay.portlet.simpleblog.model.Author addAuthor(
@@ -638,6 +648,59 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 		throw new UnsupportedOperationException();
 	}
 
+	public com.liferay.portlet.simpleblog.model.Author addAuthor(
+		java.lang.String name,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19,
+					new Object[] {
+						ClpSerializer.translateInput(name),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portlet.simpleblog.model.Author)ClpSerializer.translateOutput(returnObj);
+	}
+
+	public com.liferay.portlet.simpleblog.model.Author updateAuthor(
+		long authorId, java.lang.String name) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] { authorId, ClpSerializer.translateInput(name) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portlet.simpleblog.model.Author)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -675,4 +738,8 @@ public class AuthorLocalServiceClp implements AuthorLocalService {
 	private String[] _methodParameterTypes16;
 	private String _methodName17;
 	private String[] _methodParameterTypes17;
+	private String _methodName19;
+	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
 }

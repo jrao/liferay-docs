@@ -111,6 +111,30 @@ public class PostLocalServiceClpInvoker {
 		_methodName47 = "setBeanIdentifier";
 
 		_methodParameterTypes47 = new String[] { "java.lang.String" };
+
+		_methodName52 = "addPost";
+
+		_methodParameterTypes52 = new String[] {
+				"java.lang.String", "java.lang.String", "long",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName53 = "updatePost";
+
+		_methodParameterTypes53 = new String[] {
+				"long", "java.lang.String", "java.lang.String", "long"
+			};
+
+		_methodName54 = "deletePost";
+
+		_methodParameterTypes54 = new String[] { "long" };
+
+		_methodName55 = "findByTitleContentAuthor";
+
+		_methodParameterTypes55 = new String[] {
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"int", "int"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -212,6 +236,34 @@ public class PostLocalServiceClpInvoker {
 			PostLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
+		if (_methodName52.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
+			return PostLocalServiceUtil.addPost((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1],
+				((Long)arguments[2]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[3]);
+		}
+
+		if (_methodName53.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
+			return PostLocalServiceUtil.updatePost(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				((Long)arguments[3]).longValue());
+		}
+
+		if (_methodName54.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
+			return PostLocalServiceUtil.deletePost(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName55.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
+			return PostLocalServiceUtil.findByTitleContentAuthor((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				((Integer)arguments[3]).intValue(),
+				((Integer)arguments[4]).intValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -251,4 +303,12 @@ public class PostLocalServiceClpInvoker {
 	private String[] _methodParameterTypes46;
 	private String _methodName47;
 	private String[] _methodParameterTypes47;
+	private String _methodName52;
+	private String[] _methodParameterTypes52;
+	private String _methodName53;
+	private String[] _methodParameterTypes53;
+	private String _methodName54;
+	private String[] _methodParameterTypes54;
+	private String _methodName55;
+	private String[] _methodParameterTypes55;
 }

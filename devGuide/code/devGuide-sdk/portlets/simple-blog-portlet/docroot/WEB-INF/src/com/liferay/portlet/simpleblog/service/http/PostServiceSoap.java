@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.simpleblog.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import com.liferay.portlet.simpleblog.service.PostServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -58,4 +65,49 @@ package com.liferay.portlet.simpleblog.service.http;
  * @generated
  */
 public class PostServiceSoap {
+	public static com.liferay.portlet.simpleblog.model.PostSoap addPost()
+		throws RemoteException {
+		try {
+			com.liferay.portlet.simpleblog.model.Post returnValue = PostServiceUtil.addPost();
+
+			return com.liferay.portlet.simpleblog.model.PostSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.simpleblog.model.PostSoap updatePost(
+		long postId, java.lang.String title, java.lang.String content,
+		long authorId) throws RemoteException {
+		try {
+			com.liferay.portlet.simpleblog.model.Post returnValue = PostServiceUtil.updatePost(postId,
+					title, content, authorId);
+
+			return com.liferay.portlet.simpleblog.model.PostSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.simpleblog.model.PostSoap deletePost(
+		long postId) throws RemoteException {
+		try {
+			com.liferay.portlet.simpleblog.model.Post returnValue = PostServiceUtil.deletePost(postId);
+
+			return com.liferay.portlet.simpleblog.model.PostSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(PostServiceSoap.class);
 }

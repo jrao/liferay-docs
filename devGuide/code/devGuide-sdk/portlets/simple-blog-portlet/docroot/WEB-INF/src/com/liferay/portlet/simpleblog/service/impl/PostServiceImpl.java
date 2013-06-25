@@ -14,6 +14,12 @@
 
 package com.liferay.portlet.simpleblog.service.impl;
 
+import java.util.Date;
+
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.simpleblog.model.Post;
+import com.liferay.portlet.simpleblog.service.PostLocalServiceUtil;
 import com.liferay.portlet.simpleblog.service.base.PostServiceBaseImpl;
 
 /**
@@ -36,4 +42,79 @@ public class PostServiceImpl extends PostServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link com.liferay.portlet.simpleblog.service.PostServiceUtil} to access the post remote service.
 	 */
+	
+	public Post addPost() {
+		
+		long postId = 0;
+		
+		try {
+			postId = CounterLocalServiceUtil.increment(Post.class.getName());
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		Post post = PostLocalServiceUtil.createPost(postId);
+		
+		Date now = new Date();
+		
+		post.setCreateDate(now);
+		
+		post.setModifiedDate(now);
+		
+		try {
+			return PostLocalServiceUtil.addPost(post);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public Post updatePost(long postId, String title, String content, long authorId) {
+		
+		Post post = null;
+		
+		try {
+			post = PostLocalServiceUtil.fetchPost(postId);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		post.setTitle(title);
+		
+		post.setContent(content);
+		
+		post.setAuthorId(authorId);
+		
+		Date now = new Date();
+		
+		post.setModifiedDate(now);
+		
+		try {
+			return PostLocalServiceUtil.updatePost(post);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		return post;
+	}
+	
+	public Post deletePost (long postId) {
+		
+		Post post = null;
+		
+		try {
+			post = PostLocalServiceUtil.fetchPost(postId);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		try {
+			return PostLocalServiceUtil.deletePost(post);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		return post;
+	}
 }

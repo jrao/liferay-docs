@@ -30,6 +30,20 @@ public class PostServiceClp implements PostService {
 		_methodName1 = "setBeanIdentifier";
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
+
+		_methodName3 = "addPost";
+
+		_methodParameterTypes3 = new String[] {  };
+
+		_methodName4 = "updatePost";
+
+		_methodParameterTypes4 = new String[] {
+				"long", "java.lang.String", "java.lang.String", "long"
+			};
+
+		_methodName5 = "deletePost";
+
+		_methodParameterTypes5 = new String[] { "long" };
 	}
 
 	public java.lang.String getBeanIdentifier() {
@@ -79,9 +93,91 @@ public class PostServiceClp implements PostService {
 		throw new UnsupportedOperationException();
 	}
 
+	public com.liferay.portlet.simpleblog.model.Post addPost() {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName3,
+					_methodParameterTypes3, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portlet.simpleblog.model.Post)ClpSerializer.translateOutput(returnObj);
+	}
+
+	public com.liferay.portlet.simpleblog.model.Post updatePost(long postId,
+		java.lang.String title, java.lang.String content, long authorId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName4,
+					_methodParameterTypes4,
+					new Object[] {
+						postId,
+						
+					ClpSerializer.translateInput(title),
+						
+					ClpSerializer.translateInput(content),
+						
+					authorId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portlet.simpleblog.model.Post)ClpSerializer.translateOutput(returnObj);
+	}
+
+	public com.liferay.portlet.simpleblog.model.Post deletePost(long postId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5, new Object[] { postId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portlet.simpleblog.model.Post)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
 	private String _methodName1;
 	private String[] _methodParameterTypes1;
+	private String _methodName3;
+	private String[] _methodParameterTypes3;
+	private String _methodName4;
+	private String[] _methodParameterTypes4;
+	private String _methodName5;
+	private String[] _methodParameterTypes5;
 }

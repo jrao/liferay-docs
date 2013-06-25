@@ -262,6 +262,26 @@ public class PostLocalServiceWrapper implements PostLocalService,
 		return _postLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public com.liferay.portlet.simpleblog.model.Post addPost(
+		java.lang.String title, java.lang.String content, long authorId,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _postLocalService.addPost(title, content, authorId,
+			serviceContext);
+	}
+
+	public com.liferay.portlet.simpleblog.model.Post updatePost(long postId,
+		java.lang.String title, java.lang.String content, long authorId) {
+		return _postLocalService.updatePost(postId, title, content, authorId);
+	}
+
+	public java.util.List<com.liferay.portlet.simpleblog.model.Post> findByTitleContentAuthor(
+		java.lang.String title, java.lang.String content,
+		java.lang.String author, int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _postLocalService.findByTitleContentAuthor(title, content,
+			author, begin, end);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

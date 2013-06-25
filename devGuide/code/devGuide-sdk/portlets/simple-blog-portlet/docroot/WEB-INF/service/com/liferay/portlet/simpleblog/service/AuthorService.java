@@ -62,4 +62,12 @@ public interface AuthorService extends BaseService, InvokableService {
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public com.liferay.portlet.simpleblog.model.Author addAuthor();
+
+	public com.liferay.portlet.simpleblog.model.Author updateAuthor(
+		long authorId, java.lang.String name);
+
+	public com.liferay.portlet.simpleblog.model.Author deleteAuthor(
+		long authorId);
 }

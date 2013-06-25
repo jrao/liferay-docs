@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.simpleblog.service.impl;
 
+import java.util.Date;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.simpleblog.model.Author;
+import com.liferay.portlet.simpleblog.service.AuthorLocalServiceUtil;
 import com.liferay.portlet.simpleblog.service.base.AuthorLocalServiceBaseImpl;
 
 /**
@@ -36,4 +43,93 @@ public class AuthorLocalServiceImpl extends AuthorLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link com.liferay.portlet.simpleblog.service.AuthorLocalServiceUtil} to access the author local service.
 	 */
+	
+	public Author addAuthor(String name, ServiceContext serviceContext) {
+		
+		long authorId = 0;
+		
+		try {
+			authorId = counterLocalService.increment(Author.class.getName());
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		Author author = super.createAuthor(authorId);
+		
+		author.setName(name);
+		
+		long companyId = serviceContext.getCompanyId();
+		
+		author.setAuthorId(authorId);
+		
+		long groupId = serviceContext.getScopeGroupId();
+		
+		author.setGroupId(groupId);
+		
+		long userId = 0;
+		
+		try {
+			userId = serviceContext.getGuestOrUserId();
+		} catch (PortalException pe) {
+			pe.printStackTrace();
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		author.setUserId(userId);
+		
+		Date now = new Date();
+		
+		author.setCreateDate(now);
+		
+		author.setModifiedDate(now);
+		
+		try {
+			AuthorLocalServiceUtil.addAuthor(author);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		return author;
+	}
+	
+	public Author updateAuthor(long authorId, String name) {
+		
+		Author author = null;
+		try {
+			author = super.fetchAuthor(authorId);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		author.setName(name);
+		
+		try {
+			return AuthorLocalServiceUtil.updateAuthor(author);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		return author;
+	}
+	
+	public Author deleteAuthor(long authorId) {
+		
+		Author author = null;
+		
+		try {
+			author = super.fetchAuthor(authorId);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		try {
+			return super.deleteAuthor(author);
+		} catch (SystemException se) {
+			se.printStackTrace();
+		}
+		
+		return author;
+	}
+	
 }

@@ -265,6 +265,17 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 		return _authorLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public com.liferay.portlet.simpleblog.model.Author addAuthor(
+		java.lang.String name,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _authorLocalService.addAuthor(name, serviceContext);
+	}
+
+	public com.liferay.portlet.simpleblog.model.Author updateAuthor(
+		long authorId, java.lang.String name) {
+		return _authorLocalService.updateAuthor(authorId, name);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

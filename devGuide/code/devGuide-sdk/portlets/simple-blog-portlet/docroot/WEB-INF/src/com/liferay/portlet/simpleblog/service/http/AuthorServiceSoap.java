@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.simpleblog.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import com.liferay.portlet.simpleblog.service.AuthorServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -58,4 +65,48 @@ package com.liferay.portlet.simpleblog.service.http;
  * @generated
  */
 public class AuthorServiceSoap {
+	public static com.liferay.portlet.simpleblog.model.AuthorSoap addAuthor()
+		throws RemoteException {
+		try {
+			com.liferay.portlet.simpleblog.model.Author returnValue = AuthorServiceUtil.addAuthor();
+
+			return com.liferay.portlet.simpleblog.model.AuthorSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.simpleblog.model.AuthorSoap updateAuthor(
+		long authorId, java.lang.String name) throws RemoteException {
+		try {
+			com.liferay.portlet.simpleblog.model.Author returnValue = AuthorServiceUtil.updateAuthor(authorId,
+					name);
+
+			return com.liferay.portlet.simpleblog.model.AuthorSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.simpleblog.model.AuthorSoap deleteAuthor(
+		long authorId) throws RemoteException {
+		try {
+			com.liferay.portlet.simpleblog.model.Author returnValue = AuthorServiceUtil.deleteAuthor(authorId);
+
+			return com.liferay.portlet.simpleblog.model.AuthorSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(AuthorServiceSoap.class);
 }
