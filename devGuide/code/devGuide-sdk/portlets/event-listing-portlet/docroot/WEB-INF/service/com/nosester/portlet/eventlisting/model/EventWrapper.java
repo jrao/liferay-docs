@@ -412,6 +412,10 @@ public class EventWrapper implements Event, ModelWrapper<Event> {
 		_event.persist();
 	}
 
+	public com.nosester.portlet.eventlisting.model.Location getLocation() {
+		return _event.getLocation();
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedModel}
 	 */

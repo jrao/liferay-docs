@@ -20,6 +20,7 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.nosester.portlet.eventlisting.model.Event;
 import com.nosester.portlet.eventlisting.service.base.EventLocalServiceBaseImpl;
+import com.nosester.portlet.eventlisting.service.persistence.EventFinderUtil;
 
 /**
  * The implementation of the event local service.
@@ -61,6 +62,12 @@ public class EventLocalServiceImpl extends EventLocalServiceBaseImpl {
 		
 		return super.updateEvent(event);
 	}
+	
+	public List<Event> findByEventNameEventDescriptionLocationName(String eventName, String eventDescription, String locationName, 
+	        int begin, int end) throws SystemException {
+		
+	    return EventFinderUtil.findByEventNameEventDescriptionLocationName(eventName, eventDescription, locationName, begin, end);
+	}	
 
 	public List<Event> getEventsByGroupId(long groupId) throws SystemException {
 		

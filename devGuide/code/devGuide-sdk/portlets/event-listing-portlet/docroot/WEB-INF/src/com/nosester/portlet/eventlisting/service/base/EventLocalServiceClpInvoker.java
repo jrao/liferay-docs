@@ -104,37 +104,44 @@ public class EventLocalServiceClpInvoker {
 				"com.nosester.portlet.eventlisting.model.Event", "boolean"
 			};
 
-		_methodName44 = "getBeanIdentifier";
+		_methodName46 = "getBeanIdentifier";
 
-		_methodParameterTypes44 = new String[] {  };
+		_methodParameterTypes46 = new String[] {  };
 
-		_methodName45 = "setBeanIdentifier";
+		_methodName47 = "setBeanIdentifier";
 
-		_methodParameterTypes45 = new String[] { "java.lang.String" };
+		_methodParameterTypes47 = new String[] { "java.lang.String" };
 
-		_methodName50 = "addEvent";
+		_methodName52 = "addEvent";
 
-		_methodParameterTypes50 = new String[] {
+		_methodParameterTypes52 = new String[] {
 				"com.nosester.portlet.eventlisting.model.Event"
 			};
 
-		_methodName51 = "updateEvent";
+		_methodName53 = "updateEvent";
 
-		_methodParameterTypes51 = new String[] {
+		_methodParameterTypes53 = new String[] {
 				"com.nosester.portlet.eventlisting.model.Event"
 			};
 
-		_methodName52 = "getEventsByGroupId";
+		_methodName54 = "findByEventNameEventDescriptionLocationName";
 
-		_methodParameterTypes52 = new String[] { "long" };
+		_methodParameterTypes54 = new String[] {
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"int", "int"
+			};
 
-		_methodName53 = "getEventsByGroupId";
+		_methodName55 = "getEventsByGroupId";
 
-		_methodParameterTypes53 = new String[] { "long", "int", "int" };
+		_methodParameterTypes55 = new String[] { "long" };
 
-		_methodName54 = "getEventsCountByGroupId";
+		_methodName56 = "getEventsByGroupId";
 
-		_methodParameterTypes54 = new String[] { "long" };
+		_methodParameterTypes56 = new String[] { "long", "int", "int" };
+
+		_methodName57 = "getEventsCountByGroupId";
+
+		_methodParameterTypes57 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -226,40 +233,48 @@ public class EventLocalServiceClpInvoker {
 				((Boolean)arguments[1]).booleanValue());
 		}
 
-		if (_methodName44.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
+		if (_methodName46.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
 			return EventLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName45.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
+		if (_methodName47.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
 			EventLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
-		}
-
-		if (_methodName50.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
-			return EventLocalServiceUtil.addEvent((com.nosester.portlet.eventlisting.model.Event)arguments[0]);
-		}
-
-		if (_methodName51.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
-			return EventLocalServiceUtil.updateEvent((com.nosester.portlet.eventlisting.model.Event)arguments[0]);
 		}
 
 		if (_methodName52.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
-			return EventLocalServiceUtil.getEventsByGroupId(((Long)arguments[0]).longValue());
+			return EventLocalServiceUtil.addEvent((com.nosester.portlet.eventlisting.model.Event)arguments[0]);
 		}
 
 		if (_methodName53.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
+			return EventLocalServiceUtil.updateEvent((com.nosester.portlet.eventlisting.model.Event)arguments[0]);
+		}
+
+		if (_methodName54.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
+			return EventLocalServiceUtil.findByEventNameEventDescriptionLocationName((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				((Integer)arguments[3]).intValue(),
+				((Integer)arguments[4]).intValue());
+		}
+
+		if (_methodName55.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
+			return EventLocalServiceUtil.getEventsByGroupId(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName56.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
 			return EventLocalServiceUtil.getEventsByGroupId(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName54.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
+		if (_methodName57.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
 			return EventLocalServiceUtil.getEventsCountByGroupId(((Long)arguments[0]).longValue());
 		}
 
@@ -298,18 +313,20 @@ public class EventLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName44;
-	private String[] _methodParameterTypes44;
-	private String _methodName45;
-	private String[] _methodParameterTypes45;
-	private String _methodName50;
-	private String[] _methodParameterTypes50;
-	private String _methodName51;
-	private String[] _methodParameterTypes51;
+	private String _methodName46;
+	private String[] _methodParameterTypes46;
+	private String _methodName47;
+	private String[] _methodParameterTypes47;
 	private String _methodName52;
 	private String[] _methodParameterTypes52;
 	private String _methodName53;
 	private String[] _methodParameterTypes53;
 	private String _methodName54;
 	private String[] _methodParameterTypes54;
+	private String _methodName55;
+	private String[] _methodParameterTypes55;
+	private String _methodName56;
+	private String[] _methodParameterTypes56;
+	private String _methodName57;
+	private String[] _methodParameterTypes57;
 }

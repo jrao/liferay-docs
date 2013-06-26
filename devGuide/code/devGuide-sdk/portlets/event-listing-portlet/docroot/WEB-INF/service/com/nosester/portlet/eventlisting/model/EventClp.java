@@ -232,6 +232,10 @@ public class EventClp extends BaseModelImpl<Event> implements Event {
 		_locationId = locationId;
 	}
 
+	public com.nosester.portlet.eventlisting.model.Location getLocation() {
+		throw new UnsupportedOperationException();
+	}
+
 	public BaseModel<?> getEventRemoteModel() {
 		return _eventRemoteModel;
 	}

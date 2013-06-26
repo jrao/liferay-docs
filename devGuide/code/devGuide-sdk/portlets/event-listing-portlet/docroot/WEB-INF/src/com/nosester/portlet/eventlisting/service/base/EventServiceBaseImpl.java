@@ -34,6 +34,7 @@ import com.nosester.portlet.eventlisting.service.EventLocalService;
 import com.nosester.portlet.eventlisting.service.EventService;
 import com.nosester.portlet.eventlisting.service.LocationLocalService;
 import com.nosester.portlet.eventlisting.service.LocationService;
+import com.nosester.portlet.eventlisting.service.persistence.EventFinder;
 import com.nosester.portlet.eventlisting.service.persistence.EventPersistence;
 import com.nosester.portlet.eventlisting.service.persistence.LocationPersistence;
 
@@ -111,6 +112,24 @@ public abstract class EventServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setEventPersistence(EventPersistence eventPersistence) {
 		this.eventPersistence = eventPersistence;
+	}
+
+	/**
+	 * Returns the event finder.
+	 *
+	 * @return the event finder
+	 */
+	public EventFinder getEventFinder() {
+		return eventFinder;
+	}
+
+	/**
+	 * Sets the event finder.
+	 *
+	 * @param eventFinder the event finder
+	 */
+	public void setEventFinder(EventFinder eventFinder) {
+		this.eventFinder = eventFinder;
 	}
 
 	/**
@@ -357,6 +376,8 @@ public abstract class EventServiceBaseImpl extends BaseServiceImpl
 	protected EventService eventService;
 	@BeanReference(type = EventPersistence.class)
 	protected EventPersistence eventPersistence;
+	@BeanReference(type = EventFinder.class)
+	protected EventFinder eventFinder;
 	@BeanReference(type = LocationLocalService.class)
 	protected LocationLocalService locationLocalService;
 	@BeanReference(type = LocationService.class)

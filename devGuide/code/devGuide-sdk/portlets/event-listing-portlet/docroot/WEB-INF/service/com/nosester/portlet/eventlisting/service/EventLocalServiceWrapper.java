@@ -265,6 +265,14 @@ public class EventLocalServiceWrapper implements EventLocalService,
 		return _eventLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public java.util.List<com.nosester.portlet.eventlisting.model.Event> findByEventNameEventDescriptionLocationName(
+		java.lang.String eventName, java.lang.String eventDescription,
+		java.lang.String locationName, int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _eventLocalService.findByEventNameEventDescriptionLocationName(eventName,
+			eventDescription, locationName, begin, end);
+	}
+
 	public java.util.List<com.nosester.portlet.eventlisting.model.Event> getEventsByGroupId(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {

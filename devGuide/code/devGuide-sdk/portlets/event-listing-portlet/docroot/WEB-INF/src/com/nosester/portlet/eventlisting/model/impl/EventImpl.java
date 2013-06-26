@@ -14,6 +14,9 @@
 
 package com.nosester.portlet.eventlisting.model.impl;
 
+import com.nosester.portlet.eventlisting.model.Location;
+import com.nosester.portlet.eventlisting.service.LocationLocalServiceUtil;
+
 /**
  * The extended model implementation for the Event service. Represents a row in the &quot;Event_Event&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,4 +34,15 @@ public class EventImpl extends EventBaseImpl {
 	 */
 	public EventImpl() {
 	}
+	
+	public Location getLocation() {
+
+		try {
+			return LocationLocalServiceUtil.getLocation(getLocationId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 }
