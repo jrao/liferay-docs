@@ -90,17 +90,18 @@ how to use Service Builder.
 ### Configuring Service Builder and Defining Portlet Data
 
 In order to demonstrate how to use Service Builder, let's create an example
-portlet project that the Nose-ster organization can use to schedule events. For
-our example, we'll create a new Liferay portlet project called
-*event-listing-portlet*. If you'd like to examine the finished example project,
-you can view the code on Github
-[here](https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/portlets/event-listing-portlet)
-or download the WAR file from
-[here](https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/dist/event-listing-portlet-6.2.0.1.war).
-We'll define two entities called *events* and *locations*, representing events
-that can be scheduled and locations at which the events can take place. Since
-events take place at specific locations, an event entity should be able to take
-a location entity as an attribute.
+portlet project that the Nose-ster organization can use to schedule social
+events. For our example, we'll create a new Liferay portlet project for managing
+and listing our events. We'll define two entities called *events* and
+*locations*, representing events that can be scheduled and locations at which
+the events can take place. Since events take place at specific locations, an
+event entity should be able to take a location entity as an attribute. If you'd
+like to examine the finished example project, you can view the code on Github
+[https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/portlets/event-listing-portlet](https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/portlets/event-listing-portlet)
+or download the `.war` file from
+[https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/dist/event-listing-portlet-6.2.0.1.war](https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/dist/event-listing-portlet-6.2.0.1.war).
+But we'll guide you through creating the project, its portlets, and its entities
+step-by-step using Liferay IDE/Developer Studio. 
 
 ---
 
@@ -115,47 +116,60 @@ a location entity as an attribute.
 ---
 
 Liferay portlet projects can contain multiple portlets. We'll create two
-portlets in our event-listing-portlet project called *Event Listing Portlet* and
-*Location Listing Portlet*. These portlets will allow users to add, edit, or
-remove events and locations, display lists of events and locations, search for
-particular events and locations, and view the details of individual events or
-locations. To follow this example, create a new Liferay portlet project in your
-Liferay Plugins SDK called *event-listing-portlet*. In your new project's
-`docroot/WEB-INF/src` folder, create a package called
-`com.nosester.portlet.eventlisting`.
+portlets in our `event-listing-portlet` project--one for managing Nose-ster
+events and the other for managing Nose-ster locations. These portlets will allow
+users to add, edit, or remove events and locations, display lists of events and
+locations, search for particular events and locations, and view the details of
+individual events or locations. We'll start by creating the event listing
+portlet as we create the `event-listing-portlet` plugin project. 
 
-In this new package, create a Java file called `EventListingPortlet.java` and
-add the following contents:
+To follow this example, create a new Liferay portlet project in your Liferay
+Plugins SDK using Liferay IDE or Developer Studio. In the IDE, go to File &rarr;
+New Liferay Project. We'll mention some key information to specify for the
+project and the event listing portlet as you create both in the wizard. Name the
+project `event-listing-portlet`, enter `Event Listing` as its display name, and
+select *Portlet* as its project type. Select the Liferay MVC portlet framework
+as the default framework for the project and select the checkbox to add a custom
+portlet class. This custom portlet class will be for your event listing portlet,
+which we'll continue to specifying in the wizard.
 
-    package com.nosester.portlet.eventlisting;
+Enter portlet class name `EventListingPortlet`, Java package
+`com.nosester.portlet.eventlisting`, and keep the superclass
+`com.liferay.util.bridges.mvc.MVCPortlet`. For your portlet's info, enter
+`eventlisting` as its name and `Event Listing Portlet` as its display name and
+title. For the portlet's modes, select *Edit* mode in addition to *View*.
+Selecting the edit mode is optional at this point, but it sets you up with a
+helpful skeleton JSP file to add logic for editing your Nose-ster events. While
+you're at it, select the checkbox for creating a resource bundle file so that you
+can add different language translations for your portlet's textual display
+values. Lastly, leave your portlet's category as `Sample`. Click *Finish* to
+complete creating your Liferay portlet plugin project and the Event Listing
+portlet.   
 
-    import com.liferay.util.bridges.mvc.MVCPortlet;
+Now, go ahead and create a Location Listing portlet in this same project by
+selecting the project in the *Package Explorer* first and going to  File &rarr;
+New  &rarr; Liferay Portlet.  Creating the Location Listing portlet in the IDE
+will be similar to how you created the Event Listing portlet. Only the portlet
+class name and other name values will be slightly different.
 
-    /**
-     * Portlet implementation class EventListingPortlet
-     */
-    public class EventListingPortlet extends MVCPortlet {
+Here is a summary of the values to specify in the Liferay Portlet wizard for
+creating the Location Listing portlet:    
 
-    }
+- Portlet class: `LocationListingPortlet`
+- Java package:`com.nosester.portlet.eventlisting`
+- Display name: `Location Listing Portlet`
+- Title: `Location Listing Portlet`
+- Superclass: `com.liferay.util.bridges.mvc.MVCPortlet`
+- Portlet name: `locationlisting`
+- Portlet modes: *View* and *Edit*
+- Create JSP files: yes
+- Category: `Sample`
 
-In the same package, create another Java file called
-`LocationListingPortlet.java` and add the following contents:
-
-    package com.nosester.portlet.eventlisting;
-
-    import com.liferay.util.bridges.mvc.MVCPortlet;
-
-    /**
-     * Portlet implementation class LocationListingPortlet
-     */
-    public class LocationListingPortlet extends MVCPortlet {
-
-    }
-
-Notice that for our custom Event Listing and Location Listing portlets, we are
-extending Liferay's MVC Portlet class. We'll add some business logic to these
-portlet classes after using Service Builder to create a service layer for our
-event and location entities.
+Expand your project's `docroot/WEB-INF/src` folder and the
+`com.nosester.portlet.eventlisting` package. Notice the
+`EventListingPortlet.java` and `LocationListingPortlet.java` files Liferay IDE
+created. We'll add some business logic to these portlet classes after using
+Service Builder to create a service layer for our event and location entities.
 
 The first step in using Service Builder is to define your model classes and
 their attributes in a `service.xml` file. In Service Builder terminology, your
@@ -170,7 +184,7 @@ Attribute | Attribute Type | Attribute Description
 `name` | String | The name of the event
 `description` | String | A description of the event
 `date` | Date | The date and time the event takes place
-`locationId` | int | An event takes place at a location and we use a location Id to specify the location
+`locationId` | long | An event takes place at a location and we use a location Id to specify the location
 
 Locations should have the attributes specified in the following table:
 
@@ -185,13 +199,114 @@ Attribute | Attribute Type | Attribute Description
 `stateOrProvince` | String | The state or province of the location
 `country` | String | The country of the location
 
-Create a `service.xml` file in your project's `docroot/WEB-INF` directory and
-add the following contents:
+<!-- 
+Let's show how to build the service.xml from the ground up, using Liferay
+IDE. - Jim
+-->
+
+Let's create a `service.xml` file for our project and specify our services and
+their entities. Liferay's IDE makes it easy.
+
+To create a `service.xml` file for your project, use the following steps: 
+
+1.  Create the `service.xml` file.
+
+2.  Define global information such as the Service Builder package path, author,
+    and namespace.
+
+3.  Define one or more database entities. Decide whether Service Builder should
+    generate local services, remote services, or both.
+
+4.  Define the columns (attributes) that each entity should possess.
+
+<!--
+5.  Specify relationships between entities. - Jim
+-->
+
+5.  Define a default ordering of entities that are retrieved from the database.
+
+6.  Define the finder methods that retrieve objects from the database using
+    specified parameters.
+
+<!--
+7.  Provide the means to associate an asset and tags. //AssetEntry and AssetTag
+See sample-service-builder-portlet. - Jim
+-->
+
+You can create your `service.xml` file manually to your `docroot/WEB-INF/src`
+folder or do it with a click of the button in Liferay's IDE. To create it in the
+IDE, select your `event-listing-portlet` project in the Package Explorer
+and then select File &rarr; New &rarr; Liferay Service Builder. By default, Service
+Builder creates the `service.xml` file and displays it in *Overview* mode in the
+IDE. 
+
+Now, we're ready to define the service's global information. If not already
+selected, select *Service Builder* in the outline on the left of the view of
+`service.xml`. Then, enter `com.nosester.portlet.eventlisting` for package path,
+your name as author, and `Event` as the namespace. Save your `service.xml`.  
+
+Next, we'll add our Event and Location entities. Select *Entities* from under
+*Service Builder* in the outline on the left of the view. In the main part of
+the view, notice the *Entities* table is empty. Create an entity by clicking the
+add icon (a green plus sign) to the right of the table. Fill in `Event` for our
+entity's name and select both *Local Service* and *Remote Service* options for
+it. Create an entity named `Location` too, and select *Local Service* and
+*Remote Service* options for it. Great! We now have our Event and Location
+entities. Let's describe their attributes.
+
+To add attributes for our Event entity we'll need to drill down to its columns
+in the outline. From the outline, expand *Entities* and our new *Event* entity.
+Then, select *Columns*. Liferay IDE displays a table of the Event entity's
+columns. Similar to the table we used for adding entities, we'll add attributes
+for the *Event* entity and *Location* entity. Create each attribute by clicking
+the add icon and filling in the name of the attribute, select its type, and
+specify whether it is a primary key for the entity. Note, while your cursor is
+in a column's *Type* field, an option icon shows in the right hand side of the
+field. Click the options icon to select the appropriate type for your column.
+Use attribute information as specified for both entities in the tables listed
+previously in this section. 
+
+<!--
+We may want to move those tables down here. - Jim
+-->
+
+In addition to the attributes of each entity we must specify a primary key column for
+each entity. Create a column named `eventId` of type `long` for the Event entity
+and a column named `locationId` of type `long` for the Location entity. 
+
+Also, it is always worth considering adding two `long` fields called *groupId*
+and *companyId* to your data models. The *groupId* specifies a particular site
+within a portal instance and the *companyId* specifies a portal instance. These
+two fields allow your portlet to support the multi-tenancy features of Liferay
+so that each portal instance and each site within a portal instance can have
+independent sets of portlet data. You should also consider adding two additional
+fields called *createDate* and *modifiedDate*. You can use these fields to
+record the times entities were created and last edited. 
+
+
+<!--
+TODO - Instruct how to use IDE to create Order by. - Jim
+
+By now, you've added all of your attributes as columns. Let's specify the order
+in which to return records for each entity.
+
+TODO - Instruct how to use IDE to create Finders. - Jim
+-->
+
+<!--
+Consider reflecting on the service.xml after explaining step by step how to build
+using IDE. Perhaps put the heading here. - Jim
+
+### Overview of `service.xml`
+-->
+
+Now that you are done creating your `service.xml`, it should look similar to the
+following: 
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
     <service-builder package-path="com.nosester.portlet.eventlisting">
-        <author>jbloggs</author>
+        <author>Joe Bloggs</author>
         <namespace>Event</namespace>
 
         <entity name="Event" local-service="true" remote-service="true">
@@ -239,8 +354,8 @@ add the following contents:
             <column name="companyId" type="long" />
             <column name="groupId" type="long" />
             <column name="userId" type="long" />
-            <column name="createDate" type="long" />
-            <column name="modifiedDate" type="long" />
+            <column name="createDate" type="Date" />
+            <column name="modifiedDate" type="Date" />
 
             <!-- Other fields -->
 
@@ -264,25 +379,6 @@ add the following contents:
             </finder>
         </entity>
     </service-builder>
-
-Now let's discuss the tags and attributes that we've added to `service.xml`.
-
-### Overview of `service.xml`
-
-To create a `service.xml` file for your project, use the following steps:
-
-1. Define global information such as the Service Builder package path, author,
-   and namespace.
-
-2. Define one or more database entities. Decide whether Service Builder should
-   generate local services, remote services, or both.
-
-3. Define the columns (attributes) that each entity should possess.
-
-4. Define a default ordering of entities that are retrieved from the database.
-
-5. Define the finder methods that retrieve objects from the database using
-   specified parameters.
 
 We followed these steps to create the `service.xml` for our
 event-listing-project example. The first line of `service.xml`, `<?xml
@@ -417,7 +513,7 @@ for them. `<finder>`, like `<column>` and `<order>`, is a child element of the
 `<entity>` element.
 
     <finder name="GroupId" return-type="Collection">
-        <finder-column name="group" />
+        <finder-column name="groupId" />
     </finder>
 
 Service Builder creates a finder method for each `<finder>` element that you
@@ -442,6 +538,12 @@ run Service Builder, run `ant build-service` from your project's root directory.
 The Ant tasks are provided by the Liferay Plugins SDK. The following section
 provides further details on running Service Builder.
 
+<!--
+I suggest leaving the `ant build-service` instruction for the next section. Let
+them read about using IDE and Ant for generating the services before deciding.
+- Jim
+-->
+
 ### Generating the Services
 
 To build a service using our `service.xml`, you can either use *Liferay IDE* or
@@ -453,6 +555,9 @@ folder. By default, the file opens up in the *Service Builder Editor*. Make sure
 you are in *Overview* mode. Then, click on the *Build Services* button.
 
 ![Figure 10.1: The *Overview* mode in the editor provides a nested outline which you can expand, a form for editing basic Service Builder attributes, and buttons for building services or building web service deployment descriptors.](../../images/service-xml-overview.png)
+
+<!-- Need to highlight the build services icon in image (e.g., add red square
+around icon - Jim --> 
 
 You should receive a message in your console stating BUILD SUCCESSFUL along with
 a list of generated files. We discuss these files in more detail later on in
@@ -467,12 +572,27 @@ graph structured background onto which you can add entities and relationships
 from the *Palette* available on the right hand side of the editor. Here is a
 view of the editor in *Diagram* mode:
 
+<!--
+Suggest, moving WSDD generation references later in this section, after we're done
+building the service. - Jim
+-->
+
 ![Figure 10.2: *Diagram* mode in editor](../../images/service-xml-diagram.png)
+
+<!--
+The view window need not be so tall as there is much empty space in the view - Jim
+-->
 
 Lastly, select *Source* mode to edit the XML source directly. Here is a view of
 our example `service.xml` shown in the editor's *Source* mode:
 
 ![Figure 10.3: *Source* mode in editor](../../images/service-xml-source.png)
+
+<!--
+Since the service.xml source is given as code in this section, there's no
+need to show the an image of the source view. Mentioning *Source* mode is enough.
+- Jim
+-->
 
 The tools provided by Developer Studio make it easy to edit your `service.xml`
 file to customize the generated interfaces and classes for your database model,
@@ -633,6 +753,10 @@ Freemarker template. You can find Service Builder's Freemarker templates in the
 `*ServiceImpl.java` file is generated, just look at the `service_impl.ftl`
 template.
 
+<!--
+Missing transition - Jim
+-->
+
 ### Writing the Local Service Class 
 
 In the file overview above, notice that `EventLocalService` is the interface for
@@ -656,8 +780,8 @@ the following methods to the `EventLocalServiceImpl` class:
         event.setEventId(eventId);
         
         Date now = new Date();
-        event.setCreateDate(now.getTime());
-        event.setModifiedDate(now.getTime());
+        event.setCreateDate(now);
+        event.setModifiedDate(now);
         
         return super.addEvent(event);
     }
@@ -665,7 +789,7 @@ the following methods to the `EventLocalServiceImpl` class:
     public Event updateEvent(Event event) throws SystemException {
         
         Date now = new Date();
-        event.setModifiedDate(now.getTime());
+        event.setModifiedDate(now);
         
         return super.updateEvent(event);
     }
@@ -684,6 +808,18 @@ the following methods to the `EventLocalServiceImpl` class:
         
         return eventPersistence.countByGroupId(groupId);
     }	
+
+<!--
+Mention importing the following, to help clarify from where
+the reader should import these classes ...
+
+com.nosester.portlet.eventlisting.model.Event
+com.liferay.portal.kernel.exception.SystemException
+java.util.Date
+java.util.List
+
+- Jim
+-->
 
 In order to add an Event to the database, we need an ID for the Event. Liferay
 provides a counter service which we call to obtain a unique Id for adding a new
@@ -926,8 +1062,8 @@ following methods to your `EventServiceImpl` class:
         event.setEventId(eventId);
         
         Date now = new Date();
-        event.setCreateDate(now.getTime());
-        event.setModifiedDate(now.getTime());
+        event.setCreateDate(now);
+        event.setModifiedDate(now);
         
         return eventLocalService.addEvent(event);
     }
@@ -935,7 +1071,7 @@ following methods to your `EventServiceImpl` class:
     public Event update(Event event) throws SystemException {
         
         Date now = new Date();
-        event.setModifiedDate(now.getTime());
+        event.setModifiedDate(now);
         
         return eventLocalService.updateEvent(event);
     }	
@@ -993,6 +1129,11 @@ custom services can be registered with Liferay. This allows them to be called by
                 deleteEvent: true
         }
     )
+
+<!--
+Must we create service.js on our own first? I'm not seeing it after building
+services from IDE (with Eclipse Juno). -Jim 
+-->
 
 Liferay uses Apache Axis to make SOAP web services available. Axis requires a
 Web Service Deployment Descriptior (WSDD) to be generated in order to make the
