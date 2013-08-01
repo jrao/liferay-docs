@@ -1,4 +1,4 @@
-# Service Builder 
+# Generating Your Service Layer 
 
 Service Builder is a model-driven code generation tool built by Liferay that
 allows developers to define custom object models called entities. Service
@@ -23,7 +23,7 @@ accessible from anywhere over the Internet or your local network. Service
 Builder automatically generates the code necessary to allow access to the remote
 services using SOAP, JSON, and Java RMI.
 
-## Benefits of Using Service Builder
+<!-- ## Benefits of Using Service Builder -->
 
 Service Builder solves an important portal problem. In a standalone web
 application, the database access code can be bundled with the rest of the
@@ -95,17 +95,22 @@ events. For our example, we'll create a new Liferay portlet project for managing
 and listing events. We'll define two entities called *events* and *locations*,
 representing events that can be scheduled and locations at which the events can
 take place. Since events take place at specific locations, an event entity
-should be able to take a location entity as an attribute. If you'd like to
-examine the finished example project, you can view the code on Github
-[https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/portlets/event-listing-portlet](https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/portlets/event-listing-portlet)
-or download the `.war` file from
-[https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/dist/event-listing-portlet-6.2.0.1.war](https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/dist/event-listing-portlet-6.2.0.1.war).
-But we'll guide you through creating the project, its portlets, and its entities
+should be able to take a location entity as an attribute.
+
+If you'd like to examine the finished example project, it is a part of our
+*Dev Guide SDK* which you can download from our Developer's Guide page at
+[http://www.liferay.com/documentation/liferay-portal/6.1/development](http://www.liferay.com/documentation/liferay-portal/6.1/development).
+The `event-listing-portlet` folder found in `devGuide-sdk/portlets/` holds the
+example Event Listing portlet project. If you'd rather simply deploy the project
+to your server, you can download its `.war` file from
+[https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/dist/event-listing-portlet-6.2.0.1.war](https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/dist/event-listing-portlet-6.2.0.1.war)
+and place it in your portal's `deploy` folder for hot-deployment. But we'll
+guide you through creating the project, its portlets, and its entities
 step-by-step using Liferay IDE/Developer Studio. 
 
 ---
 
- ![Tip](../../images/tip-pen-paper.png)**Note:** If you're actually looking for
+ ![Tip](../../images/tip-pen-paper.png) **Note:** If you're actually looking for
  a portlet application that can manage events, please consider using Liferay's
  Calendar portlet. The example described in this section is only intended to
  demonstrate how to use Service Builder. The Calendar portlet provides many more
@@ -121,16 +126,20 @@ portlets in our event-listing-portlet project: an Event Listing portlet and a
 Location Listing portlet. These portlets will allow users to add, edit, or
 remove events or locations, display lists of events or locations, search for
 particular events or locations, and view the details of individual events or
-locations. We'll start by creating the Event Listing portlet in a new portlet
-plugin project. 
+locations. See the Event Listing Portlet below displaying a sample Nose-ster
+event.
 
-To follow this example, create a new Liferay portlet project in your Liferay
-Plugins SDK using Liferay IDE or Developer Studio. Go to *File* &rarr; *New
-Liferay Project* and a wizard will appear. We'll use this wizard to create both
-the event-listing-portlet project and the Event Listing portlet. After we finish
-with the first wizard, we'll use a second wizard to create a second portlet in
-this project, the Location Listing portlet. Here's some key information
-to specify for the event-listing-portlet project in the first wizard:
+![Figure 4.1: The Event Listing Portlet let's you add and modify events for Nose-ster. The portlet relies on event and location services and data constructed by Liferay Service Builder.](../../images/service-builder-events-view-1.png)
+
+We'll start by creating the Event Listing portlet in a new portlet plugin
+project. To follow this example, create a new Liferay portlet project in your
+Liferay Plugins SDK using Liferay IDE or Developer Studio. Go to *File* &rarr;
+*New Liferay Project* and a wizard will appear. We'll use this wizard to create
+both the event-listing-portlet project and the Event Listing portlet. After we
+finish with the first wizard, we'll use a second wizard to create a second
+portlet in this project, the Location Listing portlet. Here's some key
+information to specify for the event-listing-portlet project in the first
+wizard:
 
 - Project name: *event-listing-portlet*
 - Display name: *Event Listing*
@@ -242,7 +251,7 @@ See sample-service-builder-portlet. - Jim
 Let's start creating our service by using Liferay IDE to create a `service.xml`
 file. 
 
-### Step 1: Create the `service.xml` file
+### Step 1: Create the `service.xml` File
 
 To define a service for your portlet project, you must create a `service.xml`
 file. The DTD (Document Type Declaration) file
@@ -267,7 +276,7 @@ steps in creating our service.
 
 Let's start filling out the global information for our service next. 
 
-### Step 2: Define global service information
+### Step 2: Define Global Service Information
 
 A service's global information applies to all of its entities. So, let's specify
 this information first. Select the *Service Builder* node in the upper left
@@ -317,7 +326,7 @@ name to all of the generated Java classes and interface. Save your `service.xml`
 file to preserve the information you added. Next, we'll add entities for our
 service's events and locations. 
 
-### Step 3: Define service entities
+### Step 3: Define Service Entities
 
 Entities are the heart and soul of a service. Entities represent the models
 created, modified, and persisted for the service. For our example, we'll create
@@ -344,7 +353,7 @@ right of the table. Enter *Event* for your entity's name and select both the
 `Location`, and select the *Local Service* and the *Remote Service* options
 for it too. 
 
-![Figure 4.1: Adding service entities is easy with Liferay IDE's *Overview* mode of `service.xml`](../../images/service-add-entity.png)
+![Figure 4.2: Adding service entities is easy with Liferay IDE's *Overview* mode of `service.xml`](../../images/service-add-entity.png)
 
 An entity's name is used in naming the database table for persisting instances
 of it. The actual name of the database table is prefixed with the namespace; so
@@ -381,7 +390,7 @@ entities, we'll set both local service and remote service to `true`.
 Now that we've created our Event and Location entities, let's describe their
 attributes using entity columns. 
 
-### Step 4: Define the columns (attributes) for each service entity
+### Step 4: Define the Columns (Attributes) for Each Service Entity
 
 Each entity is described by its columns, which represent attributes. For our
 example, we'll add attributes for both our Event and Location entities. To add
@@ -467,7 +476,7 @@ Great! Our entities are set with the columns that not only represent their
 attributes, but also support multi-tenancy, and entity auditing. Next, we'll
 specify the relationship between our Event entity and Location entity. 
 
-### Step 5: Define relationships between service entities
+### Step 5: Define Relationships Between Service Entities
 
 Often you'll want to reference one type of entity in the context of another
 entity. That is, you'll want to *relate* the entities. We'll show you how to do
@@ -485,7 +494,7 @@ cursor. Click the Location entity to complete drawing the relationship. Liferay
 IDE turns the dashed line into a solid line, with an arrow pointing to the
 Location entity. Save the `service.xml` file. 
 
-![Figure 4.2: Relating entities is a snap in Liferay IDE's *Diagram* mode for `service.xml`.](../../images/service-builder-relate-entities.png)
+![Figure 4.3: Relating entities is a snap in Liferay IDE's *Diagram* mode for `service.xml`.](../../images/service-builder-relate-entities.png)
 
 Switch to *Source* mode in `service.xml` and note that Liferay IDE created a
 column element for a location ID in the Event entity:
@@ -495,7 +504,7 @@ column element for a location ID in the Event entity:
 Now that our entity columns are in place, let's specify a default order for the
 entity instances retrieved from the database. 
 
-### Step 6: Define ordering of service entity instances
+### Step 6: Define Ordering of Service Entity Instances
 
 Often, you'll want to list multiple instances of a given entity. And you may
 want to list them in a particular order. Liferay lets you specify a default
@@ -519,7 +528,7 @@ ordering, follow similar steps but specify *name* as the column and *asc* as the
 The last thing do for our service entities is define the finder methods for
 retrieving them from the database. 
 
-### Step 7: Define service entity finder methods
+### Step 7: Define Service Entity Finder Methods
 
 Finder methods retrieve entity objects from the database based on specified
 parameters. You'll probably want to create at least one finder method for each
@@ -560,8 +569,10 @@ Event and Location entities:
 Terrific! You've created the service and its event and location entities for the
 event listing portlet.
 
-We've posted the source code for the service to
-[https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/portlets/event-listing-portlet/docroot/WEB-INF/service.xml](https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/portlets/event-listing-portlet/docroot/WEB-INF/service.xml).
+We've made the source code for the service, and the Event Listing portlet,
+available in the *Dev Guide SDK* which you can download from our Developer's
+Guide page at
+[http://www.liferay.com/documentation/liferay-portal/6.1/development](http://www.liferay.com/documentation/liferay-portal/6.1/development).
 But we've also listed it here for your convenience. Note, we've added some
 comments to highlight the service's various elements. But your `service.xml`
 should look similar to this one: 
@@ -643,11 +654,15 @@ should look similar to this one:
         </entity>
     </service-builder>
 
+<!-- Should we include the entity element's uuid attribute? The
+sample-service-builder-portlet-master project includes it. - Jim
+-->
+
 Now that you've specified the service for the event listing portlet, let's build
 the service by running Service Builder. Then we'll take a closer look at the
 code it generates.
 
-## Generating the Services
+## Generating Services
 
 To build a service using our `service.xml`, you can either use *Liferay IDE* or
 *Liferay Developer Studio* or use a terminal window.
@@ -665,7 +680,7 @@ you'll be wondering where all the generated files are for your service. For
 information about WSDDs (web service deployment descriptors), please refer to
 the section on remote Liferay services later in this chapter. 
 
-![Figure 4.3: The *Overview* mode in the editor provides a nested outline which you can expand, a form for editing basic Service Builder attributes, and buttons for building services or building web service deployment descriptors.](../../images/service-xml-overview.png)
+![Figure 4.4: The *Overview* mode in the editor provides a nested outline which you can expand, a form for editing basic Service Builder attributes, and buttons for building services or building web service deployment descriptors.](../../images/service-xml-overview.png)
 
 After running Service Builder, your Plugins SDK prints messages listing the
 generated files and a message stating `BUILD SUCCESSFUL`. We'll discuss these
@@ -726,12 +741,12 @@ generated for Locations are similar.
       portlet classes, use `EventLocalServiceUtil` or `EventServiceUtil`
       instead. `@generated`
 
-    ![Figure 4.4: Service Builder generates these persistence classes and interfaces. You shouldn't (and won't need to) customize any of these classes or interfaces.](../../images/service-builder-persistence-diagram.uml.png)
+    ![Figure 4.5: Service Builder generates these persistence classes and interfaces. You shouldn't (and won't need to) customize any of these classes or interfaces.](../../images/service-builder-persistence-diagram.uml.png)
 
 -   Local Service (only generated for an entity if an entity's `local-service`
     attribute is set to `true` in `service.xml`)
     - `EventLocalService`: Event local service interface. `@generated`
-    - **`EventLocalServiceImpl`**: Event local service implementation. This is
+    - `EventLocalServiceImpl` (**LOCAL SERVICE IMPLEMENTATION**): Event local service implementation (**LOCAL SERVICE IMPLEMENTATION**). This is
       the only class within the local service that you should modify manually.
       You can add custom business logic here. For any custom methods added here,
       Service Builder adds corresponding methods to the `EventLocalService`
@@ -748,12 +763,12 @@ generated for Locations are similar.
       developers to customize the local Event services. Customizing services
       should be done via a hook plugin. `@generated` 
 
-    ![Figure 4.5: Service Builder generates these service classes and interfaces. Only EventLocalServiceImpl allows custom methods to be added to the service layer.](../../images/service-builder-service-diagram.uml.png)
+    ![Figure 4.6: Service Builder generates these service classes and interfaces. Only EventLocalServiceImpl allows custom methods to be added to the service layer.](../../images/service-builder-service-diagram.uml.png)
 
 -   Remote Service (only generated for an entity if an entity's `remote-service`
     attribute is set to `true` in `service.xml`)
     - `EventService`: Event remote service interface. `@generated`
-    - **`EventServiceImpl`**: Event remote service implementation. This is the
+    - `EventServiceImpl` (**REMOTE SERVICE IMPLEMENTATION**): Event remote service implementation. This is the
       only class within the remote service that you should modify manually.
       Here, you can write code that adds additional security checks and invokes
       the local services. For any custom methods added here, Service Builder
@@ -780,7 +795,7 @@ generated for Locations are similar.
       all application logic should be added to `EventImpl`. `@generated`
     - `EventModelImpl`: Event base model implementation. `@generated`
     - `Event`: Event model interface which extends `EventModel`. `@generated`
-    - **`EventImpl`**: Event model implementation. You can use this class to add
+    - `EventImpl`:  (**MODEL IMPLEMENTATION**)Event model implementation. You can use this class to add
       helper methods and application logic to your model. If you don't add any
       helper methods or application logic, only the auto-generated field getters
       and setters will be available. Whenever you add custom methods to this
@@ -788,7 +803,7 @@ generated for Locations are similar.
       the next time you run it.
     - `EventWrapper`: Event wrapper, wraps `Event`. `@generated`
 
-    ![Figure 4.6: Service Builder generates these model classes and interfaces. Only `EventImpl` allows custom methods to be added to the service layer.](../../images/service-builder-model-diagram.uml.png)
+    ![Figure 4.7: Service Builder generates these model classes and interfaces. Only `EventImpl` allows custom methods to be added to the service layer.](../../images/service-builder-model-diagram.uml.png)
 
 Each file that Service Builder generates is assembled from an associated
 Freemarker template. You can find Service Builder's Freemarker templates in the
@@ -804,7 +819,9 @@ next time you run Service Builder. Next, let's add some local service methods to
 `EventLocalServiceImpl` and learn how to call them. After that, we'll add
 some remote service methods to `EventServiceImpl` and learn how to invoke them.
 
-## Writing the Local Service Class 
+## Implementing and Invoking Local Services 
+
+### Writing the Local Service Class 
 
 The heart of your service is its `-LocalServiceImpl` class. Within it, you put
 core business logic for working with your model. Throughout this chapter, we've
@@ -916,8 +933,9 @@ Event. Then we could use the method's parameters to populate the new Event's
 name, description, and a location ID fields and return the Event.
 (`eventPersistence` is one of the Spring beans injected into
 `EventLocalServiceBaseImpl` by Service Builder.) To see this implementation of`
-addEvent`, please examine the complete `EventListingServiceImpl` class
-on [Github](https://github.com/liferay/liferay-docs/tree/master/devGuide/code/devGuide-sdk/portlets/event-listing-portlet/docroot/WEB-INF/src/com/nosester/portlet/eventlisting/service/impl/EventLocalServiceImpl.java).
+addEvent`, please examine the complete `EventListingServiceImpl` class included
+in the *Dev Guide SDK* which you can download from our Developer's Guide page at
+[http://www.liferay.com/documentation/liferay-portal/6.1/development](http://www.liferay.com/documentation/liferay-portal/6.1/development).
 
 Before you can use any custom methods that you added to `EventLocalServiceImpl`
 class, you must add its signature to the `EventLocalService` interface by
@@ -944,7 +962,7 @@ of the Java classes, Service Builder also generates a `service.properties` file
 which we'll examine later in this chapter. Next, let's call our newly
 implemented local service. 
 
-## Calling Local Liferay Services
+### Calling Local Liferay Services
 
 Once Service Builder has generated our portlet project's services, we can call
 them in our project's `-Portlet` classes. We can call any methods of
@@ -1065,7 +1083,7 @@ CRUD methods including the following:
 The methods listed in the following figure are all generated by Service Builder
 and are available to be called by our Event Listing portlet class.
 
-![Figure 4.7: Our Event Listing portlet class can access these methods of `EventLocalServiceUtil`, many of which enable CRUD operations.](../../images/local-service-util-outline.png)
+![Figure 4.8: Our Event Listing portlet class can access these methods of `EventLocalServiceUtil`, many of which enable CRUD operations.](../../images/local-service-util-outline.png)
 
 Portlet classes should only have access to the `-LocalServiceUtil` classes.
 `-LocalServiceUtil` classes, in turn, call their injected `-LocalServiceImpl` classes.
@@ -1076,9 +1094,9 @@ via dependency injection. So all the methods of `EventLocalServiceUtil`
 internally call corresponding methods of `EventLocalServiceImpl` at runtime to
 perform CRUD operations.
 
-<!-- Consider removing this or moving it. - Jim
+<!-- Consider removing or moving the section below. - Jim
 
-## Invoking the API Locally 
+### Invoking the API Locally 
 
 Each service provides a local interface to clients running in the same JVM as
 Liferay Portal. There are two ways to invoke a service API's methods: 
@@ -1118,11 +1136,11 @@ remote variant of the API, even from a local context.
 <!-- I don't believe the above tip is true anymore. If the -ServiceUtil class
 uses the filterFindBy implementation, permission checks are performed. -Rich --> 
 
-<!--
-Next, find out how you can invoke Liferay's service APIs remotely.
--->
+Next, let's find out how you can invoke Liferay's service APIs remotely. 
 
-## Writing the Remote Service Class
+## Implementing and Invoking Remote Services 
+
+### Writing the Remote Service Class 
 
 Many default Liferay services are available as web services. Liferay exposes its
 web services via SOAP and JSON web services. If you're running Liferay locally
@@ -1219,7 +1237,7 @@ makes your service's Web Services Definition Language (WSDL) available after
 you've built its WSDD and deployed your portlet project. Let's learn how to call
 our remote services next. 
 
-## Calling Remote Liferay Services
+### Calling Remote Liferay Services 
 
 After you've built your portlet project's WSDDs and deployed the project as a
 plugin, its services are available on the portal server. If you've been
@@ -1255,7 +1273,7 @@ API page. You can invoke JSON web services directly from your browser. For
 example, bring up a test form for your Event entity's *delete-event* operation
 and click on its link. 
 
-![Figure 4.8: You'll see a page displaying the name of the service method, its required parameters, its return type, possible exceptions it can throw, and a form for entering its parameters.](../../images/invoking-sb-generated-json-ws.png)
+![Figure 4.9: You'll see a page displaying the name of the service method, its required parameters, its return type, possible exceptions it can throw, and a form for entering its parameters.](../../images/invoking-sb-generated-json-ws.png)
 
 The only parameter required for the `delete-event` operation is a event ID.
 Since we haven't covered creating the UI for adding our Event entities, you
@@ -1272,50 +1290,93 @@ methods of calling the SOAP and JSON web services via JavaScript, curl, and
 URLs. Next, we'll consider how to implement custom SQL queries in your portlet,
 so you can easily leverage information from multiple entity types. 
 
-## Custom SQL Queries
+## Developing Custom SQL Queries 
 
-Service Builder allows searching for entities via custom SQL queries. For
-example, consider our Nose-ster Event Listing portlet project. Suppose we'd like
-to add a search form to allow searching for events based on the event's name,
-description, and location name. Since the location name is not in the
-`Event_Event` table (although the locationId is), we can't implement this kind
-of search using the event entity's finder methods. We need to perform a joined
-searched across both the `Event_Event` and the `Event_Location` tables. To
-accomplish this, we can implement a custom SQL query using the following steps:
+Service Builder's finder methods facilitates searching for entities by their
+attributes--their column values. You simply add the column as a parameter for
+the finder in your `service.xml` file, run Service Builder, and it generates the
+finder method in your persistence layer and adds methods to your service layer
+that invoke the finder. But what if you'd like to do more complicated searches
+that incorporate columns from multiple entities? 
 
-1. Create a folder called `custom-sql` in our project's `docroot/WEB-INF/src`
-   folder and create a file called `default.xml` in this new folder.
+For example, consider the Nose-ster Event Listing portlet we've been developing
+in this chapter. Suppose we want to find an event based on its name,
+description, and location *name*. If you recall, our event entity refers to it's
+location by the location's ID, not its name. That is, the event entity table,
+`Event_Event`, refer's to an event's location by its long integer ID in the
+table's `locationId` column. But we need to access the *name* of the event's
+location. Of course with SQL we can join the event and location tables for our
+search to include the location name. But how do we incorporate custom SQL into
+our portlet? And how do we invoke the SQL from our service? We'll specify the
+SQL as *Liferay custom SQL* and invoke it in our service via a *custom finder
+method*.
 
-2. Write the SQL query to be used by our custom finder and add it to
-   `default.xml`.
+Liferay custom SQL is a Service Builder-supported method for performing complex
+and custom queries against the database. Invoking custom SQL from a finder
+method in your persistence layer is straightforward. And Service Builder helps
+you generate the interfaces to your finder method. We'll show you just how easy
+it is following these steps: 
 
-3. Create a custom finder class called `EventFinderImpl` extending
-   `BasePersistenceImpl`, run Service Builder to generate the required
-   `EventFinder` interface and then make `EventFinderImpl` implement
-   `EventFinder`.
+1. Specify your custom SQL. 
 
-4. Create a custom finder method in `EventFinderImpl` and run Service Builder
-   again to generate a corresponding method in `EventFinderUtil`.
+2. Implement your finder method. 
 
-5. Since business logic should only be implemented in service classes and not in
-   portlet classes or JSPs, add a finder method to `EventLocalServiceImpl` that
-   calls the one created in `EventFinderImpl` and propagated by Service Builder
-   to `EventFinderUtil`.
-   
-6. Run Service Builder a third time to make the custom finder method available
-   to `EventLocalServiceUtil`. Portlet classes and JSPs can call
-   `EventLocalServiceUtil`'s custom finder method to perform the custom SQL
-   query.
+3. Access your finder method from your service. 
 
-In order to use a custom SQL query in our portlet, our first step is to add the
-query in the appropriate location in our project. Let's create this file in our
-project in the appropriate location: create a folder called `custom-sql` in our
-project's `docroot/WEB-INF/src` folder and create the `default.xml` file in this
-folder.  Now let's add our custom SQL to this file:
+Let's follow these steps to create and invoke custom SQL in our Event Listing
+portlet. 
+
+### Step 1: Specify Your Custom SQL
+
+After you've tested your SQL, you must specify it in a place in a particular
+file for Liferay to access it. Liferay's `CustomSQLUtil` class looks up custom
+SQL from a file called `default.xml` in your portlet project's
+`docroot/WEB-INF/src/custom-sql/` folder. You must create the `custom-sql`
+folder and create the `default.xml` file in that `custom-sql` folder. 
+
+Here's the custom SQL we'll use to return an event location's name along with
+the event's name and event's description, for our Event Listing portlet: 
+
+    SELECT
+        COUNT(*) AS COUNT_VALUE
+    FROM
+        Inventory_PurchaseOrder
+    WHERE
+        (Inventory_PurchaseOrder.partId = ?) AND
+        (Inventory_PurchaseOrder.closed = 0)
+
+The `default.xml` file must adhere to the following format: 
+
+    <custom-sql>
+        <sql id="[fully-qualified class name + method]">
+        SQL query wrapped in <![CDATA[...]]>
+        No terminating semi-colon
+    </sql>
+    </custom-sql>
+
+You can add a `custom-sql` element for every custom SQL query you'd like for
+your portlet, as long as each query has a unique ID. The convention we recommend
+using for the ID value is the fully-qualified class name of the finder followed
+by a dot (`.`) and the name of the finder method. We'll go into more detail on
+the finder class and finder methods in Step 2.  
+
+For our example, we'll use the following ID value for our query. Note that we
+used a backslash `\` character in order to fit the ID value on this page.   
+
+    com.nosester.portlet.eventlisting.service.persistence.\
+    EventFinder.findByEventNameEventDescriptionLocationName
+
+Custom SQL must be wrapped in character data (`CDATA`) for the your `sql`
+element. Importantly, the SQL must *not* be terminated with a semi-colon. 
+
+Following these rules, let's specify the custom SQL for our Event Listing
+portlet by replacing the contents of the `default.xml` file with the following
+code: 
 
     <?xml version="1.0" encoding="UTF-8"?>
     <custom-sql>
-        <sql id="com.nosester.portlet.eventlisting.service.persistence.EventFinder.findByEventNameEventDescriptionLocationName">
+        <sql id="com.nosester.portlet.eventlisting.service.persistence.EventFinder.\
+    findByEventNameEventDescriptionLocationName">
             SELECT Event_Event.*
             FROM Event_Event
             INNER JOIN 
@@ -1327,18 +1388,26 @@ folder.  Now let's add our custom SQL to this file:
         </sql>
     </custom-sql>
 
-Notice that the SQL query we define in `default.xml` has a unique id. It's
-possible to define multiple SQL queries in `default.xml` so long as each one has
-a unique id. Liferay has a class called `CustomSQLUtil` with methods that
-retrieve SQL queries by id.
+Make sure to delete the backslash `\` character from the end of the ID so that
+the finder method name `findByEventNameEventDescriptionLocationName` immediately
+follows `com.nosester.portlet.eventlisting.service.persistence.`. 
+  
+Now that we've specified our custom SQL, let's implement the finder method named
+after the ID we just specified for our `sql` element. 
 
-Next, we need to create a custom finder class. This class should be created in
-the `com.nosester.portlet.eventlisting` package of our project's
-`docroot/WEB-INF/src` folder. This package was created by Service Builder. The
-class we create should extend
-`com.liferay.portal.service.persistence.impl.BasePersistenceImpl<Event>`. For
-our example, we'll create a class called `EventFinderImpl` in this folder with
-the following contents:
+### Step 2: Implement Your Finder Method
+
+Let's implement a Java method, our *finder method*, to invoke our custom SQL
+query. Since our finder method will invoke our query on the database, we'll
+implement the method in our service's persistence layer. And we'll rely on
+Service Builder to generate the interface for it. Let's get started implementing
+the finder method for the custom SQL we created in Step 1. 
+
+We'll create a `-FinderImpl` class in the service persistence package of our
+portlet. Create a class called `EventFinderImpl` in our portlet's
+`com.nosester.portlet.eventlisting.service.persistence.impl` package. 
+Then, make the class extend `BasePersistenceImpl<Event>`. Your class should now
+have the following contents: 
 
     package com.nosester.portlet.eventlisting.service.persistence;
 
@@ -1349,26 +1418,30 @@ the following contents:
 
     }
 
-Once you've created this class, run Service Builder again. Service Builder
-generates `EventFinder` interface and the `EventFinderUtil` class for us in our
-project's `docroot/WEB-INF/service` folder. After running Service Builder again,
-make your `EventFinderImpl` class implement the generated `EventFinder`
-interface:
+Run Service Builder to generate the `-Finder` interface and the `-Util` class
+for our finder. Service Builder generates the `EventFinder` interface and the
+`EventFinderUtil` based on our `EventFinderImpl` class. Modify your
+`EventFinderImpl` class to have it implement the `EventFinder` interface you
+just generated: 
 
-    public class EventFinderImpl extends BasePersistenceImpl<Event> implements EventFinder {
+    public class EventFinderImpl extends BasePersistenceImpl<Event>
+        implements EventFinder {
 
     }
 
-Make sure not to forget this step! Now we can create our custom query method in
-our `EventFinderImpl` class:
+Now we can create our finder method in our `EventFinderImpl` class. Add
+the following finder method and static field to the `EventFinderImpl` class:
 
-    public List<Event> findByEventNameEventDescriptionLocationName(String eventName, String eventDescription, String locationName, int begin, int end) {
+    public List<Event> findByEventNameEventDescriptionLocationName(
+        String eventName, String eventDescription, String locationName, int begin,
+        int end) {
                 
         Session session = null;
         try {
             session = openSession();
 
-            String sql = CustomSQLUtil.get(FIND_BY_EVENTNAME_EVENTDESCRIPTON_LOCATIONNAME);
+            String sql = CustomSQLUtil.get(
+                FIND_BY_EVENTNAME_EVENTDESCRIPTON_LOCATIONNAME);
             
             SQLQuery q = session.createSQLQuery(sql);
             q.setCacheable(false);
@@ -1393,55 +1466,109 @@ our `EventFinderImpl` class:
         return null;
     }	
 
-    public static final String FIND_BY_EVENTNAME_EVENTDESCRIPTON_LOCATIONNAME = EventFinder.class.getName() + ".findByEventNameEventDescriptionLocationName";
+    public static final String FIND_BY_EVENTNAME_EVENTDESCRIPTON_LOCATIONNAME =
+        EventFinder.class.getName() +
+            ".findByEventNameEventDescriptionLocationName";
 
-In this custom finder method, we open a new Hibernate session and use Liferay's
+The custom finder method opens a new Hibernate session and use Liferay's
 `CustomSQLUtil`'s `get(String id)` method to get the custom SQL to use for the
-database query. The `FIND_BY_EVENTNAME_EVENTDESCRIPTON_LOCATIONNAME` string
-contains the id of our custom SQL query. We define the
-`FIND_BY_EVENTNAME_EVENTDESCRIPTON_LOCATIONNAME` string based on the name of the
-`EventFinder` class and the name of the finder method.
+database query. The `FIND_BY_EVENTNAME_EVENTDESCRIPTON_LOCATIONNAME` static
+field contains the ID of the custom SQL query. We define the
+`FIND_BY_EVENTNAME_EVENTDESCRIPTON_LOCATIONNAME` string based on the
+fully-qualified class name of the our `-Finder` interface (`EventFinder`) and
+the name of our finder method (`findByEventNameEventDescriptionLocationName`). 
 
-So far, we have created a `EventFinderImpl` class and generated a
-`EventFinderUtil` class. However, our Event Listing portlet class cannot use the
-`EventFinderUtil` class directly; only a local (`EventLocalServiceImpl`) or
-remote (`EventServiceImpl`) service class can. This encourages a proper
-separation of concerns: since only the service classes should contain a
-portlet's business logic, finders should not be directly accessed by portlet
-classes. A portlet should be able to call the finders only indirectly through
-the Util classes which wrap the \*ServiceImpl classes. Add the following method
-to `EventLocalServiceImpl`:
+Our custom SQL is in place and our finder method is implemented. Next, we'll
+access our finder method from our service.  
 
-    public List<Event> findByEventNameEventDescriptionLocationName(String eventName, String eventDescription, String locationName, 
-        int begin, int end) throws SystemException {
+### Step 3: Access Your Finder Method from Your Service
+
+So far, we have created a `-FinderImpl` class and generated a `-FinderUtil`
+class. However, our portlet class should not use the `-FinderUtil` class
+directly; only a local or remote service implementation should invoke the
+`-FinderUtil` class. This encourages a proper separation of concerns: the
+portlet classes invoke business logic of the services and the services in turn
+access the data model using the persistence layer's finder classes. So we'll add
+a method in our `-LocalServiceImpl` class that invokes the finder method
+implementation via the `-FinderUtil` class. Then we'll provide our portlet and
+JSPs access to this service method by rebuilding the service. 
+
+Add the following method to the `EventLocalServiceImpl` class of our Event
+Listing portlet: 
+
+    public List<Event> findByEventNameEventDescriptionLocationName(String eventName,
+        String eventDescription, String locationName, int begin, int end)
+    throws SystemException {
 		
-    return EventFinderUtil.findByEventNameEventDescriptionLocationName(eventName, eventDescription, locationName, begin, end);
+        return EventFinderUtil.findByEventNameEventDescriptionLocationName(
+            eventName, eventDescription, locationName, begin, end);
     }	
 
 Run Service Builder after adding this method to generate the interface and make
-this finder method available in `EventLocalServiceUtil`. Now we can indirectly
-call this finder method from our portlet class or from a JSP by calling
-`EventLocalServiceUtil.findByEventNameEventDescriptionLocationName(...)`.
+this finder method available in the `EventLocalServiceUtil` class. 
 
-## Overview of `portlet-model-hints.xml`
+Now we can indirectly call the finder method from our portlet class or from a
+JSP in our portlet by calling
+`EventLocalServiceUtil.findByEventNameEventDescriptionLocationName(...)`. It's
+just that easy! 
 
-Service Builder generates a number of XML configuration files in your project's
+<!-- Note, the view JSP currently does not call
+EventLocalServiceUtil.findByEventNameEventDescriptionLocationName(...). We may
+want to include this in the solution. - Jim --> 
+
+Congratulations on following the 3 step process in developing a custom SQL query
+and custom finder for your portlet! Next, we'll show you how to give Liferay
+portal instructions, or *hints*, on how to present your entity models in your
+portlet's view. 
+
+## Using Model Hints 
+
+Now that you've created your model entities and implemented your business logic
+to create and modify those entities, I'm sure you have some ideas on how to help
+users input valid model entity data. For example, considering the Nose-ster
+project we've been working on throughout this chapter, you want users to create
+social events for the future, not for the past. And you probably want to limit
+the location's postal code to an appropriate number of characters (e.g., five
+digits, optionally followed by a dash and four more digits). Wouldn't it be
+great to specify these fundamental limitations from a single place in your
+portal project? Good news! Service Builder lets you specify this information as
+*model hints* in a single file called `portlet-model-hints.xml` found in your
+project's `docroot/WEB-INF/src/META-INF` folder. Liferay calls them *model
+hints* because they suggest how the entities should be presented to the users
+and the size of the database columns that should be used to store the entities. 
+
+<!-- Commenting this out for now. It's good information to know, but I found it
+distracting in the first paragraph and thought it was more important to focus on
+introducing model hints. Perhaps this can be moved somewhere else in this
+section or the chapter. - Jim
+
+Service Builder generates a
+number of XML configuration files in your project's
 `docroot/WEB-INF/src/META-INF` folder. Service Builder uses most of these files
 to manage Spring and Hibernate configurations. Don't modify the Spring or
 Hibernate configuration files; your changes will be overwritten the next time
-Service Builder runs. However, there's one configuration file that you can
-safely edit which allows you to customize details of your Service Builder
-generated models: `portlet-model-hints.xml`. This file allows you to configure
-how model fields are displayed using the `aui` taglib. It also allows you to
-adjust the size of the columns of database tables. Liferay has its own model
-hints XML configuration file called `portal-model-hints.xml` which you can find
-in Liferay's `portal-impl/classes/META-INF` folder. Liferay's model hints
-configuration file contains many hint examples so you can refer to it for
-reference when customizing your `portlet-model-hints.xml`.
+Service Builder runs. However, you can safely edit the
+`portlet-model-hints.xml` file. 
+-->
 
+Model hints let you to configure how model fields are displayed by the AlloyUI
+taglib called `aui`. As Liferay Portal displays forms in your portlet for users
+to input values for model entities, portal first checks the model hints you
+specified to customize your form's input fields appropriately. For example, if
+you want to limit users to selecting dates in the future, you'd set a
+`year-range-past` hint to `false` for your that field your
+`portlet-model-hints.xml` file:
+
+    <field name="date" type="Date">
+        <hint name="year-range-past">false</hint>
+    </field>
+
+Let's take a look at the model hints file that Service Builder generated for
+your Event Listing portlet example we've been working on in this chapter.
 Examine your project's `docroot/WEB-INF/src/META-INF/portlet-model-hints.xml`
-file. If you're following the Event Listing portlet example, Service Builder
-should have created the file with the following contents:
+file. If you've been following along in the previous sections, Service Builder
+should have created the `portlet-model-hints.xml` file with the following
+contents:
 
     <?xml version="1.0"?>
 
@@ -1474,30 +1601,38 @@ should have created the file with the following contents:
         </model>
     </model-hints>
 
-Your `portlet-model-hints.xml` file has a root-level model-hints tag that
-contains model tags. Each model tag must have a name attribute specifying the
-full package name of the model class. Each model tag must also contain a field
-name for attribute of the model specifying the field name and type as
-attributes. To add hints to a field, add a hint tag inside of a field tag,
-specify the hint's name as an attribute and the value of the hint within in the
-hint tag. For example, the display-width hint allows you to specify the width of
-a model's field as it appears on an AUI form. The default is 350. To specify a
-display-width of 50 pixels for the Event model's name field, replace the `<field
-name="name" type="String" />` line with the following:
+<!-- Should the above model elements include the uuid String field? - Jim -->
+
+The a root-level element is `model-hints`. Within it are all of your model
+entities represented by `model` elements. Each `model` element must have a
+`name` attribute specifying the full package name of its model class. Each model
+has `field` elements that represent their model entity's columns. And lastly
+each `field` element must have a name and a type. The names and types of each
+`field` element correspond to the names and types specified for each entity's
+columns in your project's `serivce.xml` file. Service Builder generated all of
+these elements for you, based on your `service.xml` file. 
+
+To add hints to a field, add a `hint` tag inside of its `field` tag. For
+example, you can add a `display-width hint` to specify the pixel width that
+should be used in displaying the field. The default pixel width for a field is
+350. To display our Event model's `name` field with a 50 pixels, we'll nest a
+`hint` element named `display-width` in it and give it a value of `50` for 50
+pixels. To make this change, replace the `<field name="name" type="String" />`
+line with the following `field` element:
 
     <field name="name" type="String">
         <hint name="display-width">50</hint>
     </field>
 
-In order to see the effect of the display-width hint on the Event model's name
+In order to see the effect of the `display-width` hint on the Event model's name
 field, you have to run Service Builder again and redeploy your portlet project.
-Changing the display-width doesn't actually limit the number of characters that
-can be entered into the name field; it's just a way to control the width of the
-AUI input form field. To configure the maximum size of a model field's database
-column (i.e., the maximum number of characters that can be saved in the field),
-use the max-length hint. The default max-length is 75. If you'd like to allow
-Event names of up to 100 characters to be saved, add another hint element inside
-of your name field element:
+Changing the `display-width` doesn't actually limit the number of characters
+that can be entered into the `name` field; it's just a way to control the width
+of the field in the AlloyUI input form. To configure the maximum size of a model
+field's database column (i.e., the maximum number of characters that can be
+saved for the field), use the `max-length` hint. The default `max-length` value
+is 75 characters. If you'd like to allow Event names of up to 100 characters to
+be saved, add another hint element inside of your `name` field element:
 
     <field name="name" type="String">
         <hint name="display-width">50</hint>
@@ -1505,37 +1640,60 @@ of your name field element:
     </field>
 
 Remember to run Service Builder and redeploy your portlet project after updating
-`portlet-model-hints.xml`. To test your max length setting, add a new event with
-a name consisting of between 75 and 100 characters. The following table
-describes some commonly used model hints.
+your `portlet-model-hints.xml` file. To test your max length setting, add a new
+event with a name consisting of between 75 to 100 characters. See what happens. 
+
+So, we've mentioned a few different hints. It's about time we listed the portlet
+hints available to you. The following table describes the portlet model hints.
 
 **Model Hint Values and Descriptions**
 
-Name | Value Type | Description | Default
-:--: | :--------: | :---------: | :-----:
-auto-escape | boolean | sets whether text values should be escaped via HtmlUtil.escape | true
-day-nullable | boolean | allows the day to be null in a date field | false
-default-value | String | sets the default value for a field | (empty String)
-display-height | integer | sets the display height of the form field rendered using the aui taglib | 15
-display-width | integer | sets the display width of the form field rendered using the aui taglib | 350
-max-length | integer | sets the maximum column size for SQL file generation | 75
-month-nullable | boolean | allows the month to be null in a date field | false
-upper-case | boolean | converts all characters to upper case | false
-year-nullable | boolean | allows the year to be null in a date field | false
-year-range-delta | integer | specifies the number of years to display from today's date in a date field rendered with the aui taglib | 5
+Name                | Value Type | Description | Default
+------------------: | :--------: | ----------: | :-----:
+`auto-escape`       | boolean | sets whether text values should be escaped via `HtmlUtil.escape` | true
+`autoSize`          | boolean | displays the field in a for scrollable text area | false
+`day-nullable`      | boolean | allows the day to be null in a date field | false
+`default-value`     | String  | sets the default value for a field | (empty String)
+`display-height`    | integer | sets the display height of the form field rendered using the aui taglib | 15
+`display-width`     | integer | sets the display width of the form field rendered using the aui taglib | 350
+`editor`            | boolean | sets whether to provide an editor for the input | false
+`max-length`        | integer | sets the maximum column size for SQL file generation | 75
+`month-nullable`    | boolean | allows the month to be null in a date field | false
+`secret`            | boolean | sets whether hide the characters input by the user | false | false
+`show-time`         | boolean | sets whether to show inlcude time along with the date | true
+`upper-case`        | boolean | converts all characters to upper case | false
+`year-nullable`     | boolean | allows the year to be null in a date field | false
+`year-range-delta`  | integer | specifies the number of years to display from today's date in a date field rendered with the aui taglib | 5
+`year-range-future` | boolean | sets whether to include future dates | true
+`year-range-past`   | boolean | sets whether to include past dates | true
 
-You can use the default-hints element to define a list of hints to be applied to
+<!--
+I wanted to get a complete list of model hints used in portal. I found the
+ModelHints interface and then searched for where (*.java, *.js, *.jsp) it was
+referenced. It led me to portal-web/docroot/html/taglib/ui/input_field/page.jsp.
+I found some more hints and added them to the table above.
+
+I'm not sure what the `check-tab` hint does. Would be worth asking the UI team.
+
+- Jim -->
+
+Liferay Portal has its own model hints XML configuration file called
+`portal-model-hints.xml` which you can find in Liferay's
+`portal-impl/classes/META-INF` folder. Liferay's model hints configuration file
+contains many hint examples so you can refer to it for reference when
+customizing your `portlet-model-hints.xml`. 
+
+You can use the `default-hints` element to define a list of hints to be applied to
 every field of a model. For example, adding the following element inside of a
-model element applies a display-width of 300 to each element of the model:
+model element applies a `display-width` of 300 to each element of the model:
 
     <default-hints>
         <hint name="display-width">300</hint>
     </default-hints>
 
-You can define hint-collection elements inside of the model-hints element to
-define a list of hints that can applied together. A hint collection must be
-specified with a name. Model fields can apply a hint collection by referring to
-the hint collection's name. For example, Liferay's `portal-model-hints.xml`
+You can define `hint-collection` elements inside of the `model-hints` root-level
+element to define a list of hints that can applied together. A hint collection
+must be specified with a name. For example, Liferay's `portal-model-hints.xml`
 defines the following hint collections:
 
     <hint-collection name="CLOB">
@@ -1556,32 +1714,65 @@ defines the following hint collections:
         <hint name="show-time">false</hint>
     </hint-collection>
 
-If you define the same SEARCHABLE-DATE collection as above, you can apply it to
-your Event model's date field by using a hint-collection element:
+You can apply a hint collection to a model field by referring to the hint
+collection's name. For example, if you define a the `SEARCHABLE-DATE`
+collection, as written above, in your `model-hints` element, you can apply it to
+your Event model's date field by using a `hint-collection` element that
+references the collection by it's name:
 
     <field name="date" type="Date">
         <hint-collection name="SEARCHABLE-DATE" />
     </field>
 
-Remember to run Service Builder and redeploy your project after updating your
-`portlet-model-hints.xml` file.
+As always, remember to run Service Builder and redeploy your project after
+updating your `portlet-model-hints.xml` file.
 
-## Overview of `service.properties`
+For our Event Listing portlet solution, we set an editor to be used for our
+description and made sure the user could not select a year from the past, by
+using the following hints:
 
-Service Builder generates the properties file `service.properties` in the `src`
-directory of your service. Liferay Portal uses the properties in this file to
-alter your service's database schema and load Spring configuration files to
-support deployment of your service. You should not modify this file, but rather
-make any necessary overrides in a `service-ext.properties` file in the `src`
-folder.
+	<field name="description" type="String">
+		<hint name="editor">true</hint>
+	</field>
+
+	<field name="date" type="Date">
+		<hint name="year-range-past">false</hint>
+	</field>
+
+The following figure shows the portlet displaying these input fields using the
+limitations we specified.
+	
+![Figure 4.10: With model hints, you can do customize your input fields to use an editor or prevent the user from selecting a year from the past.](../../images/service-builder-edit-event.png)
+
+Well you've learned the art of persuasion through Liferay's model hints. Now
+you can not only influence how your model's input fields are displayed but you
+can also set their database table column sizes. And you have your choice of how
+to apply hints. You can insert indivicual hints directly into your fields, you
+can apply a set of default hints to all of a model's fields, and you can define
+collections of hints to apply at either of those scopes. Looks like you've
+picked up on the "hints" of how your portlets can benefit from Liferay's model
+hints! 
+
+<!--
+## Leveraging Dynamic Query 
+-->
+
+## Overview of `service.properties` 
+
+Service Builder generates the properties file `service.properties` in your
+project's `docroot/WEB-INF/src` folder. Liferay Portal uses the properties in
+this file to alter your service's database schema and load Spring configuration
+files to support deployment of your service. You should not modify this file,
+but rather make any necessary overrides in a `service-ext.properties` file in
+that same folder.
 
 The only property that you may need to override from this file is
 `build.auto.upgrade`. Setting `build.auto.upgrade=false` in your
-`service-ext.properties` prevents Liferay from trying to automatically apply any
-changes to the database model when a new version of the plugin is deployed. This
-is needed in projects in which it is preferred to manually manage the changes to
-the database or in which the SQL schema has been modified manually after
-generation by Service Builder.
+`service-ext.properties` file prevents Liferay from trying to automatically
+apply any changes to the database model when a new version of the plugin is
+deployed. This is needed in projects in which it is preferred to manually manage
+the changes to the database or in which the SQL schema has intentionally been
+modified manually after generation by Service Builder.
 
 Other properties included in the `service.properties` file include the
 following:
@@ -1594,7 +1785,7 @@ following:
   increments this number.
 - `build.date`: This is the time of the latest build of your plugin.
 - `spring.configs`: This is a comma-delimited list of Spring configurations. If
-  you'd like to alter this list or the any of the values in
+  you'd like to alter this list or any of the values in
   `service.properties`, don't edit `service.properties` directly. Instead,
   create a `service-ext.properties`. The values for the properties that you
   define there will override the ones in `service.properties`.
@@ -1607,23 +1798,37 @@ In addition to the services you create using Service Builder, your portlets may
 also access a variety of services built into Liferay. These include the
 following:
 
-- `UserService`
+- `UserService` - for accessing, adding, authenticating, deleting, and updating
+  users. 
+- `OrganizationService` - for accessing, adding, deleting, and updating
+  organizations. 
+- `GroupService` - for accessing, adding, deleting, and updating groups.
+- `CompanyService` - for accessing, adding, checking, and updating companies.
+- `ImageService` - for accessing images.
+- `LayoutService` - for accessing, adding, deleting, exporting, importing, and
+  updating layouts. 
+- `PermissionService` - for checking permissions.
+- `UserGroupService` - for accessing, adding, deleting, and updating user
+  groups. 
+- `RoleService` - for accessing, adding, unassigning, checking, deleting, and
+  updating roles. 
 
-- `OrganizationService`
+For more information on these services, see the Liferay Portal CE Javadocs at
+[http://docs.liferay.com/portal/6.1/javadocs/](http://docs.liferay.com/portal/6.1/javadocs/)
+or the Liferay Portal EE Javadocs included in the Liferay Portal EE
+Documentation `.zip` file that you can download from the Customer Portal on
+[http://www.liferay.com](http://www.liferay.com). 
 
-- `GroupService`
+<!--
+Missing summary ...
 
-- `CompanyService`
+## Summary
 
-- `ImageService`
+(Summarize what's been covered in the chapter.)
+-->
 
-- `LayoutService`
-
-- `PermissionService`
-
-- `UserGroupService`
-
-- `RoleService`
-
-For more information on these services, see Liferay's Javadocs at
-[http://docs.liferay.com/portal/6.1/javadocs/](http://docs.liferay.com/portal/6.1/javadocs/).
+In this chapter, we've only scratched the surface of remote services. In the
+next chapter, we'll show you how to find other services and invoke them. We'll
+take an in-depth look at Liferay's service security layer. And last but not
+least we'll dive deep into SOAP web services and JSON web services. So hold on
+tight, you're about to get served a big helping of Liferay services. 

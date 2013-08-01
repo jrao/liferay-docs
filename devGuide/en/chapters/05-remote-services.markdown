@@ -1,13 +1,19 @@
-# Remote Services
+# Accessing Services Remotely 
+
+You've created your portlet and built some terrific services. You're happy to
+brag to your colleagues about the awesome things your portlet does. And you've
+started to prick their interest; they want to call your portlet's services. You
+wonder whether this will be difficult and you start asking yourself questions.
+How do publish my services? How do my clients find my services? How can
+consumers call my services efficiently? No worries. We'll answer all of these
+questions on accessing remote services. 
+
+Here are the topics we'll cover in this chapter:
 
 - Finding Services 
-
 - Invoking the API Remotely 
-
 - Service Security Layers 
-
 - SOAP Web Services 
-
 - JSON Web Services 
 
 ## Finding Services 
@@ -24,7 +30,7 @@ Liferay's Javadocs are easy to browse and well-organized. Here's how you find
 the *Organization* services: 
 
 1. In your browser, open up the Javadocs:
-[http://docs.liferay.com/portal/6.1/javadocs/](http://docs.liferay.com/portal/6.1/javadocs/) 
+   [http://docs.liferay.com/portal/6.1/javadocs/](http://docs.liferay.com/portal/6.1/javadocs/) 
 
 2. Under *Portal Services*, click the link for the `com.liferay.portal.service`
    package, since the services for the Organization entity belong to the
@@ -32,7 +38,7 @@ the *Organization* services:
 
 3. Find and click on the `-ServiceUtil` class (in this case,
    `OrganizationLocalServiceUtil`) in the *Class Summary* table or the
-*Classes* list at the bottom of the page. 
+   *Classes* list at the bottom of the page. 
 
 That was easy! What if you want to find portlet services? 
 
@@ -47,15 +53,15 @@ naming convention `com.liferay.portlet.[portlet-name].service`, where
 Here's how you find services for a user's blogs statistics:
 
 1. In your browser, open the Javadocs:
-[http://docs.liferay.com/portal/6.1/javadocs/](http://docs.liferay.com/portal/6.1/javadocs/)
+   [http://docs.liferay.com/portal/6.1/javadocs/](http://docs.liferay.com/portal/6.1/javadocs/)
 
 2. Under *Portlet Services*, click the link for the
-`com.liferay.portlet.blogs.service` package in the *Packages* frame, since the
-services are a part of the *blogs portlet*. 
+   `com.liferay.portlet.blogs.service` package in the *Packages* frame, since the
+   services are a part of the *blogs portlet*. 
 
 3. Find and click on the `-ServiceUtil` class (in this case
-`BlogsStatsUserLocalServiceUtil`) in the *Class Summary* table or the *Classes*
-list. 
+   `BlogsStatsUserLocalServiceUtil`) in the *Class Summary* table or the
+   *Classes* list. 
 
 Now you're ready to invoke Liferay services.
 
@@ -161,9 +167,11 @@ recommended to use HTTPS whenever accessing these services in an untrusted
 network. Most HTTP clients let you specify the Basic authentication credentials
 in the URL--this is very handy for testing.
 
-You'd use the following syntax to call the AXIS web service using credentials:
+You'd use the following syntax to call the AXIS web service using credentials.
+Be sure to remove the line escape character `\` when entering your URL:
 
-    http://" + userIdAsString + ":" + password + "@[server.com]:[port]/api/secure/axis/" + serviceName
+    http://" + userIdAsString + ":" + password + "@[server.com]:[port]/api/\
+    secure/axis/" + serviceName
 
 The user ID is the user's ID from the Liferay database. This may be obtained by
 logging in as the user and navigating to the *My Account* page of the control
@@ -208,8 +216,7 @@ To summarize, accessing Liferay remotely requires you to pass two layers of
 security checks:
 
 - *First layer*: The IP address must be pre-configured in the server's portal
-properties. 
-
+  properties. 
 - *Second layer*: The user needs permission to access the related resources. 
 
 Next let's talk about Liferay's SOAP web services. 
@@ -252,10 +259,9 @@ You can see a list of the services deployed on your portal by opening your
 browser to a URL following one of these formats: 
 
 - For your secure services (i.e., serevices requiring authentication) use
-`http://[host]:[port]/api/secure/axis`. 
-
+  `http://[host]:[port]/api/secure/axis`. 
 - For your sevices that don't require authentication, use
-`http://[host]:[port]/api/axis`. 
+  `http://[host]:[port]/api/axis`. 
 
 Here's the list of *secure* web services for `UserGroup`: 
 
@@ -272,10 +278,9 @@ Here's the list of *secure* web services for `UserGroup`:
 
 ---
 
-![note](../../images/tip-pen-paper.png) **Note:** Liferay's developers use a tool
-called *Service Builder* to expose their services via SOAP automatically. If
-you're interested in using Service Builder, check out the *Service Builder*
-chapter in this guide. 
+![note](../../images/tip-pen-paper.png) **Note:** Liferay's developers use a
+tool called *Service Builder* to expose their services via SOAP automatically.
+If you're interested in using Service Builder, read Chapter 4. 
 
 ---
 
@@ -290,8 +295,6 @@ Here's the WSDL Excerpt for the `addUserGroup` operation of `UserGroup`:
         <wsdl:input message="impl:addUserGroupRequest" name="addUserGroupRequest"/>
         <wsdl:outputMessage="impl:addUserGroupResponse" name="assUserGroupResponse"/>
     </wsdl:operation>
-
-<!--Jim, I removed the screenshot of this XML and just typed it out. Is it okay?-->
 
 To use the service, you pass in the WSDL URL along with your login credentials
 to the SOAP service locator for your service. We'll show you an example in the
@@ -308,8 +311,8 @@ plan to consume in your client code. For our purposes, the client we're building
 needs a Web Service Client for the portal's `Company`, `User`, and `UserGroup`
 services. 
 
-To add your Web Service Clients in Eclipse IDE, click *New* &rarr; *Other...*, then
-expand the *Web Services* category. Click *Web Service Client*.
+To add your Web Service Clients in Eclipse IDE, click *New* &rarr; *Other...*,
+then expand the *Web Services* category. Click *Web Service Client*.
 
 For each client you create, you're prompted to enter the service definition
 (WSDL) for the desired service. Here's an example WSDL: 
@@ -317,10 +320,6 @@ For each client you create, you're prompted to enter the service definition
     http://localhost:8080/api/axis/Portal_UserService?wsdl
 
 ![Figure 5.3: Service Definition](../../images/api-web-svc-wsdl.png)
-
-<!-- Again, too many screenshots. -Rich -->
-<!--Jim I removed three screenshots that were too close otgether to respond to
-Rich's comments and added some detail to the text. -->
 
 With the WSDL specified, Eclipse automatically adds the auxiliary files and
 libraries required to consume that web service.  Nifty!
@@ -456,7 +455,8 @@ Running this client should produce output like the following example:
 
     userId for user named test is 10196
     User groups for user 10196 ...
-    java.rmi.RemoteException: No UserGroup exists with the key {companyId=10154, name=MyUserGroup}
+    java.rmi.RemoteException: No UserGroup exists with the key {companyId=10154,
+    name=MyUserGroup}
     Added user group named
     Added user to user group named MyUserGroup
     User groups for user 10196 ...
@@ -475,15 +475,13 @@ okay. Don't worry, be happy!
 Here are a few things to note about the URL: 
 
 - It's a *secure* (authenticated) URL for the service. Authentication is done
-using HTTP Basic Authentication, which isn't appropriate for a production
-environment, since the password is unencrypted. It's simply used for convenience
-in this example. 
-
+  using HTTP Basic Authentication, which isn't appropriate for a production
+  environment, since the password is unencrypted. It's simply used for convenience
+  in this example. 
 - The screen name and password are passed in as credentials. 
-
 - The name of the service (e.g. `Portal_UserGroupService`) is specified at the
-end of the URL. Remember that the service name can be found in the web service
-listing. 
+  end of the URL. Remember that the service name can be found in the web service
+  listing. 
 
 The operations `getCompanyByVirtualHost()`, `getUserIdByScreenName()`,
 `getUserUserGroups()`, `addUserGroup()` and `addUserGroupUsers()` are specified
@@ -555,16 +553,13 @@ both from JavaScript within the portal and from any JSON-speaking client.
 We'll cover the following topics as we explore JSON Web Service functionality:
 
 - Registration
-
 - Configuration
-
 - Invocation 
-
 - Results
 
 Let's talk about registering JSON Web Services next. 
 
-### Registering JSON Web Services
+### Registering JSON Web Services 
 
 Liferay's developers use a tool called *Service Builder* to build services. When
 you build services with Service Builder, all remote-enabled services (i.e.,
@@ -600,8 +595,8 @@ As an example, let's register the `DLAppService`:
 The `@JSONWebService` annotation is found on portal startup. You'll see the
 following lines in the console output when the debug log level is set:
 
-    10:55:06,595 DEBUG [JSONWebServiceConfigurator:121] Configure JSON web service actions
-    10:55:06,938 DEBUG [JSONWebServiceConfigurator:136] Configuring 820 actions in ... ms
+    DEBUG [JSONWebServiceConfigurator:121] Configure JSON web service actions
+    DEBUG [JSONWebServiceConfigurator:136] Configuring 820 actions in ... ms
 
 Scanning and registration is complete and all service methods (those of
 `DLAppService` and of other services) are registered as JSON Web Services. 
@@ -636,44 +631,60 @@ Services that use the `@JSONWebService` annotation become part of the JSON API.
 Scanning of portlet services isn't enabled by default; the following servlet
 definition must be added in your portlet's `web.xml`: 
 
-        <web-app>
-            ...
-            <filter>
-                <filter-name>Secure JSON Web Service Servlet Filter</filter-name>
-                <filter-class>com.liferay.portal.kernel.servlet.PortalClassLoaderFilter</filter-class>
-                <init-param>
-                    <param-name>filter-class</param-name>
-                    <param-value>com.liferay.portal.servlet.filters.secure.SecureFilter</param-value>
-                </init-param>
-                <init-param>
-                    <param-name>basic_auth</param-name>
-                    <param-value>true</param-value>
-                </init-param>
-                <init-param>
-                    <param-name>portal_property_prefix</param-name>
-                    <param-value>jsonws.servlet.</param-value>
-                </init-param>
-            </filter>
-            <filter-mapping>
-                <filter-name>Secure JSON Web Service Servlet Filter</filter-name>
-                <url-pattern>/api/jsonws/*</url-pattern>
-            </filter-mapping>
+    <web-app>
+        ...
+        <filter>
+            <filter-name>
+            Secure JSON Web Service Servlet Filter
+            </filter-name>
+            <filter-class>
+            com.liferay.portal.kernel.servlet.PortalClassLoaderFilter
+            </filter-class>
+            <init-param>
+                <param-name>
+                filter-class
+                </param-name>
+                <param-value>
+                com.liferay.portal.servlet.filters.secure.SecureFilter
+                </param-value>
+            </init-param>
+            <init-param>
+                <param-name>basic_auth</param-name>
+                <param-value>true</param-value>
+            </init-param>
+            <init-param>
+                <param-name>portal_property_prefix</param-name>
+                <param-value>jsonws.servlet.</param-value>
+            </init-param>
+        </filter>
+        <filter-mapping>
+            <filter-name>Secure JSON Web Service Servlet Filter</filter-name>
+            <url-pattern>/api/jsonws/*</url-pattern>
+        </filter-mapping>
 
-            <servlet>
-                <servlet-name>JSON Web Service Servlet</servlet-name>
-                <servlet-class>com.liferay.portal.kernel.servlet.PortalClassLoaderServlet</servlet-class>
-                <init-param>
-                    <param-name>servlet-class</param-name>
-                    <param-value>com.liferay.portal.jsonwebservice.JSONWebServiceServlet</param-value>
-                </init-param>
-                <load-on-startup>0</load-on-startup>
-            </servlet>
-            <servlet-mapping>
-                <servlet-name>JSON Web Service Servlet</servlet-name>
-                <url-pattern>/api/jsonws/*</url-pattern>
-            </servlet-mapping>
-            ...
-        </web-app>
+        <servlet>
+            <servlet-name>
+            JSON Web Service Servlet
+            </servlet-name>
+            <servlet-class>
+            com.liferay.portal.kernel.servlet.PortalClassLoaderServlet
+            </servlet-class>
+            <init-param>
+                <param-name>
+                servlet-class
+                </param-name>
+                <param-value>
+                com.liferay.portal.jsonwebservice.JSONWebServiceServlet
+                </param-value>
+            </init-param>
+            <load-on-startup>0</load-on-startup>
+        </servlet>
+        <servlet-mapping>
+            <servlet-name>JSON Web Service Servlet</servlet-name>
+            <url-pattern>/api/jsonws/*</url-pattern>
+        </servlet-mapping>
+        ...
+    </web-app>
 
 Now the servlet can scan and register your portlet's JSON Web Services. 
 
@@ -689,7 +700,7 @@ declaration in web.xml), then we should explain why it's necessary. -->
 
 Let's see how to form a mapped URL of the service next. 
 
-#### Mapping and naming conventions 
+#### Mapping and Naming Conventions 
 
 You can form a mapped URL of an exposed service using the following naming
 convention: 
@@ -706,24 +717,23 @@ to the service? -->
 Let's look at the last two bracketed items more closely: 
 
 - `service-class-name` is generated from the service's class name by removing
-the `Service` or `ServiceImpl` suffix and making it lower case. 
-
+  the `Service` or `ServiceImpl` suffix and making it lower case. 
 - `service-method-name` is generated from the service's method name by
-converting its camel case to lower case and using dashes (`-`) to separate
-words. 
+  converting its camel case to lower case and using dashes (`-`) to separate
+  words. 
 
 Let's demonstrate by mapping a service method's URL using the above naming
 conventions: 
 
-- First, here's the service method we want to map: 
+-   First, here's the service method we want to map: 
 
-    @JSONWebService
-    public interface UserService {
-        public com.liferay.portal.model.User getUserById(long userId) {...}
+        @JSONWebService
+        public interface UserService {
+            public com.liferay.portal.model.User getUserById(long userId) {...}
 
-- Here's what the service method's URL looks like: 
+-   Here's what the service method's URL looks like: 
 
-    http://localhost:8080/api/jsonws/user-service/get-user-by-id
+        http://localhost:8080/api/jsonws/user-service/get-user-by-id
 
 Each service method is bound to one HTTP method type. Any method name starting
 with `get`, `is` or `has` are assumed to be read-only methods and are mapped as
@@ -733,19 +743,23 @@ methods.
 There are two ways to access a plugin's JSON Web Services. We'll call them,
 ingeniously, *Option 1* and *Option 2*. 
 
-- *Option 1*: Access the plugin service via the plugin context (e.g. your custom
-portlet's context):
+-   *Option 1*: Access the plugin service via the plugin context (e.g. your
+    custom portlet's context). Be sure to remove the line escape character `\`
+    for your URL:
 
-        http://[server]:[port]/[plugin-context]/api/jsonws/[service-class-name]/[service-method-name]
+        http://[server]:[port]/[plugin-context]/api/jsonws/[service-class-name]/\
+        [service-method-name]
 
     This calls the plugin's service in a separate web application that is not
     aware of the user's current session in the portal. As a result, accessing
     the service in this manner requires additional authentication. You might use
     this for batch services or other requests that don't require context. 
 
-- *Option 2*: Accessing the plugin service via the portal context:
+-   *Option 2*: Accessing the plugin service via the portal context. Be sure to
+    remove the line escape character `\` in your URL:
 
-        http://[server]:[port]/[portal-context]/api/jsonws/[plugin-context].[service-class-name]/[service-method-name]
+        http://[server]:[port]/[portal-context]/api/jsonws/[plugin-context].\
+        [service-class-name]/[service-method-name]
 
     Conveniently, requests sent this way can leverage the user's authentication
     in his current portal session. Liferay's JavaScript API for services calls
@@ -753,7 +767,7 @@ portlet's context):
 
 NExt we'll learn to available JSON Web Services. 
 
-#### Listing available JSON Web Services 
+#### Listing Available JSON Web Services 
 
 To see which service methods are registered and available for use, open your
 browser to the following address: 
@@ -782,7 +796,7 @@ level.
 
 Let's find out how to ignore a specific method. 
 
-#### Ignoring a method 
+#### Ignoring a Method 
 
 To keep a method from being exposed as a service, annotate the method with the
 following option:
@@ -793,7 +807,7 @@ Methods with this annotation don't become part of the JSON Web Service API.
 
 Let's learn to define custom HTTP method names and URL names. 
 
-#### HTTP method name and URL 
+#### HTTP Method Name and URL 
 
 At the method level, you can define custom HTTP method names and URL names. Just
 use an annotation like this one: 
@@ -829,7 +843,7 @@ Service Builder chapter. We're also missing a transition here. -Rich -->
 Next we'll show you a different approach to exposing your methods as we discuss
 manual registration. 
 
-#### Manual registration mode 
+#### Manual Registration Mode 
 
 Up to now, it is assumed that you want to expose most of your service methods,
 while hiding some specific methods (the *blacklist* approach).
@@ -865,7 +879,7 @@ disable them, specify this portal property setting:
 
 Now let's look at strict HTTP methods. 
 
-#### Strict HTTP methods 
+#### Strict HTTP Methods 
 
 All JSON Web Services are mapped to either GET or POST HTTP methods. If a
 service method name starts with `get`, `is` or `has`, the service is assumed to
@@ -884,10 +898,7 @@ methods.
 When strict HTTP mode is enabled, you still might have need to disable HTTP
 methods. We'll show you how next. 
 
-<!--This needed a transition, and I got tired of saying, "next let's...". Check
-for acuracy. -Russ-->
-
-#### Disabling HTTP methods 
+#### Disabling HTTP Methods 
 
 When strict HTTP method mode is enabled, you can filter web service access based
 on HTTP methods used by the services. For example, you can set the portal JSON
@@ -900,7 +911,7 @@ Now all requests that use HTTP methods from the list above are ignored.
 
 Next we'll show you how to restrict public access to exposed JSON APIs. 
 
-#### Controlling public access 
+#### Controlling Public Access 
 
 Each service method knows if it can be executed by unauthenticated users and
 if a user has adequate permission for the chosen action. Most of the portal's
@@ -939,7 +950,7 @@ Exceptions abound in life, and there's an exception to the rule that *all*
 parameters are required--when using numeric *hints* to match methods. Let's look
 at using hints next. 
 
-#### Using hints 
+#### Using Hints 
 
 Adding numeric hints lets you specify how many method arguments a service has.
 If you don't specify an argument for a parameter, it's automatically
@@ -962,14 +973,18 @@ In this example, `param2` will automatically be set to `null`.
 
 Find out how to pass parameters as part of the URL path next. 
 
-#### Passing parameters as part of URL path 
+#### Passing Parameters as Part of a URL Path 
 
 You can pass parameters as part of the URL path. After the service URL, just
 specify method parameters in name-value pairs. Parameter names must be formed
 from method argument names by converting them from camelCase to names using all
 lower case and separated-by-dash. Here's an example: 
 
-    http://localhost:8080/api/secure/jsonws/dlapp/get-file-entries/repository-id/10172/folder-id/0
+    http://localhost:8080/api/secure/jsonws/dlapp/get-file-entries/repository-id/\
+    10172/folder-id/0
+
+Note, we've inserted line escape character `\` in order to fit the example URL
+on this page. 
 
 You can pass parameters in any order; it's not necessary to follow the order in
 which the arguments specified in the method signatures. 
@@ -980,12 +995,16 @@ you.
 
 You can also pass parameters in a URL query, and we'll show you how next. 
 
-#### Passing parameters as URL query 
+#### Passing Parameters as a URL Query 
 
 You can pass in parameters as request parameters. Parameter names are specified
 as is (e.g. camelCase) and are set equal to their argument values, like this: 
 
-    http://localhost:8080/api/secure/jsonws/dlapp/get-file-entries?repositoryId=10172&folderId=0
+    http://localhost:8080/api/secure/jsonws/dlapp/get-file-entries?repositoryId=\
+    10172&folderId=0
+
+Note, we've inserted line escape character `\` in order to fit the example URL
+on this page.
 
 As with passing parameters as part of a URL path, the parameter order is not
 important, and the *best match* rule applies for overloaded methods. 
@@ -1015,26 +1034,25 @@ object. The conversion of these is done in two steps, ingeniously referred to
 below as *Step 1* and *Step 2*:
 
 - *Step 1--JSON deserialization*: JSON arrays are converted into `List<String>`
-and JSON objects are converted to `Map<String, String>`. For security reasons,
-it is forbidden to instantiate any type within JSON deserialization. 
-
+  and JSON objects are converted to `Map<String, String>`. For security reasons,
+  it is forbidden to instantiate any type within JSON deserialization. 
 - *Step 2--Generification*: Each `String` element of the `List` and `Map` is
-converted to its target type (the argument's generic Java type specified in the
-method signature). This step is only executed if the Java argument type uses
-generics. 
+  converted to its target type (the argument's generic Java type specified in
+  the method signature). This step is only executed if the Java argument type
+  uses generics. 
 
 As an example, let's consider the conversion of `String` array `[en,fr]` as JSON
 web service parameters for a `List<Locale>` Java method argument type: 
 
 - *Step 1--JSON deserialization*: The JSON array is deserialized to a
-`List<String>` containing `String`s `en` and `fr`. 
+  `List<String>` containing `String`s `en` and `fr`. 
 
 - *Step 2--Generification*: Each `String` is converted to the `Locale` (the
-generic type), resulting in the `List<Locale>` Java argument type. 
+  generic type), resulting in the `List<Locale>` Java argument type. 
 
 Now let's see how to specify an argument as `null`. 
 
-#### Sending NULL values 
+#### Sending NULL Values 
 
 To pass a `null` value for an argument, prefix the parameter name with a dash.
 Here's an example: 
@@ -1081,11 +1099,14 @@ received, this value is first going to be translated to an array of 10 bytes
 
 Did you know you can send files as arguments? Find out how next. 
 
-#### Sending files as arguments 
+#### Sending Files as Arguments 
 
 Files can be uploaded using multipart forms and requests. Here's an example: 
 
-    <form action="http://localhost:8080/api/secure/jsonws/dlapp/add-file-entry" method="POST" enctype="multipart/form-data">
+    <form
+     action="http://localhost:8080/api/secure/jsonws/dlapp/add-file-entry"
+     method="POST"
+     enctype="multipart/form-data">
         <input type="hidden" name="repositoryId" value="10172"/>
         <input type="hidden" name="folderId" value="0"/>
         <input type="hidden" name="title" value="test.jpg"/>
@@ -1121,7 +1142,7 @@ Here's an example of invoking a JSON web service using JSON RPC:
 Let's talk about paramteters that are made available to secure JSON web
 services by default. 
 
-#### Default parameters 
+#### Default Parameters 
 
 When accessing *secure* JSON web services (i.e., the user has to be
 authenticated), some parameters are made available to the web services by
@@ -1137,7 +1158,7 @@ Here are the default parameters:
 
 Let's find out about object parameters next. 
 
-#### Object parameters 
+#### Object Parameters 
 
 Most services accept simple parameters like numbers and strings. However,
 sometimes you might need to provide an object (a non-simple type) as a service
@@ -1194,7 +1215,7 @@ Find out how next.
 
 When you pass in an object paramter, you'll often need to populate its inner
 parameters (i.e., fields). Consider a default parameter `serviceContext` of type
-`ServiceContext` (see the *Service Context* section in this chapter to find out
+`ServiceContext` (see the *ServiceContext* section in this chapter to find out
 more about this type). To make an appropriate call to JSONWS, you might need to
 set the `serviceContext` parameter's fields `addGroupPermissions` and
 `scopeGroupId`. 
@@ -1212,14 +1233,14 @@ and are ignored during matching.
 
 ---
 
-![tip](../../images/tip-pen-paper.png)**Tip:** Use inner parameters with object
+![tip](../../images/tip-pen-paper.png) **Tip:** Use inner parameters with object
 parameters to set inner content of created parameter instances! 
 
 ---
 
 Next let's see what values are returned when a JSON seb service is invoked. 
 
-### Returned values 
+### Returned Values 
 
 No matter how a JSON web service is invoked, it returns a JSON string that
 represents the service method result. Returned objects are *loosely* serialized
@@ -1229,21 +1250,26 @@ Let's look at some values returned from service calls. We'll create a
 `UserGroup` as we did in our SOAP web service client examples. To make it easy,
 we'll use the test form provided with the JSON web service in our browser. 
 
-1. Open your browser to the JSON web service method that adds a `UserGroup`: 
+1.  Open your browser to the JSON web service method that adds a `UserGroup`: 
 
-        http://127.0.0.1:8080/api/jsonws?signature=/usergroup/add-user-group-2-name-description
+        http://127.0.0.1:8080/api/jsonws?signature=/usergroup/add-user-group-2-\
+        name-description
+
+    Note, we've inserted line escape character `\` in order to fit the example
+    URL on this page.
 
     Alternatively, navigate to it by starting at
     `http://127.0.0.1:8080/api/jsonws` then scrolling down to the section for
     *UserGroup*; click *add-user-group*. 
 
-2. In the *name* field enter *UserGroup3* and set the description to an
-arbitrary value like *Created using JSON WS*.
+2.  In the *name* field enter *UserGroup3* and set the description to an
+    arbitrary value like *Created using JSON WS*.
 
-3. Click *Invoke* and you'll get a result similar to the following: 
+3.  Click *Invoke* and you'll get a result similar to the following: 
 
         {"addedByLDAPImport":false,"companyId":10154,"description":"Created
-        using JSON WS","name":"MyUserGroup33","parentUserGroupId":0,"userGroupId":13162}
+        using JSON WS","name":"MyUserGroup33","parentUserGroupId":0,
+        "userGroupId":13162}
 
 The returned `String` represents the `UserGroup` object you just created,
 serialized into a JSON string. To find out more about JSON strings, go to
@@ -1256,7 +1282,7 @@ by Igor Spasi&#263;.
 
 Let's check out some common JSON WebService errors. 
 
-### Common JSON WebService errors 
+### Common JSON Web Service Errors 
 
 While working with JSON Web Services, you may encounter errors. Let's look at
 the most common errors in the following subsections. 
@@ -1268,52 +1294,45 @@ for now. Which is preferred?  Are they long enough to warrant subsections? -->
 chapter. I removed some sections already. One way to fix some of the "missing
 transition" problems above would be to combine some of the sections. -Rich -->
 
-<!--I just added the transitions for now. -Russ -->
+-   Missing value for parameter 
+    
+    If you see this error, you didn't pass a parameter value along with the
+    parameter name in your URL path. The parameter value must follow the
+    parameter name, like in this example: 
 
-- Missing value for parameter 
-        If you see this error, you didn't pass a parameter value along with the
-        parameter name in your URL path. The parameter value must follow the
-        parameter name, like in this example: 
+        /api/jsonws/user/get-user-by-id/userId
 
-    /api/jsonws/user/get-user-by-id/userId
+    The path above specifies a parameter named `userId`, but doesn't specify
+    the parameter's value. You can resolve this error by providing the
+    parameter value after the parameter name: 
 
-        The path above specifies a parameter named `userId`, but doesn't specify
-        the parameter's value. You can resolve this error by providing the
-        parameter value after the parameter name: 
+        /api/jsonws/user/get-user-by-id/userId/173
 
-    /api/jsonws/user/get-user-by-id/userId/173
+-   No JSON web service action associated 
 
-- No JSON web service action associated 
-        This is error means no service method could be matched with the provided
-        data (method name and argument names). This can be due to various reasons:
-        arguments may be misspelled, the method name may be formatted incorrectly, etc.
-        Since JSON web services reflect the underlying Java API, any changes in the
-        respective Java API will automatically be propagated to the JSON web services.
-        For example, if a new argument is added to a method or an existing argument is
-        removed from a method, the parameter data must match that of the new method
-        signature.
+    This is error means no service method could be matched with the provided
+    data (method name and argument names). This can be due to various reasons:
+    arguments may be misspelled, the method name may be formatted incorrectly,
+    etc. Since JSON web services reflect the underlying Java API, any changes in
+    the respective Java API will automatically be propagated to the JSON web
+    services. For example, if a new argument is added to a method or an existing
+    argument is removed from a method, the parameter data must match that of the
+    new method signature.
 
-- Unmatched argument type 
-        This error appears when you try to instantiate a method argument using an
-        incompatible argument type.
+-   Unmatched argument type 
 
-- Judgment Day
-        We hope you never see this error. It means that Skynet has initiated a nuclear
-        war and most of humanity will be wiped out; survivors will need to battle
-        *Terminator* cyborgs. If you see this error and survive *Judgment Day*, we
-        recommend joining the resistance--they'll likely need good developers to
-        support the cause, especially those familiar with time travel. 
+    This error appears when you try to instantiate a method argument using an
+    incompatible argument type.
 
-        Had you going there, didn't we? 
+-   Judgment Day
 
-<!-- Too much?-->
+    We hope you never see this error. It means that Skynet has initiated a
+    nuclear war and most of humanity will be wiped out; survivors will need to
+    battle *Terminator* cyborgs. If you see this error and survive *Judgment
+    Day*, we recommend joining the resistance--they'll likely need good
+    developers to support the cause, especially those familiar with time travel. 
 
-<!-- I actually took all the other ones out except for this one. This turns it
-from a chapter-long thing into a random, unexpected insertion, which may be
-funnier (YMMV), and doesn't make Liferay out to be a part of an evil,
-computer-generated, apocalypse-causing, malevolent force. --> 
-
-<!--Wait, we aren't?-->
+    Had you going there, didn't we? 
 
 Next we'll show you how to optimize your use of JSON Web Services by using the
 *JSON Web Services Invoker*. 
@@ -1339,7 +1358,7 @@ that!
 Liferay's JSON Web Service Invoker helps you optimize your use of JSON Web
 Services. In the following sections, we'll show you how. 
 
-#### A simple Invoker call 
+#### A Simple Invoker Call 
 
 The Invoker is accessible from the following fixed address:
 
@@ -1387,11 +1406,10 @@ call returned a user object you can assign to a variable:
 The `$user` variable holds the returned user object. You can reference the
 user's contact ID using the syntax `$user.contactId`. 
 
-<!-- Missing transition. --> 
-NExt see how you can use nested service calls to join information from two
+Next see how you can use nested service calls to join information from two
 related objects. 
 
-#### Nesting service calls 
+#### Nesting Service Calls 
 
 With nested service calls, you can magically bind information from related
 objects together in a JSON object. You can call other services within the same
@@ -1416,33 +1434,28 @@ Let's see what the Invoker did in the background when we used a single HTTP
 request to make the above nested service call: 
 
 - First, the Invoker called the Java service mapped to `/user/get-user-by-id`,
-passing in a value for the `userId` parameter. 
-
+  passing in a value for the `userId` parameter. 
 - Next, the resulting user object was assigned to the variable `$user`. 
-
 - The nested service calls were invoked. 
-
 - The Invoker called the Java service mapped to `/contact/get-contact-by-id` by 
-using the `contactId` parameter, with the `$user.contactId` value from the object
-`$user`. 
-
+  using the `contactId` parameter, with the `$user.contactId` value from the
+  object `$user`. 
 - The resulting contact object was assigned to the variable `$contact`. 
-
 - Lastly, the Invoker injected the contact object referenced by `$contact` into
-the user object's property named `contact`. 
+  the user object's property named `contact`. 
 
 ---
 
-![note](../../images/tip-pen-paper.png) **Note:** You must *flag* parameters that
-take values from existing variables. To flag a parameter, insert the `@` prefix
-before the parameter name. 
+![note](../../images/tip-pen-paper.png) **Note:** You must *flag* parameters
+that take values from existing variables. To flag a parameter, insert the `@`
+prefix before the parameter name. 
 
 ---
 
 Next let's talk about filtering object properties so only those you
 need are returned when you invoke a service. 
 
-#### Filtering results 
+#### Filtering Results 
 
 Many of Liferay Portal's model objects are rich with properties. If you only
 need a handful of an object's properties for your business logic, making a web
@@ -1468,7 +1481,7 @@ white-list properties, you simply place the properties in square brackets (e.g.,
 
 Let's talk about batching calls next. 
 
-#### Batching calls 
+#### Batching Calls 
 
 When we nested service calls earlier, the intent was to invoke multiple services
 with a single HTTP request. Using a single request for multiple service calls is
@@ -1489,7 +1502,14 @@ commands are collectively invoked in a single HTTP request, one after another.
 By learning to leverage JSON Web Services in Liferay, you've added some powerful
 tools to your toolbox. Good job! 
 
-Next let's consider the `ServiceContext` class that's used by many Liferay
-services.
+## Summary
 
+In this chapter, we showed you how easy it is to find and invoke services. We
+also explained how Liferay's service security layers are used to protect your
+data. Then, we dove into SOAP web services and showed you how to invoke them.
+Lastly, we jumped into JSON web services to register them and invoke them in a
+myriad of ways. You see, here at Liferay, we aim to give you terrific service! 
+
+Next, we’ll take a look at some of the powerful frameworks of Liferay Portal,
+learn how they work and how you can leverage them. 
 
