@@ -62,31 +62,16 @@ public class LocationServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this interface directly. Always use {@link com.nosester.portlet.eventlisting.service.LocationServiceUtil} to access the location remote service.
-	*/
 	public static com.nosester.portlet.eventlisting.model.Location addLocation(
-		com.nosester.portlet.eventlisting.model.Location location)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().addLocation(location);
-	}
-
-	public static com.nosester.portlet.eventlisting.model.Location addLocation(
-		long locationId, java.lang.String name, java.lang.String description,
+		long groupId, java.lang.String name, java.lang.String description,
 		java.lang.String streetAddress, java.lang.String city,
 		java.lang.String stateOrProvince, java.lang.String country,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addLocation(locationId, name, description, streetAddress,
+				   .addLocation(groupId, name, description, streetAddress,
 			city, stateOrProvince, country, serviceContext);
-	}
-
-	public static com.nosester.portlet.eventlisting.model.Location delete(
-		com.nosester.portlet.eventlisting.model.Location location)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().delete(location);
 	}
 
 	public static com.nosester.portlet.eventlisting.model.Location deleteLocation(
@@ -96,17 +81,13 @@ public class LocationServiceUtil {
 		return getService().deleteLocation(locationId);
 	}
 
-	public static com.nosester.portlet.eventlisting.model.Location update(
-		com.nosester.portlet.eventlisting.model.Location location)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().update(location);
-	}
-
 	public static com.nosester.portlet.eventlisting.model.Location updateLocation(
 		long locationId, java.lang.String name, java.lang.String description,
 		java.lang.String streetAddress, java.lang.String city,
 		java.lang.String stateOrProvince, java.lang.String country,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateLocation(locationId, name, description,
 			streetAddress, city, stateOrProvince, country, serviceContext);

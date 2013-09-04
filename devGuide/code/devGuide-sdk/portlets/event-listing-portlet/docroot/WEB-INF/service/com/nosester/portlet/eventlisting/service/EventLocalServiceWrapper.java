@@ -265,12 +265,48 @@ public class EventLocalServiceWrapper implements EventLocalService,
 		return _eventLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public com.nosester.portlet.eventlisting.model.Event addEvent(
-		java.lang.String name, java.lang.String description,
-		java.util.Date date, long locationId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		return _eventLocalService.addEvent(name, description, date, locationId,
-			serviceContext);
+	public com.nosester.portlet.eventlisting.model.Event addEvent(long userId,
+		long groupId, java.lang.String name, java.lang.String description,
+		int month, int day, int year, int hour, int minute, long locationId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _eventLocalService.addEvent(userId, groupId, name, description,
+			month, day, year, hour, minute, locationId, serviceContext);
+	}
+
+	public void addEventResources(
+		com.nosester.portlet.eventlisting.model.Event event,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_eventLocalService.addEventResources(event, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public void addEventResources(
+		com.nosester.portlet.eventlisting.model.Event event,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_eventLocalService.addEventResources(event, groupPermissions,
+			guestPermissions);
+	}
+
+	public void addEventResources(long eventId, boolean addGroupPermissions,
+		boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_eventLocalService.addEventResources(eventId, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public void addEventResources(long eventId,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_eventLocalService.addEventResources(eventId, groupPermissions,
+			guestPermissions);
 	}
 
 	public java.util.List<com.nosester.portlet.eventlisting.model.Event> findByEventNameEventDescriptionLocationName(
@@ -299,11 +335,15 @@ public class EventLocalServiceWrapper implements EventLocalService,
 	}
 
 	public com.nosester.portlet.eventlisting.model.Event updateEvent(
-		long eventId, java.lang.String name, java.lang.String description,
-		java.util.Date date, long locationId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		return _eventLocalService.updateEvent(eventId, name, description, date,
-			locationId, serviceContext);
+		long userId, long eventId, java.lang.String name,
+		java.lang.String description, int month, int day, int year, int hour,
+		int minute, long locationId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _eventLocalService.updateEvent(userId, eventId, name,
+			description, month, day, year, hour, minute, locationId,
+			serviceContext);
 	}
 
 	/**
