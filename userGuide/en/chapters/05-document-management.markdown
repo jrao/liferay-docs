@@ -851,7 +851,7 @@ through traditional web-based interfaces.
 
 For desktop environments, a new folder structure is created and used for
 synchronizing files. Files found therein can be treated as any ordinary file.
-Credentials, sync frequency, and other folder options can be configured
+Credentials, sync frequency, and other options can be configured
 in-client. Native desktop notification events keep you abreast of what Sync is
 doing, and native menu and taskbar integration keep Sync controls within easy
 reach.
@@ -880,7 +880,8 @@ Office EE on Liferay Portal EE, then you can sync any and all sites.
 For Windows or Mac OS, visit the Liferay Sync product page [Liferay Sync Product
 Page](http://www.liferay.com/products/liferay-sync/features), and click *Get it
 Now* (on the right-side navigation menu) to download the client application for
-your desktop environment. For Windows, the client application installer should
+your desktop environment. There is also a Linux Beta version available. 
+For Windows, the client application installer should
 be named `liferay-sync-<version>-<date>.exe`. For Mac OS, it should be
 `liferay-sync-<version>-<date>.dmg`. Follow the on-screen instructions of the
 installer wizard to configure your client to connect to an existing Liferay 6.1
@@ -1013,28 +1014,24 @@ modify in your Sync folder are automatically detected and uploaded to your
 Liferay server. Also, changes from other users are downloaded to your Sync
 folder.
 
-Liferay Sync handles deletions via a special `liferay-sync.deletions` file. This
-mechanism prevents users from accidentally deleting shared files. When you
-delete files from your Sync folder, a `.liferay-sync.deletions` file is created
-there with the names of the files you deleted. This lets Liferay Sync know that
-you don't want these files in your Sync folder, so it won't download them the
-next time it syncs. Note that the files listed in your `.liferay-sync.deletions`
-file are only local deletions. You can remove entries from your
-`.liferay-sync.deletions` file to have Liferay Sync download them the next time
-it syncs. Of course, you can use Sync for more than just local deletions. If you
+If you delete a file your sync folder, it will only be deleted locally, it will
+not be deleted on the server.  This mechanism prevents users from accidentally 
+deleting shared files. So when you delete a file from you sync folder sync will 
+no longer download changes to this file the next time it syncs. If you want to go 
+back to syncing a file, simply restore it from you recycle bin or trash can.  Once 
+the file is restored back to the sync folder sync will being keeping that file in sync
+by uploading any of your changes and downloading any changes from the server. If you
 have the required permissions, you can delete files from the server.
 
 You can run through the following exercise to familiarize yourself with how to
 create, edit, download, and upload files with Liferay Sync. First, open your
 Liferay Sync folder in your file manager (use the *Open Sync Folder* option of
 the Liferay Sync menu from the taskbar), and create a new file called
-`README.txt`. Edit this file and enter the word *test*. Then use the *Sync now*
-option of the Liferay Sync menu to make sure that your `README.txt` file gets
-uploaded to your Liferay server. Next, check that you can access this file from
-your Liferay site. Open your browser, navigate to your Liferay site, and sign in
-with your Liferay account credentials. First, make sure you're on the site you
-want to sync with. Then, navigate to *Site Administration* &rarr; *Documents and
-Media*. You should see your `README.txt` file listed there.
+`README.txt`. Edit this file and enter the word *test*. Next, check that you can 
+access this file from your Liferay site. Open your browser, navigate to your 
+Liferay site, and sign in with your Liferay account credentials. First, make sure
+you're on the site you want to sync with. Then, navigate to *Site Administration* 
+&rarr; *Documents and Media*. You should see your `README.txt` file listed there.
 
 Download the file (click the small triangle icon at the top right corner of the
 *README.txt* icon and select *Download*) to a convenient location on your
@@ -1050,9 +1047,10 @@ right, and you'll see that its version number has incremented.
 Current versions of Liferay Sync are unable to connect to new 6.2 Liferay Portal
 -->
 
-Download the file again, and you'll see that it now says *second test*--your
-edit was uploaded to the server. You can be confident that this edit was also
-downloaded by all other Liferay Sync clients connected to your site.
+Click *Sync Now* from the menu to force sync to download any remote changes.
+You'll see that it now says *second test*--your edit was uploaded to the server. 
+You can be confident that this edit was also downloaded by all other Liferay Sync 
+clients connected to your site.
 
 #### Demonstrating Liferay Sync Permissions  
 
