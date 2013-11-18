@@ -1,12 +1,5 @@
 # Advanced Customization with Ext Plugins [](id=advanced-customization-with-ext-plugins-liferay-portal-6-2-dev-guide-12-en)
 
----
-
-![Note](../../images/tip-pen-paper.png) This chapter has not yet been updated to
-reflect the new features in Liferay 6.2. 
-
----
-
 Ext plugins are powerful tools for extending Liferay. Because they increase the
 complexity of your Liferay instance, you should only use an Ext plugin if you're
 sure you can't accomplish your goal using a different tool. Check out Chapter
@@ -216,7 +209,7 @@ develop Ext plugins:
 - We'll show you examples of Liferay Portal customizations that require advanced
 customization techniques. 
 
-Now let's look at each step of the development proces in more detail. 
+Now let's look at each step of the development process in more detail. 
 
 ### Set Up [](id=set-up-liferay-portal-6-2-dev-guide-12-en)
 
@@ -897,7 +890,7 @@ Liferay's source code directly and making manual changes to a slew of files.
 But that's not the Liferay way: there's a better way to do it. 
 
 The best way to extend an existing service is by creating a custom service
-that's complementary ( e.g., a `MyUserLocalService` that includes all the new
+that's complementary (e.g., a `MyUserLocalService` that includes all the new
 methods). Your custom code can invoke this service instead of the default
 service, and the implementation of your service can invoke the original service
 as needed. 
@@ -948,13 +941,13 @@ version of Liferay is released.
 ---
 
 That's it for advanced customization techniques. Let's talk about deploying in
-porudction next. 
+production next. 
 
 ## Deploying in Production [](id=deploying-ext-plugin-in-production-liferay-portal-6-2-dev-guide-en)
 
 Often times you can't use Ant to deploy web applications in production or
 pre-production environments. Additionally, some application servers such as
-WebSphere or Weblogic have their own deployment tools, and Liferay's autodeploy
+WebSphere or WebLogic have their own deployment tools, and Liferay's autodeploy
 process won't work. Let's look at two methods for deploying and redeploying Ext
 plugins in these scenarios. 
 
@@ -985,7 +978,7 @@ small and easy to transport. Execute these steps on the server:
 
 ### Method 2: Generate an Aggregated WAR File [](id=generating-an-aggregated-war-file-liferay-portal-6-2-dev-guide-12-en)
 
-Some application servers don't support auto-deploy; WebSphere and Weblogic are
+Some application servers don't support auto-deploy; WebSphere and WebLogic are
 two examples. With an aggregated WAR file, all Ext plugins are merged before
 deployment to production. A single `.war` file will contain Liferay plus the
 changes from all your Ext plugins. Before you deploy the Liferay `.war` file,
@@ -1018,7 +1011,7 @@ another app server. It makes the erroneous case that Liferay is somehow
 want to send. I think we need to change this and get Tomcat out of it. --> 
 
 Next we'll show you how to migrate your extension environment (from older
-verisons of Liferay) into Ext plugins. 
+versions of Liferay) into Ext plugins. 
 
 ## Migrating Old Extension Environments [](id=migrating-old-extension-environments-liferay-portal-6-2-dev-guide-12-en)
 
