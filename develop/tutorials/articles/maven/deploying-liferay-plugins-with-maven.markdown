@@ -1,4 +1,4 @@
-# Deploying Liferay Plugins with Maven
+# Deploying Liferay Plugins with Maven [](id=deploying-liferay-plugins-with-maven-lp-6-2-develop-tutorial)
 
 With Maven, it's easy to deploy plugins to a Liferay Portal instance. In this
 tutorial, we explain the process. Just follow these steps: 
@@ -112,7 +112,7 @@ tutorial, we explain the process. Just follow these steps:
 
     ![Figure 2.29: Select the *Summary* tab of your repository to see how to specify it for distribution management in your plugin's POM.](../../images/maven-repository-summary.png) 
 
-    Since you created the plugin as a snapshot, you'll have to deploy it to a
+    If you created the plugin as a snapshot, you'll have to deploy it to a
     snapshot repository. You can deploy a plugin as a release, but the plugin's
     POM must specify a valid release version (e.g., `<version>1.0</version>`),
     not a snapshot version (e.g., `<version>1.0-SNAPSHOT</version>`). 
@@ -137,7 +137,7 @@ you'll use when developing plugins with Maven:
 
 ---
 
-## Next Steps
+## Next Steps [](id=next-steps-lp-6-2-develop-tutorial-6)
 
 Now that you've learned how to deploy a plugin using Maven, let's consider the
 types of Liferay plugins you can develop with Liferay Maven archetypes. You can
@@ -149,7 +149,8 @@ have if you had used the Plugins SDK. If you have questions about Maven, Liferay
 artifacts, or Liferay IDE's Maven integration, please refer to our other Liferay
 Maven tutorials.
 
-[Creating Portlet Plugins with Maven](http://www.liferay.com)
-[Creating Theme Plugins with Maven](http://www.liferay.com)
-[Creating Hook Plugins with Maven](http://www.liferay.com)
-[Creating Layout Template Plugins with Maven](http://www.liferay.com)
+* [Creating Portlet Plugins with Maven](http://www.liferay.com) 
+* [Creating Theme Plugins with Maven](http://www.liferay.com) 
+* [Creating Hook Plugins with Maven](http://www.liferay.com) 
+* [Creating Layout Template Plugins with Maven](http://www.liferay.com)
+
