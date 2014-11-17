@@ -73,8 +73,8 @@ public class EntryIndexer extends BaseIndexer {
 		Document document = getBaseModelDocument(PORTLET_ID, entry);
 
 		document.addDate(Field.MODIFIED_DATE, entry.getModifiedDate());
-		document.addText(Field.CONTENT, entry.getMessage());
-		document.addText(Field.TITLE, entry.getName());
+		document.addText("message", entry.getMessage());
+		document.addText("name", entry.getName());
 		document.addText("email", entry.getEmail());
 		document.addKeyword(Field.GROUP_ID, getSiteGroupId(entry.getGroupId()));
 		document.addKeyword(Field.SCOPE_GROUP_ID, entry.getGroupId());

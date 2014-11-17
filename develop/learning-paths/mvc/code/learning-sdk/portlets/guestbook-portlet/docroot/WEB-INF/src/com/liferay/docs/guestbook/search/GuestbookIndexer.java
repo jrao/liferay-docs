@@ -73,7 +73,7 @@ public class GuestbookIndexer extends BaseIndexer {
 		Document document = getBaseModelDocument(PORTLET_ID, guestbook);
 
 		document.addDate(Field.MODIFIED_DATE, guestbook.getModifiedDate());
-		document.addText(Field.TITLE, guestbook.getName());
+		document.addText("name", guestbook.getName());
 		document.addKeyword(Field.GROUP_ID, getSiteGroupId(guestbook.getGroupId()));
 		document.addKeyword(Field.SCOPE_GROUP_ID, guestbook.getGroupId());
 		

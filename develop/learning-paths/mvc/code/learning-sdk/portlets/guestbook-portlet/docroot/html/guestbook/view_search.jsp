@@ -1,5 +1,11 @@
 <%@include file="/html/init.jsp"%>
 
+<%@ page import="com.liferay.portal.kernel.search.BooleanQuery" %>
+<%@ page import="com.liferay.portal.kernel.search.BooleanQueryFactoryUtil" %>
+<%@ page import="com.liferay.portal.kernel.search.ParseException" %>
+<%@ page import="com.liferay.portal.kernel.search.SearchEngineUtil" %>
+<%@ page import="com.liferay.portal.kernel.search.SearchException" %>
+
 <%
     String keywords = ParamUtil.getString(request, "keywords");
 %>
@@ -33,42 +39,61 @@
 	SearchContext searchContext = SearchContextFactory
 	.getInstance(request);
 
-	searchContext.setKeywords(keywords);
 	searchContext.setAttribute("paginationType", "more");
 	searchContext.setStart(0);
 	searchContext.setEnd(10);
 	
-	Indexer indexer = IndexerRegistryUtil.getIndexer(Entry.class);
-
-	Hits hits = indexer.search(searchContext);
+	BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(searchContext);
 	
-	List<Entry> entries = new ArrayList<Entry>();
+	String[] terms = {"message", "name", "email"};
+	
+	try {
+		booleanQuery.addTerms(terms, keywords);
+	}
+	catch (ParseException pe) {
+		_log.error(pe.getLocalizedMessage());
+	}
 
-	for (int i = 0; i < hits.getDocs().length; i++) {
-		Document doc = hits.doc(i);
-
-		long entryId = GetterUtil
-		.getLong(doc.get(Field.ENTRY_CLASS_PK));
-
-		Entry entry = null;
-		
-		try {
-			entry = EntryLocalServiceUtil.getEntry(entryId);
-		} catch (PortalException pe) {
-			_log.error(pe.getLocalizedMessage());
-		} catch (SystemException se) {
-			_log.error(se.getLocalizedMessage());
-		}
-		
-		entries.add(entry);
+	Hits hits = null;
+	
+	try {
+		hits = SearchEngineUtil.search(searchContext, booleanQuery);
+	}
+	catch (SearchException se) {
+		_log.error(se.getLocalizedMessage());
 	}
 	
-	List<Guestbook> guestbooks = GuestbookLocalServiceUtil.getGuestbooks(scopeGroupId);
+	List<Entry> entries = new ArrayList<Entry>();
 	
+	if (hits != null) {
+		for (int i = 0; i < hits.getDocs().length; i++) {
+			Document doc = hits.doc(i);
+
+			long entryId = GetterUtil.getLong(doc
+					.get(Field.ENTRY_CLASS_PK));
+
+			Entry entry = null;
+
+			try {
+				entry = EntryLocalServiceUtil.getEntry(entryId);
+			} catch (PortalException pe) {
+				_log.error(pe.getLocalizedMessage());
+			} catch (SystemException se) {
+				_log.error(se.getLocalizedMessage());
+			}
+
+			entries.add(entry);
+		}
+	}
+
+	List<Guestbook> guestbooks = GuestbookLocalServiceUtil
+			.getGuestbooks(scopeGroupId);
+
 	Map<String, String> guestbookMap = new HashMap<String, String>();
-	
+
 	for (Guestbook guestbook : guestbooks) {
-		guestbookMap.put(Long.toString(guestbook.getGuestbookId()), guestbook.getName());
+		guestbookMap.put(Long.toString(guestbook.getGuestbookId()),
+				guestbook.getName());
 	}
 %>
 
