@@ -106,8 +106,21 @@
 	<liferay-ui:search-container-row
 		className="com.liferay.docs.guestbook.model.Entry"
 		keyProperty="entryId" modelVar="entry" escapedModel="<%=true%>">
+		
+		<%
+		long entryGuestbookId = entry.getGuestbookId();
+		
+		String entryGuestbookIdString = Long.toString(entryGuestbookId);
+		
+		String entryGuestbookName = StringPool.BLANK;
+		
+		if(guestbookMap.containsKey(entryGuestbookIdString)) {
+			entryGuestbookName = guestbookMap.get(entryGuestbookId);
+		}
+		%>
+		
 		<liferay-ui:search-container-column-text name="guestbook"
-			value="<%=guestbookMap.get(Long.toString(entry.getGuestbookId()))%>" />
+			value="<%= entryGuestbookName %>" />
 		
 		<liferay-ui:search-container-column-text property="message" />
 
