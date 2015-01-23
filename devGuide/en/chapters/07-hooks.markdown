@@ -19,6 +19,7 @@ Our chapter topics include these items:
 - Extending and Overriding *portal.properties* 
 - Overriding a Portal Service
 - Overriding a *Language.properties* file
+- Extending the Indexer Post Processor
 - Other Hooks
 
 Like portlets, layout templates, and themes, hooks are created and managed using
@@ -32,11 +33,43 @@ hooks projects are stored in the Plugins SDK's `hooks` directory.
 
 ***Using Developer Studio:***
 
-1.  Go to File &rarr; New &rarr; Liferay Project. 
+1.  Go to *File* &rarr; *New* &rarr; *Liferay Plugin Project*. 
 
-2.  Enter *example* for your Project name and *Example* for your Display name. 
+2.  Assign a project name and display name. To demonstrate, we'll use
+    *example-hook* and *Example* for the project name and display name,
+    respectively. Notice that upon entering *example-hook* as the project
+    name, the wizard conveniently inserts *Example* in grayed-out text as the
+    plugin's default display name. The wizard derives the default display name
+    from the project name, starts it in upper-case, and leaves off the plugin
+    type suffix *Hook* because the plugin type is automatically appended to
+    the display name in Liferay Portal. The IDE saves the you from repetitively
+    appending the plugin type to the display name; in fact, the IDE ignores any
+    plugin type suffix if you happen to append it to the display name.
 
-3.  Select the Plugins SDK and Portal Runtime you've configured. 
+    Enter the following values for the project name and display name:
+
+    - **Project name:** *example-hook*
+    - **Display name:** *Example*
+
+3.  Select the build type, Plugins SDK, and Liferay runtime. 
+
+    If you select the Maven build type, you'll be prompted to enter an artifact
+    version, group ID, and active profile for your project. See [Using Liferay
+	IDE with
+	Maven](http://www.liferay.com/documentation/liferay-portal/6.1/development/-/ai/use-liferay-ide-with-maven-liferay-portal-6-1-dev-guide-en)
+    for more information. Otherwise, select the Ant build type, a Plugins SDK
+    and a Liferay runtime.  
+
+    For this demonstration, make the following selections: 
+
+    - **Build type:** *Ant*
+    - **Plugins SDK:** `[a configured Plugins SDK]`
+    - **Liferay runtime:** `[a configured Liferay runtime]`
+    
+    For more information, see sections [Installing the
+    SDK](https://www.liferay.com/documentation/liferay-portal/6.1/development/-/ai/installing-the-sdk)
+    and [Setting Up Liferay
+    IDE](https://www.liferay.com/documentation/liferay-portal/6.1/development/-/ai/setting-up-liferay-ide).
 
 4.  Select the *Hook* Plugin Type. 
 
@@ -843,30 +876,119 @@ XML and the specified order for those elements.
 
 ---
 
-Great! You now know how to customize language keys. Next, let's consider some
-other types of hooks that may interest you.
+Great! You now know how to customize language keys. Next, let's discuss
+extending your Indexer Post Processor.
+
+## Extending the Indexer Post Processor [](id=extend-the-indexer-post-processor-liferay-portal-6-1-dev-guide-en)
+
+Would you like to modify the search summaries, indexes, and queries available in
+your portal instance? Developing an Indexer Post Processor hook lets you do just
+that. The indexer hook implements a post processing system on top of the
+existing indexer to allow plugin hook developers to modify their search, index,
+and query capabilities. Let's run through a simple example to preview what you
+can accomplish with an indexer hook. For our example, we're going to add *Job
+Title* into the User Indexer so we can search for users by their Job Title.
+
+1. In your existing example-hook project, open the `liferay-hook.xml` file and
+insert the following lines before the closing `</hook>` tag:
+
+		<indexer-post-processor>
+        	<indexer-class-name>com.liferay.portal.model.User</indexer-class-name>
+        	<indexer-post-processor-impl>com.liferay.hook.indexer.SampleIndexerPostProcessor</indexer-post-processor-impl>
+        </indexer-post-processor>
+
+    The `<indexer-class-name/>` tag clarifies the model entity for the indexer.
+    Furthermore, the `<indexer-post-processor-impl/>` tag clarifies the
+    implementation of the interface.
+
+2. Create a new class in the `docroot/WEB-INF/src/com/liferay/hook/indexer`
+directory of your example-hook named *SampleIndexerPostProcessor*. Then replace
+the Java source file's contents with the following lines:
+
+		package com.liferay.hook.indexer;
+
+		import java.util.Locale;
+		import javax.portlet.PortletURL;
+		import com.liferay.portal.kernel.log.Log;
+		import com.liferay.portal.kernel.log.LogFactoryUtil;
+		import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
+		import com.liferay.portal.kernel.search.BooleanQuery;
+		import com.liferay.portal.kernel.search.Document;
+		import com.liferay.portal.kernel.search.Field;
+		import com.liferay.portal.kernel.search.SearchContext;
+		import com.liferay.portal.kernel.search.Summary;
+		import com.liferay.portal.model.User;
+
+
+			public class SampleIndexerPostProcessor extends BaseIndexerPostProcessor
+			{
+				public void postProcessContextQuery(BooleanQuery booleanQuery, SearchContext searchcontext)
+						throws Exception {
+					if(_log.isDebugEnabled())
+						_log.debug(" postProcessContextQuery()");
+					}
+
+				public void postProcessDocument(Document document, Object object)
+						throws Exception {
+					User userEntity = (User) object;
+					String indexerUserTitle = "";
+					try {
+						indexerUserTitle = userEntity.getJobTitle();
+					} catch (Exception e) {}
+					if(indexerUserTitle.length() > 0)
+						document.addText(Field.TITLE, indexerUserTitle);
+				}
+
+				public void postProcessFullQuery(BooleanQuery fullQuery, SearchContext searchcontext)
+						throws Exception {
+					if(_log.isDebugEnabled())
+						_log.debug(" postProcessFullQuery()");
+				}
+
+				public void postProcessSearchQuery(BooleanQuery searchquery, SearchContext searchcontext)
+						throws Exception {
+					if(_log.isDebugEnabled())
+						_log.debug(" postProcessSearchQuery()");
+				}
+
+				public void postProcessSummary(Summary summary, Document document, Locale locale,
+						String snippet, PortletURL portletURL) {
+					if(_log.isDebugEnabled())
+						_log.debug("postProcessSummary()");
+				}
+				private static Log _log = LogFactoryUtil.getLog(SampleIndexerPostProcessor.class);
+			}
+
+	Notice the `SampleIndexerPostProcessor` class extends Liferay's
+	`BaseIndexerPostProcessor` base implementation. Then we add our own logic to
+	enable users to search for *Job Title* amongst all the portal's users. Thus,
+	we've added a new feature for the User Indexer. Let's give it a try!
+
+Navigate to the *Control Panel* &rarr; *Users and Organizations* and make sure a
+user has a job title, which can be added in any user's *My Account* interface.
+Then test out the indexer hook by searching for that job title.
+
+![Figure 10.5: In this example, searching for *Nose Model* returns one user with the matching job title.](../../images/indexer-hook-search.png)
+
+In the next section, we'll explore more hooks that allow for customizing
+Liferay's core features.
 
 ## Other hooks  [](id=other-hooks)
 
 Since hooks are the preferred plugin type for customizing Liferay's core
 features, the Liferay team is happy to keep providing you new hooks. This
 section is a placeholder for hooks that are available in Liferay Portal 6.1,
-but aren't yet fully documented. Here's a summary of these hooks:
+but aren't yet fully documented. 
 
-- **Servlet filter hook:** Servlet filters allow you to pre-process requests
-  going *to* a servlet and post-process responses coming *from* a servlet. As
-  server requests are received that match URL patterns or match servlet names
-  specified in your servlet filter mappings, your specified servlet filters are
-  applied. Hook elements `servlet-filter` and `servlet-filter-mapping` have been
-  added to `liferay-hook.xml` so you can configure your servlet filters. For a
-  working example, see the
-  [sample-servlet-filter-hook](https://github.com/liferay/liferay-plugins/tree/master/hooks/sample-servlet-filter-hook)
-  in the Plugin SDK. 
-- **CMIS extension hook:** The Documents and Media Library now supports multiple
-  CMIS repositories mounted for each Documents and Media Portlet. If a
-  repository doesn't fully implement CMIS or has native features that you'd like
-  to leverage, you can use a *CMIS extension hook* to apply your desired
-  extension implementation. 
+**Servlet filter hook:** Servlet filters allow you to pre-process requests going
+*to* a servlet and post-process responses coming *from* a servlet. As server
+requests are received that match URL patterns or match servlet names specified
+in your servlet filter mappings, your specified servlet filters are applied.
+Hook elements `servlet-filter` and `servlet-filter-mapping` have been added to
+`liferay-hook.xml` so you can configure your servlet filters. For a working
+example, see the
+[sample-servlet-filter-hook](https://github.com/liferay/liferay-plugins/tree/master/hooks/sample-servlet-filter-hook)
+in the Plugin SDK. 
 
 ## Summary [](id=conclusi-2)
 
