@@ -9,19 +9,19 @@ level of that interface. All of the public methods of that interface become
 registered and available as JSON web services. 
 
 The `*Service.java` interface source file should never be modified by the user.
-If you need, however, more control over its methods (e.g., hiding some methods
-and exposing others), you can configure the `*ServiceImpl` class. When the
-service implementation class (`*ServiceImpl`) is annotated with the
+If you need more control over its methods (e.g., if you need to hide some
+methods while exposing others), you can configure the `*ServiceImpl` class. When
+the service implementation class (`*ServiceImpl`) is annotated with the
 `@JSONWebService` annotation, the service interface is ignored and the service
 implementation class is used for configuration in its place. In other words,
 `@JSONWebService` annotations in the service implementation override any JSON
-Web Service configuration in service interface.
+web service configuration in the service interface.
 
 That's it! When you start Liferay Portal, it scans service classes for
 annotations (more about scanning later). Each class that uses the
-`@JSONWebService` annotation is examined and its methods become exposed as JSON
-API. As explained previously, the `*ServiceImpl` configuration overrides the
-`*Service` interface configuration during registration.
+`@JSONWebService` annotation is examined and its methods become exposed via the
+JSON web services API. As explained previously, the `*ServiceImpl` configuration
+overrides the `*Service` interface configuration during registration.
 
 Liferay Portal, however, does not scan all available classes for the
 annotations. Instead, it only scans services. More precisely, it scans all
@@ -46,9 +46,10 @@ tutorial.
 
 $$$
 
-OK, now let's see how you can create a plugin with some remote services. Keep in
-mind that Liferay developers use the very same mechanism so that Liferay
-Portal's services come enabled out-of-the-box. 
+OK, now let's see how you can register your plugin's remote services as JSON web
+services. Keep in mind that Liferay's developers use this same mechanism. This
+is why Liferay Portal's remote service are exposed as JSON web services
+out-of-the-box. 
 
 ### Registering Plugin JSON Web Services [](id=registering-plugin-json-web-services)
 
@@ -70,28 +71,29 @@ JSON web services for the plugin. Under the hood, the Plugins SDK registers the
 `SecureFilter` and the `JSONWebServiceServlet` for the plugin. You only need to
 enable JSON web services for your plugin once.
 
-Let's deploy the `SupraSurf` portlet plugin on our portal server. If your server
-isn't running, start it up. Then deploy your plugin onto it. 
+If your portal server isn't running, start it up. Then deploy your portlet
+plugin to Liferay. 
 
 To get some feedback from the portal on registering your plugin's services,
 configure the portal to log the plugin's informational messages (i.e., its `INFO
 ...` messages). See the section on Liferay's logging system in
-[Using Liferay Portal](https://www.liferay.com/documentation/liferay-portal/6.2/user-guide/-/ai/liferays-logging-system-liferay-portal-6-2-user-guide-18-en).
+[Using Liferay Portal](https://dev.liferay.com/discover/deployment/-/knowledge_base/6-2/liferays-logging-system) for details.
 
-Let's add a simple method to the plugin's services. Edit the
-`SurfBoardServiceImpl` class and add the following method:
+To test Liferay's JSON web service registration process, add a simple method to
+your plugin's services. Edit your `*ServiceImpl` class and add the following
+method:
 
     public String helloWorld(String worldName) {
         return "Hello world: " + worldName;
     }
 
-Rebuild the services and deploy the plugin. Notice that the portal prints a
+Rebuild the services and re-deploy your plugin. Notice that the portal prints a
 message like the one below informing us that an action was configured for the
 portlet. This indicates that the service method is now registered as a JSON Web
 Web Service action!
 
-	INFO  [JSONWebServiceActionsManagerImpl:117] Configured 1 actions for\
-	    /suprasurf-portlet
+    INFO  [JSONWebServiceActionsManagerImpl:117] Configured 1 actions for\
+        /suprasurf-portlet
 
 This same mechanism registers Liferay Portal's own service actions. They are
 conveniently enabled by default, so you don't have to configure them. 
@@ -240,5 +242,4 @@ of this service will be excluded from the API.
 
 Next, let's look at portal configuration options that apply to JSON Web
 Services. 
-
 
