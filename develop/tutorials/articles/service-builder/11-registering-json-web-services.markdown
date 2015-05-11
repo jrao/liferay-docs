@@ -106,12 +106,13 @@ access it.
 You can form the mapped URL of an exposed service by following the naming
 convention below: 
 
-    http://[server]:[port]/api/jsonws/[plugin-context-name.][service-class-name]/[service-method-name]
+    http://[server]:[port]/api/jsonws/[plugin-context-name].[service-class-name]/[service-method-name]
 
 Let's look at the last three bracketed items more closely: 
 
 - `plugin-context-name` is the plugin's context name (e.g., `suprasurf-portlet`
-  in our example). For the portal's services, this part is not needed. 
+  in our example). For the portal's services, the `plugin-context-name` and the
+  subsequent period should be omitted. 
 - `service-class-name` is generated from the service's class name in lower case,
   minus its `Service` or `ServiceImpl` suffix. For example, specify `surfboard`
   as the `plugin-context-name` for the `SurfBoardService` class. 
@@ -125,18 +126,18 @@ service.
 
 For our created service method, the URL looks like:
 
-	http://localhost:8080/api/jsonws/suprasurf-portlet.surfboard/hello-world
+    http://localhost:8080/api/jsonws/suprasurf-portlet.surfboard/hello-world
 
 Note the context name part of the URL. For the portal, it's similar. Here's a
 portal service method we want to access: 
 
-        @JSONWebService
-        public interface UserService {
-            public com.liferay.portal.model.User getUserById(long userId) {...}
+    @JSONWebService
+    public interface UserService {
+        public com.liferay.portal.model.User getUserById(long userId) {...}
 
-Here's is that portal service method's URL: 
+Here is that portal service method's URL: 
 
-        http://localhost:8080/api/jsonws/user-service/get-user-by-id
+    http://localhost:8080/api/jsonws/user-service/get-user-by-id
 
 Each service method is bound to one HTTP method type. Any method with a name
 starting with `get`, `is`, or `has` is assumed to be a read-only method and is
@@ -144,8 +145,8 @@ mapped as a *GET HTTP* method by default. All other methods are mapped as *POST
 HTTP* methods. 
 
 As you may have noticed, plugin services are accessed via the portal context.
-Conveniently, requests sent this way can leverage the user's authentication in
-his current portal session.
+Conveniently, requests sent this way can leverage the authentication credentials
+associated with the user's current portal session.
 
 Next, we'll learn to how to *list* JSON web services available from our portal. 
 
@@ -162,20 +163,20 @@ of the method, all of its arguments, and a list of exceptions that can be
 thrown. For additional information about remote service methods, you can look up
 the method in Liferay Portal's
 [Javadocs](http://docs.liferay.com/portal/6.2/javadocs). Using a simple form
-from within your browser, you can even invoke the service method for testing
-purposes.
+from within your browser, you can even invoke service methods. When developing
+portlet services, this can be quite handy for testing.
 
 The same API page lists remote services of plugins, too. When multiple plugins
-with remote services enabled are deployed, the API page shows a select box with
-all available plugin context paths (including the portal's path). The select box
-facilitates switching between the plugins' list of remote services and the
-portal's list of remote services.
+with remote services enabled have been deployed, click on the Context Path
+selector on the API page. This selector lists all of the available plugin
+context paths (including the portal's path). Select a plugin's context path or
+the portal's context path to list all of the remote services available within
+the context path.
 
-If you've been paying attention, you already know how to control registration by
-using the `@JSONWebService` annotation in your `*ServiceImpl` class. This
-overrides any configuration defined in the interface. What you might not know is
-that you can control the visibility of methods using annotations at the method
-level. 
+As discussed in the Registering JSON Web Services section, you can control
+registration by using the `@JSONWebService` annotation in your `*ServiceImpl`
+class. This overrides any configuration defined in the interface. You can also
+control the visibility of methods using annotations at the method level. 
 
 Let's find out how to ignore a specific method. 
 
@@ -188,7 +189,7 @@ following option:
 
 Methods with this annotation don't become part of the JSON Web Service API. 
 
-Let's learn to define custom HTTP method names and URL names. 
+Let's learn how to define custom HTTP method names and URL names. 
 
 ### HTTP Method Name and URL [](id=http-method-name-and-url)
 
@@ -203,14 +204,15 @@ method name `add-board-wow`. Its complete URL is now
 `http://localhost:8080/api/jsonws/suprasurf-portlet.surfboard/add-board-wow` and
 can be accessed using the HTTP PUT method. 
 
-If the URL name starts with a slash character (`/`), only the method name is
-used to form the service URL; the class name is ignored.
+If the URL method name in a JSON web service annotation starts with a slash
+character (`/`), only the method name is used to form the service URL; the class
+name is ignored:
 
     @JSONWebService("/add-something-very-specific")
     public boolean addBoard(
 
 Similarly, you can change the class name part of the URL, by setting the value
-in class-level annotation:
+in a class-level annotation:
 
     @JSONWebService("sbs")
     public class SurfBoardServiceImpl extends SurfBoardServiceBaseImpl {
@@ -228,7 +230,7 @@ while hiding some specific methods (the *blacklist* approach).
 Sometimes, however, you want the opposite: to explicitly specify only those
 methods that are to be exposed (the *whitelist* approach). This is possible,
 too, by specifying *manual mode* on the class-level annotation. Then it is up to
-you annotate only those methods that you want exposed.
+you to annotate only those methods that you want exposed.
 
     @JSONWebService(mode = JSONWebServiceMode.MANUAL)
     public class SurfBoardServiceImpl extends SurfBoardServiceBaseImpl{
@@ -240,6 +242,6 @@ Now only the `addBoard` method and any other method annotated with
 `@JSONWebService` will be part of the JSON Web Service API; all other methods
 of this service will be excluded from the API.
 
-Next, let's look at portal configuration options that apply to JSON Web
-Services. 
+## Related Topics
 
+[Invoking JSON Web Services](/develop/tutorials/-/knowledge_base/7-0/invoking-json-web-services)
