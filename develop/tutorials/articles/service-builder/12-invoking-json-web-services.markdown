@@ -1,12 +1,12 @@
 ## Invoking JSON Web Services [](id=invoking-json-web-services)
 
-How you invoke a JSON web service depends on how you pass in its parameters.
-We'll discuss how to pass in parameters below, but first you need to understand
-how your invocation is matched to a method, especially when a service method is
-overloaded. 
+How you invoke a JSON web service depends on how you pass in its parameters. In
+this tutorial, you'll learn how to include parameters in web service
+invocations. First, you need to understand how your invocation is matched to a
+method, especially in the case of overloaded service methods. 
 
-The general rule is that you provide the method name and *all* parameters for
-that service method--even if you only provide `null`. 
+The general rule is that you provide the service method name and *all*
+parameters for the service method--even if you only provide `null`. 
 
 It's important to provide all parameters, but it doesn't matter *how* you do it
 (e.g., as part of the URL line, as request parameters, etc.). The order of the
@@ -16,14 +16,14 @@ parameters doesn't matter either.
 
 **Note:** An authentication related token must accompany each Liferay web
 service invocation. For details, please see the
-[Understanding Liferay's Service Security Model](https://dev.liferay.com/develop/tutorials/-/knowledge_base/6-2/understanding-liferays-service-security-model)
+[Understanding Liferay's Service Security Model](develop/tutorials/-/knowledge_base/6-2/understanding-liferays-service-security-model)
 tutorial. 
 
 $$$
 
 Exceptions abound in life, and there's an exception to the rule that *all*
-parameters are required--when using numeric *hints* to match methods. Let's look
-at using hints next. 
+parameters are required. When using numeric *hints* to match methods, not all of
+the parameters are required. Let's look at using hints next. 
 
 ### Using Hints [](id=using-hints)
 
@@ -59,14 +59,14 @@ portal's services:
     http://localhost:8080/api/jsonws/dlapp/get-file-entries/repository-id/\
     10172/folder-id/0
 
-Note, we've inserted line escape character `\` in order to fit the example URL
-on this page. 
+Note, we've inserted the line escape character `\` in order to fit the example
+URL on this page. 
 
 You can pass parameters in any order; it's not necessary to follow the order in
-which the arguments specified in the method signatures. 
+which the arguments are specified in the method signatures. 
 
-When a method name is overloaded, the *best match* will be used. It chooses the
-method that contains the least number of undefined arguments and invokes it for
+When a method name is overloaded, the *best match* will be used. The method that
+contains the least number of undefined arguments and is chosen and invoked for
 you. 
 
 You can also pass parameters in a URL query, and we'll show you how next. 
@@ -94,10 +94,10 @@ Java service method is invoked, each parameter value is converted from a
 `String` to its target Java type. Liferay uses a third party open source library
 to convert each object to its appropriate common type. It's possible to add or
 change the conversion for certain types but we'll just cover the standard
-conversions process. 
+conversion process. 
 
 Conversion for common types (e.g., `long`, `String`, `boolean`) is
-straightforward. Dates can be given in milliseconds; locales can be passed as
+straightforward. Dates can be given in milliseconds. Locales can be passed as
 locale names (e.g. `en` and `en_US`). To pass in an array of numbers, send a
 `String` of comma-separated numbers (e.g. `String` `4,8,15,16,23,42` can be
 converted to `long[]` type). You get the picture!
@@ -133,16 +133,16 @@ Here's an example:
 
     .../dlsync/get-d-l-sync-update/company-id/10151/repository-id/10195/-last-access-date
 
-The `last-access-date` parameter is interpreted as `null`. Although we have it
-last in the URL above, it's not necessary.
+The `last-access-date` parameter is interpreted as `null`. Although we have this
+parameter last in the URL above, it doesn't have to be last.
 
 Null parameters don't have specified values. When a null parameter is passed as
 a request parameter, its value is ignored and `null` is used instead: 
 
     <input type="hidden" name="-last-access-date" value=""/>
 
-When using JSON RPC (see below), you can send null values explicitly, even
-without a prefix. Here's an example: 
+When using JSON-RPC (see the JSON-RPC section below), you can send null values
+explicitly, even without a prefix. Here's an example: 
 
     "last-access-date":null
 
@@ -163,13 +163,14 @@ accessing services through JSON-RPC, encoding parameters to UTF-8 isn't
 enough--you need to send the encoding type in a Content-Type header (e.g.
 `Content-Type : "text/plain; charset=utf-8"`). 
 
-For example, let's pass the value "&#1057;&#1091;&#1087;&#1077;&#1088;" ("Super"
-in Cyrillic) to some JSON Web Service method. This name first has to be
-converted to UTF-8 (resulting in array of 10 bytes) and then encoded for URLs or
-request parameters. The resulting value is the string
-`%D0%A1%D1%83%D0%BF%D0%B5%D1%80` that can be passed to our service method. When
-received, this value is first going to be translated to an array of 10 bytes
-(URL decoded) and then converted to a UTF-8 string of the 5 original characters.
+For example, suppose you want to pass the value
+"&#1057;&#1091;&#1087;&#1077;&#1088;" ("Super" in Cyrillic) to a JSON web
+service method. This name first has to be converted to UTF-8 (resulting in array
+of 10 bytes) and then encoded for URLs or request parameters. The resulting
+value is the string `%D0%A1%D1%83%D0%BF%D0%B5%D1%80` that can be passed to our
+service method. When received, this value is first going to be translated to an
+array of 10 bytes (URL decoded) and then converted to a UTF-8 string of the 5
+original characters.
 
 Did you know you can send files as arguments? Find out how next. 
 
@@ -193,5 +194,234 @@ Files can be uploaded using multipart forms and requests. Here's an example:
 This is a common upload form that invokes the `addFileEntry` method of the
 `DLAppService` class. 
 
-Now we'll show you how to invoke JSON web services using JSON RPC. 
+Now we'll show you how to invoke JSON web services using JSON-RPC. 
 
+### JSON-RPC [](id=json-rpc)
+
+You can invoke JSON Web Service using [JSON-RPC](http://json-rpc.org). Most of
+the JSON-RPC 2.0 specification is supported in Liferay JSON web services. One
+important limitation is that parameters must be passed in as *named* parameters.
+Positional parameters are not supported, as there are too many overloaded
+methods for convenient use of positional parameters. 
+
+Here's an example of invoking a JSON web service using JSON-RPC: 
+
+    POST http://localhost:8080/api/jsonws/dlapp
+    {
+        "method":"get-folders",
+        "params":{"repositoryId":10172, "parentFolderId":0},
+        "id":123,
+        "jsonrpc":"2.0"
+    }
+
+Let's talk about parameters that are made available to secure JSON web
+services by default. 
+
+### Default Parameters [](id=default-parameters)
+
+When accessing *secure* JSON web services (i.e., the user has to be
+authenticated), some parameters are made available to the web services by
+default. Unless you want to change their values to something other than their
+defaults, you don't have to specify them explicitly. 
+
+Here are the default parameters:
+
+- `userId`: The primary key of the authenticated user
+- `user`: The full user object
+- `companyId`: The primary key of the user's company
+- `serviceContext`: The empty service context object 
+
+Let's find out about object parameters next. 
+
+### Object Parameters [](id=object-parameters)
+
+Most services accept simple parameters like numbers and strings. However,
+sometimes you might need to provide an object (a non-simple type) as a service
+parameter. 
+
+To create an instance of an object parameter, prefix the parameter with a plus
+sign, `+` and don't assign it any other parameter value. This is similar to
+when we specified a null parameter by prefixing the parameter with a dash
+symbol, `-`.
+
+Here's an example:
+
+    /jsonws/foo/get-bar/zap-id/10172/start/0/end/1/+foo
+
+To create an instance of an object parameter as a request parameter, make sure
+you encode the `+` symbol: 
+
+    /jsonws/foo/get-bar?zapId=10172&start=0&end=1&%2Bfoo
+
+Here's an alternative syntax: 
+
+    <input type="hidden" name="+foo" value=""/>
+
+If a parameter is an abstract class or an interface, it can't be instantiated as
+such. Instead, a concrete implementation class must be specified to create the
+argument value. You can do this by specifying the `+` prefix before the
+parameter name followed by specifying the concrete implementation class. Check
+out this example: 
+
+    /jsonws/foo/get-bar/zap-id/10172/start/0/end/1/+foo:com.liferay.impl.FooBean
+
+Here's another way of doing it: 
+
+    <input type="hidden" name="+foo:com.liferay.impl.FooBean" value=""/>
+
+The examples above specify that a `com.liferay.impl.FooBean` object, presumed to
+implement the class of the parameter named `foo`, is to be created. 
+
+You can also set a concrete implementation as a value. Here's an example: 
+
+    <input type="hidden" name="+foo" value="com.liferay.impl.FooBean"/>
+
+In JSON-RPC, here's what it looks like:
+
+    "+foo" : "com.liferay.impl.FooBean"
+
+All the examples above specify a concrete implementation for the `foo` service
+method parameter. 
+
+Once you pass in an object parameter, you might want to populate the object.
+Find out how next. 
+
+### Inner Parameters [](id=inner-parameters)
+
+When you pass in an object parameter, you'll often need to populate its inner
+parameters (i.e., fields). Consider a default parameter `serviceContext` of type
+`ServiceContext` (see the
+[ServiceContext](develop/tutorials/-/knowledge_base/6-2/servicecontext)
+tutorial to find out more about this type). To make an appropriate call to
+JSONWS, you might need to set the `serviceContext` parameter's
+`addGroupPermissions` and `scopeGroupId` fields. 
+
+You can pass inner parameters by specifying them using dot notation. Just append
+the name of the parameter with a dot (i.e., a period, `.`), followed by the name
+of the inner parameter. For the `ServiceContext` inner parameters we mentioned
+above, you'd specify `serviceContext.addGroupPermissions` and
+`serviceContext.scopeGroupId`. They're recognized as inner parameters and their
+values are injected into existing parameters before the API service method is
+executed. 
+
+Inner parameters aren't counted as regular parameters for matching methods
+and are ignored during matching. 
+
++$$$
+
+**Tip:** Use inner parameters with object parameters to set inner contents of
+created object parameter instances! 
+
+$$$
+
+Next, let's see what values are returned when a JSON web service is invoked. 
+
+## Returned Values [](id=returned-values)
+
+No matter how a JSON web service is invoked, it returns a JSON string that
+represents the service method result. Returned objects are *loosely* serialized
+to a JSON string and returned to the caller. 
+
+Let's look at some values returned from service calls. We'll create a
+`UserGroup` as we did in our SOAP web service client examples. To make it easy,
+we'll use the test form provided with the JSON web service in our browser. 
+
+1.  Sign in to your portal as an administrator and then point your browser to
+    the JSON web service method that adds a `UserGroup`: 
+
+        http://127.0.0.1:8080/api/jsonws?signature=/usergroup/add-user-group-2-\
+        name-description
+
+    Note, we've inserted line escape character `\` in order to fit the example
+    URL on this page.
+
+    Alternatively, navigate to it by starting at
+    `http://127.0.0.1:8080/api/jsonws` then scrolling down to the section for
+    *UserGroup*; click *add-user-group*. 
+
+2.  In the *name* field, enter *UserGroup3* and set the description to an
+    arbitrary value like *Created via JSON WS*.
+
+3.  Click *Invoke* and you'll get a result similar to the following: 
+
+        {
+          "addedByLDAPImport": false,
+          "companyId": 10154,
+          "createDate": 1382460167254,
+          "description": "Created via JSON WS",
+          "modifiedDate": 1382460167254,
+          "name": "UserGroup3",
+          "parentUserGroupId": 0,
+          "userGroupId": 13901,
+          "userId": 10198,
+          "userName": "Test Test",
+          "uuid": "1b18c73d-482a-4772-b6f4-a9253bbcbf92"
+        }
+
+The returned `String` represents the `UserGroup` object you just created,
+serialized into a JSON string. To find out more about JSON strings, go to
+[json.org](http://www.json.org/). 
+
+## Common JSON Web Service Errors [](id=common-json-web-service-errors)
+
+While working with JSON web services, you may encounter errors. Let's discuss
+the following common errors:
+
+-   Authenticated access required
+
+    If you see this error, it means you don't have permission to invoke the
+    remote service. Double-check that you're signed in as a user with the
+    appropriate permissions. If necessary, sign in as an administrator to invoke
+    the remote service.
+
+-   Missing value for parameter 
+    
+    If you see this error, you didn't pass a parameter value along with the
+    parameter name in your URL path. The parameter value must follow the
+    parameter name, like in this example: 
+
+        /api/jsonws/user/get-user-by-id/userId
+
+    The path above specifies a parameter named `userId`, but doesn't specify the
+    parameter's value. You can resolve this error by providing the parameter
+    value after the parameter name: 
+
+        /api/jsonws/user/get-user-by-id/userId/173
+
+-   No JSON web service action associated 
+
+    This is error means no service method could be matched with the provided
+    data (method name and argument names). This can be due to various reasons:
+    arguments may be misspelled, the method name may be formatted incorrectly,
+    etc. Since JSON web services reflect the underlying Java API, any changes in
+    the respective Java API will automatically be propagated to the JSON web
+    services. For example, if a new argument is added to a method or an existing
+    argument is removed from a method, the parameter data must match that of the
+    new method signature.
+
+-   Unmatched argument type 
+
+    This error appears when you try to instantiate a method argument using an
+    incompatible argument type.
+
+-   Judgment Day
+
+    We hope you never see this error. It means that Skynet has initiated a
+    nuclear war and most of humanity will be wiped out; survivors will need to
+    battle *Terminator* cyborgs. If you see this error and survive *Judgment
+    Day*, we recommend joining the resistance--they'll likely need good
+    developers to support the cause, especially those familiar with time travel. 
+
+    Had you going there, didn't we? 
+
+## Related Topics
+
+[Registering JSON Web Services](develop/tutorials/-/knowledge_base/6-2/registering-json-web-services)
+
+[JSON Web Services Invoker](develop/tutorials/-/knowledge_base/6-2/json-web-servies-invoker)
+
+[Invoking JSON Web Services via JavaScript](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-javascript)
+
+[Invoking JSON Web Services via URL](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-url)
+
+[Invoking JSON Web Services via cURL](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-curl)
