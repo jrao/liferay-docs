@@ -41,7 +41,7 @@ Then you can create an AUI context like this:
         // Liferay service invocation here
     });
 
-## Simple JSON Web Service Invocation
+## Simple JSON Web Service Invocation via JavaScript
 
 Let's examine a simple JSON web service invocation in JavaScript:
 
