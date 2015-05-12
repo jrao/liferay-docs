@@ -1,5 +1,18 @@
 ## Invoking JSON Web Services [](id=invoking-json-web-services)
 
+Liferay's JSON web service API can be invoked in languages other than Java, such
+as Beanshell, Groovy, JavaScript, Python, and Ruby. Liferay's JSON web service
+API can also be invoked via URL or via [cURL](http://curl.haxx.se/). This
+tutorial explains general techniques for working with JSON web services. For
+specific information about invoking Liferay's JSON web services via JavaScript,
+URL, or cURL, as well as examples, please see the appropriate tutorial:
+
+[Invoking JSON Web Services via JavaScript](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-javascript)
+
+[Invoking JSON Web Services via URL](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-url)
+
+[Invoking JSON Web Services via cURL](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-curl)
+
 How you invoke a JSON web service depends on how you pass in its parameters. In
 this tutorial, you'll learn how to include parameters in web service
 invocations. First, you need to understand how your invocation is matched to a
