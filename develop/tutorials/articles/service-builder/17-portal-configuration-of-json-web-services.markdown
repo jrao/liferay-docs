@@ -5,7 +5,7 @@ disable them, specify this portal property setting:
 
     json.web.service.enabled=false
 
-Now let's look at strict HTTP methods. 
+Next, let's look at strict HTTP methods. 
 
 ### Strict HTTP Methods [](id=strict-http-methods)
 
@@ -58,5 +58,16 @@ accessible. All other JSON methods will be secured. To disable access to *all*
 exposed methods, you can leave the right side of the `=` symbol empty; to enable
 access to all exposed methods, specify `*`. 
 
-Read on to find out how to invoke JSON web services. 
+## Related Topics
 
+[Registering JSON Web Services](develop/tutorials/-/knowledge_base/6-2/registering-json-web-services)
+
+[Invoking JSON Web Services](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services)
+
+[JSON Web Services Invoker](develop/tutorials/-/knowledge_base/6-2/json-web-services-invoker)
+
+[Invoking JSON Web Services via JavaScript](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-javascript)
+
+[Invoking JSON Web Services via URL](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-url)
+
+[Invoking JSON Web Services via cURL](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-curl)
