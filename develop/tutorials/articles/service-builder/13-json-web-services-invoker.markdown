@@ -1,20 +1,20 @@
 ## JSON Web Services Invoker [](id=json-web-services-invoker)
 
 Using JSON web services is easy: you send a request that defines a service
-method and parameters, and you receive the result as JSON object. Below we'll
-show you why that's not optimal, and introduce a tool that lets you use JSON
-web services more efficiently and pragmatically. 
+method and parameters, and you receive the result as a JSON object. As easy as
+this technique is, it can be improved. In this tutorial, we introduce a tool
+that lets you use JSON web services more efficiently and pragmatically. 
 
-Consider this example: You're working with two related objects: a `User` and its
-corresponding `Contact`. With simple JSON Web Service calls, you first call some
-user service to get the user object and then you call the contact service using
-the contact ID from the user object. You end up sending two HTTP requests to get
-two JSON objects that aren't even bound together; there's no contact information
-in the user object (i.e. no `user.contact`). This approach is suboptimal for
-performance (sending two HTTP calls) and usability (manually managing the
-relationship between two objects). It'd be nicer if you had a tool to address
-these inefficiencies. Fortunately, the *JSON Web Service Invoker* does just
-that! 
+Consider the following example. You're working with two related objects: a
+`User` and its corresponding `Contact`. With simple JSON web service calls, you
+first call the user service to get the user object and then you call the contact
+service using the contact ID from the user object. You end up sending two HTTP
+requests to get two JSON objects that aren't even bound together. There's no
+contact information in the user object (i.e. no `user.contact`). This approach
+is suboptimal with respect to performance (sending two HTTP calls) and usability
+(manually managing the relationship between two objects). It'd be nicer if you
+had a tool to address these inefficiencies. Fortunately, the *JSON Web Service
+Invoker* does just that! 
 
 Liferay's JSON Web Service Invoker helps you optimize your use of JSON Web
 Services. In the following sections, we'll show you how. 
@@ -30,7 +30,7 @@ command request parameter is missing, the request body is used as the command.
 So you can specify the command by either using the request parameter `cmd` or
 the request body. 
 
-The Invoker command is a plain JSON map describing how JSON web services are
+The Invoker command is a plain JSON map that describes how JSON web services are
 called and how the results are managed. Here's an example of how to call a
 simple service using the Invoker: 
 
@@ -49,12 +49,12 @@ command is a JSON string, null values can be specified either by explicitly
 using the `null` keyword or by placing a dash before the parameter name and 
 leaving the value empty (e.g. `"-param1": ''`).
 
-The example Invoker calls functions exactly the same as the following standard
-JSON Web Service call: 
+The example Invoker calls functions exactly the same way as the following
+standard JSON Web Service call: 
 
     /user/get-user-by-id?userId=123&-param1
 
-Of course, JSON Web Service invoker handles calls to plugin methods as well:
+Of course, the JSON Web Service Invoker handles calls to plugin methods as well:
 
     {
         "/suprasurf-portlet.surfboard/hello-world": {
@@ -62,7 +62,7 @@ Of course, JSON Web Service invoker handles calls to plugin methods as well:
         }
     }
 
-The code above calls our plugin's remote service. 
+The code above calls the (fictitious) SupraSurf portlet's remote service. 
 
 You can use variables to reference objects returned from service calls. Variable
 names must start with a dollar sign, `$`. In our previous example, the service
@@ -91,7 +91,7 @@ a nested service call in action:
         "$user = /user/get-user-by-id": {
             "userId": 123,
             "$contact = /contact/get-contact-by-id": {
-                "@contactId" : "$user.contactId"
+                "@contactId": "$user.contactId"
             }
         }
     }
@@ -122,8 +122,8 @@ To flag a parameter, insert the `@` prefix before the parameter name.
 
 $$$
 
-Next, let's talk about filtering object properties so only those you need are
-returned when you invoke a service. 
+Next, let's talk about filtering object properties so that only the properties
+you need are returned when you invoke a service. 
 
 ### Filtering Results [](id=filtering-results)
 
@@ -139,7 +139,7 @@ the properties you need:
         "$user[firstName,emailAddress] = /user/get-user-by-id": {
             "userId": 123,
             "$contact = /contact/get-contact-by-id": {
-                "@contactId" : "$user.contactId"
+                "@contactId": "$user.contactId"
             }
         }
     }
@@ -174,6 +174,17 @@ Liferay, you may want to consider taking a streamlined approach to accessing Web
 Content articles and Dynamic Data List records. Liferay's Skinny JSON Provider
 app gives you access to them and returns them in an easy-to-use fashion. For
 more information, please refer to the
-[Invoking Services Using Skinny JSON Provider](https://dev.liferay.com/develop/tutorials/-/knowledge_base/6-2/invoking-services-using-skinny-json-provider) 
+[Invoking Services Using Skinny JSON Provider](develop/tutorials/-/knowledge_base/6-2/invoking-services-using-skinny-json-provider) 
 tutorial.
 
+## Related Topics
+
+[Registering JSON Web Services](develop/tutorials/-/knowledge_base/6-2/registering-json-web-services)
+
+[Invoking JSON Web Services](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services)
+
+[Invoking JSON Web Services via JavaScript](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-javascript)
+
+[Invoking JSON Web Services via URL](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-url)
+
+[Invoking JSON Web Services via cURL](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-curl)
