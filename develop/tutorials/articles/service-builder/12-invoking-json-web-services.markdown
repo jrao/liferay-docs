@@ -1,11 +1,28 @@
 ## Invoking JSON Web Services [](id=invoking-json-web-services)
 
 Liferay's JSON web service API can be invoked in languages other than Java, such
-as Beanshell, Groovy, JavaScript, Python, and Ruby. Liferay's JSON web service
-API can also be invoked via URL or via [cURL](http://curl.haxx.se/). This
-tutorial explains general techniques for working with JSON web services. For
-specific information about invoking Liferay's JSON web services via JavaScript,
-URL, or cURL, as well as examples, please see the appropriate tutorial:
+as Beanshell, Groovy, JavaScript, Python, and Ruby. It can also be invoked via
+URL or [cURL](http://curl.haxx.se/). Additionally, Liferay provides a handy JSON
+web services page that allows you to browse and invoke service methods.
+
+If you're running Liferay locally on port 8080, you can find the JSON web
+services page at [localhost:8080/api/jsonws](localhost:8080/api/jsonws). You can
+use this page to generate example code for invoking web services. Use the
+Context Path selector to switch contexts and you'll see different available
+service methods. The portal's context path is `/`, the Calendar portlet's
+context path is `/calendar-portlet`, the Marketplace portlet's context path is
+`/marketplace-portlet`, etc. To see the generated code for a particular service,
+click on the name of the service, enter the required parameters and click
+*Invoke*. The JSON result of your service invocation appears. There are multiple
+ways to invoke Liferay's JSON web services: click on *JavaScript Example*, *curl
+Example*, or *URL example* to see different ways of invoking the web service.
+
+![Figure x: When you invoke a service from Liferay's JSON web services page, you can view the result of your service invocation as well as example code for invoking the service via JavaScript, curl, or URL.](../../images/jsonws-simple-example.png)
+
+This tutorial explains general techniques for working with JSON web services.
+For specific information about invoking Liferay's JSON web services via
+JavaScript, URL, or cURL, as well as examples, please see the appropriate
+tutorial:
 
 [Invoking JSON Web Services via JavaScript](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-javascript)
 
