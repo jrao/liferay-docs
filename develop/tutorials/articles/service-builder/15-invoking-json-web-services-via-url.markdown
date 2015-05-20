@@ -14,6 +14,10 @@ Let's examine a simple JSON web service invocation that's performed via URL:
 
     http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/20154/email-address/test%40liferay.com
 
+Note that the `@` symbol has a special meaning in a URL and needs to be
+[escaped](http://www.w3schools.com/tags/ref_urlencode.asp). Of course, to make
+this example work, use a valid company ID and email address.
+
 ## Related Topics
 
 [Invoking JSON Web Services via JavaScript](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-javascript)
