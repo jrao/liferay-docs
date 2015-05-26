@@ -76,6 +76,10 @@ example may be called like this:
 
 In this example, `param2` will automatically be set to `null`. 
 
+**URL Example:**
+
+    localhost:8080/api/jsonws/bookmarksfolder/get-folders/group-id/20181/parent-folder-id/21503
+
 Find out how to pass parameters as part of the URL path next. 
 
 ### Passing Parameters as Part of a URL Path [](id=passing-parameters-as-part-of-a-url-path)
