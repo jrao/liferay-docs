@@ -19,10 +19,10 @@ Example*, or *URL example* to see different ways of invoking the web service.
 
 ![Figure x: When you invoke a service from Liferay's JSON web services page, you can view the result of your service invocation as well as example code for invoking the service via JavaScript, curl, or URL.](../../images/jsonws-simple-example.png)
 
-This tutorial explains general techniques for working with JSON web services.
-For specific information about invoking Liferay's JSON web services via
-JavaScript, URL, or cURL, as well as examples, please see the appropriate
-tutorial:
+This tutorial explains general techniques for working with JSON web services and
+includes details about invoking via URL. For specific information about invoking
+Liferay's JSON web services via JavaScript, URL, or cURL, as well as examples,
+please see the appropriate tutorial:
 
 [Invoking JSON Web Services via JavaScript](develop/tutorials/-/knowledge_base/6-2/invoking-json-web-services-via-javascript)
 
@@ -55,7 +55,7 @@ Exceptions abound in life, and there's an exception to the rule that *all*
 parameters are required. When using numeric *hints* to match methods, not all of
 the parameters are required. Let's look at using hints next. 
 
-### Using Hints [](id=using-hints)
+### Using Hints When Invoking a Service via URL [](id=using-hints)
 
 Adding numeric hints lets you specify how many method arguments a service has.
 If you don't specify an argument for a parameter, it's automatically
@@ -76,11 +76,43 @@ example may be called like this:
 
 In this example, `param2` will automatically be set to `null`. 
 
-**URL Example:**
+Here's a real Liferay Portal example:
 
-    localhost:8080/api/jsonws/bookmarksfolder/get-folders/group-id/20181/parent-folder-id/21503
+    http://localhost:8080/api/jsonws/bookmarksfolder/add-folder.4/parent-folder-id/0/name/News?p_auth=[value]
 
-Find out how to pass parameters as part of the URL path next. 
+In this example, the hint number is `4` because there are four parameters:
+`parentFolderId`, `name`, `description`, and `p_auth`. Since the `description`
+parameter is omitted, its value is assumed to be `null`. If you try to invoke
+this web service with another hint number such as `3` or `5`, you'll get an
+exception since there is no `bookmarks/add-folder` method that takes those
+numbers of parameters. `p_auth` is an authentication parameter that's associated
+with your Liferay session. See below for more information.
+
+**Important:** When invoking a Liferay web service by entering a URL into your
+browser, you must be logged into Liferay with an account that has permission to
+invoke the web service. You must also supply an authentication token as a URL
+parameter. This authentication token is associated with your browser session and
+is called `p_auth`. Using this authentication token helps prevent CSRF attacks.
+
+Here are two easy ways to find the `p_auth` token:
+
+1. Go to Liferay's JSON web services page and click on any service method. The
+   value of the `p_auth` token appears under the Execute heading.
+
+2. If you're working from a JavaScript context and have access to the `Liferay`
+   object, invoking `Liferay.authToken` provides the value of the `p_auth`
+   parameter.
+
+Thus, if the value of your `p_auth` parameter happens to be `n35K1pb2`, for
+example, you'd invoke the URL examples above like this:
+
+    http://localhost:8080/api/jsonws/bookmarksfolder/add-folder.4/parent-folder-id/0/name/News?p_auth=n35K1pb2
+
+The remainder of this tutorial omits the `p_auth` parameter from the example
+URLs for invoking web services. Remember that you need to include it if you want
+to invoke services from your browser!
+
+Next, find out how to pass parameters as part of the URL path.
 
 ### Passing Parameters as Part of a URL Path [](id=passing-parameters-as-part-of-a-url-path)
 
@@ -88,13 +120,10 @@ You can pass parameters as part of the URL path. After the service URL, just
 specify method parameters in name-value pairs. Parameter names must be formed
 from method argument names by converting them from camelCase to names using all
 lower case and separated-by-dash. Here's an example of calling one of the
-portal's services: 
+portal's services. This example returns all top-level bookmark folders from the
+specified site:
 
-    http://localhost:8080/api/jsonws/dlapp/get-file-entries/repository-id/\
-    10172/folder-id/0
-
-Note, we've inserted the line escape character `\` in order to fit the example
-URL on this page. 
+    http://localhost:8080/api/jsonws/bookmarksfolder/get-folders/group-id/20181/parent-folder-id/0
 
 You can pass parameters in any order; it's not necessary to follow the order in
 which the arguments are specified in the method signatures. 
@@ -110,11 +139,7 @@ You can also pass parameters in a URL query, and we'll show you how next.
 You can pass in parameters as request parameters. Parameter names are specified
 as is (e.g. camelCase) and are set equal to their argument values, like this: 
 
-    http://localhost:8080/api/jsonws/dlapp/get-file-entries?repositoryId=\
-    10172&folderId=0
-
-Note, we've inserted line escape character `\` in order to fit the example URL
-on this page.
+    http://localhost:8080/api/jsonws/bookmarksfolder/add-folder?parentFolderId=0&name=News&description=news
 
 As with passing parameters as part of a URL path, the parameter order is not
 important, and the *best match* rule applies for overloaded methods. 
@@ -133,13 +158,12 @@ conversion process.
 Conversion for common types (e.g., `long`, `String`, `boolean`) is
 straightforward. Dates can be given in milliseconds. Locales can be passed as
 locale names (e.g. `en` and `en_US`). To pass in an array of numbers, send a
-`String` of comma-separated numbers (e.g. `String` `4,8,15,16,23,42` can be
+`String` of comma-separated numbers (e.g. the `String` `4,8,15,16,23,42` can be
 converted to `long[]` type). You get the picture!
 
 In addition to the common types, arguments can be of type `List` or `Map`. To
 pass a `List` argument, send a JSON array. To pass a `Map` argument, send a JSON
-object. The conversion of these is done in two steps, ingeniously referred to
-below as *Step 1* and *Step 2*:
+object. These types of conversions are performed in two steps:
 
 - *Step 1--JSON deserialization*: JSON arrays are converted into `List<String>`
   and JSON objects are converted to `Map<String, String>`. For security reasons,
@@ -165,26 +189,31 @@ Now let's see how to specify an argument as `null`.
 To pass a `null` value for an argument, prefix the parameter name with a dash.
 Here's an example: 
 
-    .../dlsync/get-d-l-sync-update/company-id/10151/repository-id/10195/-last-access-date
+    http://localhost:8080/api/jsonws/bookmarksfolder/add-folder/parent-folder-id/0/name/News/-description
 
-The `last-access-date` parameter is interpreted as `null`. Although we have this
+Here's the equivalent example using URL query parameters instead of URL path
+parameters:
+
+    http://localhost:8080/api/jsonws/bookmarksfolder/add-folder?parentFolderId=0&name=News&-description
+
+The `description` parameter is interpreted as `null`. Although we have this
 parameter last in the URL above, it doesn't have to be last.
 
 Null parameters don't have specified values. When a null parameter is passed as
 a request parameter, its value is ignored and `null` is used instead: 
 
-    <input type="hidden" name="-last-access-date" value=""/>
+    <input type="hidden" name="-description" value=""/>
 
 When using JSON-RPC (see the JSON-RPC section below), you can send null values
 explicitly, even without a prefix. Here's an example: 
 
-    "last-access-date":null
+    "description":null
 
 Now let's learn about encoding parameters. 
 
 ### Encoding Parameters [](id=encoding-parameters)
 
-There's a difference between URL encoding and query (i.e. request parameters)
+There's a difference between URL encoding and query (i.e., request parameters)
 encoding. The difference lies in how the space character is encoded. When the
 space character is part of the URL path, it's encoded as `%20`; when it's part
 of the query it's encoded as a plus sign (`+`).
@@ -253,12 +282,14 @@ services by default.
 
 ### Default Parameters [](id=default-parameters)
 
-When accessing *secure* JSON web services (i.e., the user has to be
-authenticated), some parameters are made available to the web services by
-default. Unless you want to change their values to something other than their
-defaults, you don't have to specify them explicitly. 
+When accessing *secure* JSON web services (i.e., services for which the user
+must be authenticated), some parameters are made available to the web services
+by default. Note that as of Liferay 6.2, all of Liferay's web services are
+secured by default. Unless you want to change the available parameters' values
+to something other than their defaults, you don't have to specify them
+explicitly. 
 
-Here are the default parameters:
+Here are the available default parameters:
 
 - `userId`: The primary key of the authenticated user
 - `user`: The full user object
@@ -361,35 +392,38 @@ Let's look at some values returned from service calls. We'll create a
 we'll use the test form provided with the JSON web service in our browser. 
 
 1.  Sign in to your portal as an administrator and then point your browser to
-    the JSON web service method that adds a `UserGroup`: 
+    the JSON web service method that adds a `BookmarksFolder`: 
 
-        http://127.0.0.1:8080/api/jsonws?signature=/usergroup/add-user-group-2-\
-        name-description
-
-    Note, we've inserted line escape character `\` in order to fit the example
-    URL on this page.
+        http://127.0.0.1:8080/api/jsonws?signature=%2Fbookmarksfolder%2Fadd-folder-4-parentFolderId-name-description-serviceContext
 
     Alternatively, navigate to it by starting at
-    `http://127.0.0.1:8080/api/jsonws` then scrolling down to the section for
-    *UserGroup*; click *add-user-group*. 
+    `http://127.0.0.1:8080/api/jsonws` and then scrolling down to the section
+    for *BookmarksFolder*. Click *add-folder*. 
 
-2.  In the *name* field, enter *UserGroup3* and set the description to an
-    arbitrary value like *Created via JSON WS*.
+2.  In the *parentFolderId* field, enter `0`. Top-level bookmarks folders have a
+    `parentFolderId` value of `0`. Set the name to an arbitrary value like
+    *News*. Set the description to something like *Created via JSON WS*.
 
 3.  Click *Invoke* and you'll get a result similar to the following: 
 
         {
-          "addedByLDAPImport": false,
-          "companyId": 10154,
-          "createDate": 1382460167254,
+          "companyId": 20154,
+          "createDate": 1433285384961,
           "description": "Created via JSON WS",
-          "modifiedDate": 1382460167254,
-          "name": "UserGroup3",
-          "parentUserGroupId": 0,
-          "userGroupId": 13901,
-          "userId": 10198,
+          "folderId": 21898,
+          "groupId": 20181,
+          "modifiedDate": 1433285384961,
+          "name": "News",
+          "parentFolderId": 0,
+          "resourceBlockId": 304,
+          "status": 0,
+          "statusByUserId": 0,
+          "statusByUserName": "",
+          "statusDate": null,
+          "treePath": "/21898/",
+          "userId": 20198,
           "userName": "Test Test",
-          "uuid": "1b18c73d-482a-4772-b6f4-a9253bbcbf92"
+          "uuid": "91d76380-8a2c-4965-a7fb-e0c8e1afea4d"
         }
 
 The returned `String` represents the `UserGroup` object you just created,
@@ -401,14 +435,14 @@ serialized into a JSON string. To find out more about JSON strings, go to
 While working with JSON web services, you may encounter errors. Let's discuss
 the following common errors:
 
--   Authenticated access required
+-   *Authenticated access required*
 
     If you see this error, it means you don't have permission to invoke the
     remote service. Double-check that you're signed in as a user with the
     appropriate permissions. If necessary, sign in as an administrator to invoke
     the remote service.
 
--   Missing value for parameter 
+-   *Missing value for parameter* 
     
     If you see this error, you didn't pass a parameter value along with the
     parameter name in your URL path. The parameter value must follow the
@@ -422,7 +456,7 @@ the following common errors:
 
         /api/jsonws/user/get-user-by-id/userId/173
 
--   No JSON web service action associated 
+-   *No JSON web service action associated* 
 
     This is error means no service method could be matched with the provided
     data (method name and argument names). This can be due to various reasons:
@@ -433,12 +467,12 @@ the following common errors:
     argument is removed from a method, the parameter data must match that of the
     new method signature.
 
--   Unmatched argument type 
+-   *Unmatched argument type* 
 
     This error appears when you try to instantiate a method argument using an
     incompatible argument type.
 
--   Judgment Day
+-   *Judgment Day*
 
     We hope you never see this error. It means that Skynet has initiated a
     nuclear war and most of humanity will be wiped out; survivors will need to
