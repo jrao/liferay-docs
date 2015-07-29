@@ -16,5 +16,11 @@ public interface ExampleConfiguration {
 	
 	@Meta.AD(required = false)
 	public int itemsPerPage();
+	
+	@Meta.AD(
+        deflt = "abcd",
+		required = true
+    )
+	public String abc();
 
 }
