@@ -36,10 +36,6 @@ import aQute.bnd.annotation.metatype.Configurable;
 )
 public class ExampleConfigurationPortlet extends MVCPortlet {
 	
-	public String getDefaultLanguageLabel(Map labels) {
-		return (String) labels.get(_configuration.defaultLanguage());
-	}
-	
 	public String getAbc() {
 		return _configuration.abc();
 	}
@@ -67,6 +63,10 @@ public class ExampleConfigurationPortlet extends MVCPortlet {
 		}
 		catch (SettingsException se) {
 			se.printStackTrace();
+		}
+		
+		if (configuration != null) {
+			_configuration = configuration;
 		}
 		
 		String abc = getAbc();

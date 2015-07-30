@@ -15,7 +15,7 @@
 <p>Hello from <aui:a href="http://alloyui.com">AlloyUI</aui:a>!</p>
 
 <%
-String abc = GetterUtil.getString(renderRequest.getAttribute("ABC"));
+String abc = GetterUtil.getString(request.getAttribute("ABC"));
 %>
 
 <p>Abc is <%= abc %>.</p>
