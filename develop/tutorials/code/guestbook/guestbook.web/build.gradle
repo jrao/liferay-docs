@@ -1,0 +1,6 @@
+version = '1.0.0'
+
+dependencies {
+    compile  project(':guestbook.api')
+    compile  project(':guestbook.svc')
+}

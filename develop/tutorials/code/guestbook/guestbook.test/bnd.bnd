@@ -1,0 +1,6 @@
+-buildpath: \
+	osgi.core;version=5.0,\
+	guestbook.api;version=latest
+Private-Package: guestbook.test
+Bundle-Activator: guestbook.test.Activator
+Bundle-Version: 1.0.0.${tstamp}
