@@ -57,6 +57,8 @@ public interface FooLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public guestbook.model.Foo addFoo(guestbook.model.Foo foo);
 
+	public guestbook.model.Foo addFooWithoutId(guestbook.model.Foo foo);
+
 	/**
 	* Creates a new foo with the primary key. Does not add the foo to the database.
 	*
@@ -170,6 +172,8 @@ public interface FooLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public guestbook.model.Foo fetchFooByUuidAndGroupId(java.lang.String uuid,
 		long groupId);
+
+	public java.lang.String fooLocal();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();

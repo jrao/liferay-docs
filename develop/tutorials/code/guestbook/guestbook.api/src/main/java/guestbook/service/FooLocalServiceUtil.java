@@ -53,6 +53,10 @@ public class FooLocalServiceUtil {
 		return getService().addFoo(foo);
 	}
 
+	public static guestbook.model.Foo addFooWithoutId(guestbook.model.Foo foo) {
+		return getService().addFooWithoutId(foo);
+	}
+
 	/**
 	* Creates a new foo with the primary key. Does not add the foo to the database.
 	*
@@ -186,6 +190,10 @@ public class FooLocalServiceUtil {
 	public static guestbook.model.Foo fetchFooByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
 		return getService().fetchFooByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static java.lang.String fooLocal() {
+		return getService().fooLocal();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

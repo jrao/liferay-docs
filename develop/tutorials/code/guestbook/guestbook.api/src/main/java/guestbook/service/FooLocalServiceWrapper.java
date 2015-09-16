@@ -43,6 +43,11 @@ public class FooLocalServiceWrapper implements FooLocalService,
 		return _fooLocalService.addFoo(foo);
 	}
 
+	@Override
+	public guestbook.model.Foo addFooWithoutId(guestbook.model.Foo foo) {
+		return _fooLocalService.addFooWithoutId(foo);
+	}
+
 	/**
 	* Creates a new foo with the primary key. Does not add the foo to the database.
 	*
@@ -188,6 +193,11 @@ public class FooLocalServiceWrapper implements FooLocalService,
 	public guestbook.model.Foo fetchFooByUuidAndGroupId(java.lang.String uuid,
 		long groupId) {
 		return _fooLocalService.fetchFooByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public java.lang.String fooLocal() {
+		return _fooLocalService.fooLocal();
 	}
 
 	@Override
