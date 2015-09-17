@@ -1,0 +1,22 @@
+-buildpath: \
+	osgi.core;version=5.0,\
+	com.liferay.portal:portal-service;version='[7.0,8)',\
+	biz.aQute.bndlib,\
+	guestbook.api;version=latest
+	
+Bundle-Version: 1.0.0.${tstamp}
+
+Private-Package: \
+	guestbook.model.impl,\
+	guestbook.service.base,\
+	guestbook.service.http,\
+	guestbook.service.impl,\
+	guestbook.service.persistence.impl,\
+	guestbook.service.util
+
+
+-includeresource: src/main/resources
+Liferay-Service: true
+Require-Capability: liferay.extender;filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+Spring-Context: META-INF/spring
+-dsannotations: *
