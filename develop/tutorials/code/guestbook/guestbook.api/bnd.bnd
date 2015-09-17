@@ -11,7 +11,7 @@ Import-Package: \
     *
 
 Export-Package: \
-	guestbook.exception,\
-	guestbook.model,\
-	guestbook.service,\
-	guestbook.service.persistence
+	com.liferay.docs.guestbook.exception,\
+	com.liferay.docs.guestbook.model,\
+	com.liferay.docs.guestbook.service,\
+	com.liferay.docs.guestbook.service.persistence
