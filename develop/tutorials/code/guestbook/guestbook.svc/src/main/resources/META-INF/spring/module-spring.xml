@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<bean id="com.liferay.docs.guestbook.service.EntryLocalService" class="com.liferay.docs.guestbook.service.impl.EntryLocalServiceImpl" />
+	<bean id="com.liferay.docs.guestbook.service.EntryService" class="com.liferay.docs.guestbook.service.impl.EntryServiceImpl" />
+	<bean id="com.liferay.docs.guestbook.service.persistence.EntryPersistence" class="com.liferay.docs.guestbook.service.persistence.impl.EntryPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.docs.guestbook.service.GuestbookLocalService" class="com.liferay.docs.guestbook.service.impl.GuestbookLocalServiceImpl" />
+	<bean id="com.liferay.docs.guestbook.service.GuestbookService" class="com.liferay.docs.guestbook.service.impl.GuestbookServiceImpl" />
+	<bean id="com.liferay.docs.guestbook.service.persistence.GuestbookPersistence" class="com.liferay.docs.guestbook.service.persistence.impl.GuestbookPersistenceImpl" parent="basePersistence" />
+</beans>

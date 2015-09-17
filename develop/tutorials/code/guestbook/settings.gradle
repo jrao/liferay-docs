@@ -1,0 +1,1 @@
+include 'guestbook.api','guestbook.svc','guestbook.test','guestbook.web'
