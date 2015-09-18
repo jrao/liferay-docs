@@ -263,6 +263,9 @@ public interface GuestbookLocalService extends BaseLocalService,
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getTestString();
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

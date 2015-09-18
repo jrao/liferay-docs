@@ -307,6 +307,11 @@ public class GuestbookLocalServiceWrapper implements GuestbookLocalService,
 		return _guestbookLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public java.lang.String getTestString() {
+		return _guestbookLocalService.getTestString();
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

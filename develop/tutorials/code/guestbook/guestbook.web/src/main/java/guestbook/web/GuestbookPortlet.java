@@ -11,6 +11,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import com.liferay.docs.guestbook.service.GuestbookLocalService;
+import com.liferay.docs.guestbook.service.GuestbookLocalServiceUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 @Component(
@@ -44,9 +45,19 @@ public class GuestbookPortlet extends MVCPortlet {
 	public void render(RenderRequest request, RenderResponse response)
 			throws IOException, PortletException {
 		
+		String testString = GuestbookLocalServiceUtil.getTestString();
+		
+		System.out.println(testString);
+		
+		/*
+		int guestbooksCount = GuestbookLocalServiceUtil.getGuestbooksCount();
+		*/
+		
 		/*
 		int guestbooksCount = getGuestbookLocalService().getGuestbooksCount();
-		
+		*/
+
+		/*
 		System.out.println("Guestbooks count: " + guestbooksCount);
 		*/
 

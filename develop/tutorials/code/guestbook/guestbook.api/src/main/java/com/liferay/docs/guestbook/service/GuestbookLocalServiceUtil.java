@@ -294,6 +294,10 @@ public class GuestbookLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.lang.String getTestString() {
+		return getService().getTestString();
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
