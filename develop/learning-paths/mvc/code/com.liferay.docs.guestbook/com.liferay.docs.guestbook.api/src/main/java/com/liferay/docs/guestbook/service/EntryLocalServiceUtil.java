@@ -278,10 +278,6 @@ public class EntryLocalServiceUtil {
 		return getService().getEntryByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static java.lang.String getEntryLocalServiceString() {
-		return getService().getEntryLocalServiceString();
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);

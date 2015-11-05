@@ -284,11 +284,6 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 	}
 
 	@Override
-	public java.lang.String getEntryLocalServiceString() {
-		return _entryLocalService.getEntryLocalServiceString();
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _entryLocalService.getExportActionableDynamicQuery(portletDataContext);
