@@ -39,4 +39,8 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.docs.guestbook.service.EntryLocalServiceUtil} to access the entry local service.
 	 */
+	public String getEntryLocalServiceString() {
+		return "entry string";
+	}
+	
 }
