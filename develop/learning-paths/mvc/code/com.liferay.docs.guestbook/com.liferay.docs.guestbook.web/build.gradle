@@ -40,4 +40,6 @@ dependencies {
     compile 'com.liferay.portal:util-java:7.0.0-SNAPSHOT'
     compile 'org.slf4j:slf4j-api:1.7.7'
     compile 'org.slf4j:slf4j-simple:1.7.7'
+    compile  project(':com.liferay.docs.guestbook.api')
+    compile  project(':com.liferay.docs.guestbook.svc')
 }
