@@ -229,6 +229,10 @@ public class GuestbookLocalServiceUtil {
 		return getService().getGuestbookByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static java.lang.String getGuestbookString() {
+		return getService().getGuestbookString();
+	}
+
 	/**
 	* Returns a range of all the guestbooks.
 	*

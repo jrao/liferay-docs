@@ -206,6 +206,9 @@ public interface GuestbookLocalService extends BaseLocalService,
 	public com.liferay.docs.guestbook.model.Guestbook getGuestbookByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getGuestbookString();
+
 	/**
 	* Returns a range of all the guestbooks.
 	*

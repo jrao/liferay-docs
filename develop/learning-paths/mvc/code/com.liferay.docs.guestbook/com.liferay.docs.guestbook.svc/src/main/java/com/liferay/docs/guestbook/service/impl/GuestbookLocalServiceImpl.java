@@ -39,4 +39,8 @@ public class GuestbookLocalServiceImpl extends GuestbookLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.docs.guestbook.service.GuestbookLocalServiceUtil} to access the guestbook local service.
 	 */
+	public String getGuestbookString() {
+		return "guestbook string";
+	}
+	
 }

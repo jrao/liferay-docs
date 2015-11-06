@@ -34,9 +34,13 @@ public class GuestbookPortlet extends MVCPortlet {
 		GuestbookLocalService guestbookLocalService = getGuestbookLocalService();
 		
 		int guestbooksCount = guestbookLocalService.getGuestbooksCount();
+		
+		String guestbookString = guestbookLocalService.getGuestbookString();
 
 		//set service bean
 		request.setAttribute("GUESTBOOKS_COUNT", guestbooksCount);
+
+		request.setAttribute("GUESTBOOKS_STRING", guestbookString);
 
 		super.render(request, response);
 	}

@@ -237,6 +237,11 @@ public class GuestbookLocalServiceWrapper implements GuestbookLocalService,
 		return _guestbookLocalService.getGuestbookByUuidAndGroupId(uuid, groupId);
 	}
 
+	@Override
+	public java.lang.String getGuestbookString() {
+		return _guestbookLocalService.getGuestbookString();
+	}
+
 	/**
 	* Returns a range of all the guestbooks.
 	*
