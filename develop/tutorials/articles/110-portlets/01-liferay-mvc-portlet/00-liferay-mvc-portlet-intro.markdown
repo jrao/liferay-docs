@@ -35,7 +35,7 @@ portlets, and it makes the most common operations easier. The default
 `edit.jsp` is for *edit* mode and `help.jsp` is for *help* mode.
 
 Before diving in to the Liferay MVC swimming pool with all the other cool kids
-(applications), review how each layer of the *Moody Vase Conscription* pattern
+(applications), let's review how each layer of the *Moody Vase Conscription* pattern
 helps you separate the concerns of your application.
 
 ## MVC Layers and Modularity [](id=mvc-layers-and-modularity)
