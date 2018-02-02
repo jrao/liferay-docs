@@ -1,6 +1,6 @@
 # What is SAML? [](id=what-is-saml)
 
-The @product@'s SAML (Security Assertion Markup Language) adapter lets you
+@product@'s SAML (Security Assertion Markup Language) adapter lets you
 execute Single Sign On (SSO) and Single Log Off (SLO) in your deployment. Each
 @product@ instance serves as either the Service Provider (SP) or the Identity
 Provider (IdP). This article provides the conceptual framework for @product@'s
@@ -23,11 +23,22 @@ purposes (for example, one instance is the SP and another is the IdP).
 $$$
 
 Below is background on how SAML works. To jump right to its configuration, see
-the next article on [Setting Up SAML](/discover/deployment/-/knowledge_base/7-0/setting-up-saml)
-for instructions on using the [SAML adapter](https://web.liferay.com/marketplace/-/mp/application/15188711). 
-Use the instructions to make the conceptual magic from this article come to
-life! 
+the articles on 
+[Setting Up SAML as an Identity Provider](/discover/deployment/-/knowledge_base/7-0/setting-up-liferay-as-a-saml-identity-provider)
+or 
+[Setting Up SAML as a Service Provider](/discover/deployment/-/knowledge_base/7-0/setting-up-liferay-as-a-saml-service-provider) 
+for instructions on using the 
+[SAML adapter](https://web.liferay.com/marketplace/-/mp/application/15188711). Use
+the instructions to make the conceptual magic from this article come to life!
 
++$$$
+
+**Note:** If you're migrating from a Liferay SAML adapter prior to version
+3.1.0, your properties are automatically migrated to settings. Please see the 
+[Configuring SAML](/discover/deployment/-/knowledge_base/7-0/configuring-saml)
+article for details on settings. 
+
+$$$
 
 ## Important SAML URLs [](id=important-saml-urls)
 
@@ -47,8 +58,14 @@ certificate can be imported by a third-party application like Salesforce.
 
 ## Single Sign On [](id=single-sign-on)
 
-Both the IdP and the SP can initiate the Single Sign On process, and the SSO flow
-is different depending on each one. Consider IdP initiated SSO first.
+Both the IdP and the SP can initiate the Single Sign On process, and the SSO
+flow is different depending on each one. Regardless of how it's initiated, SSO
+is configured for HTTPS between the SP and IdP, so all transport-level
+communication is encrypted. SAML requests are signed using certificates
+configured in @product@, using the SAML Web Browser SSO profile as defined in
+the [SAML 2.0 specification](http://saml.xml.org/saml-specifications). 
+
+Consider IdP initiated SSO first.
 
 ### Identity Provider Initiated SSO [](id=identity-provider-initiated-sso)
 
@@ -277,5 +294,6 @@ initiating SP terminates its SAML session and logs the user out.
 
 ## Related Topics [](id=related-topics)
 
-- [Setting Up SAML](/discover/deployment/-/knowledge_base/7-0/setting-up-saml)
-- [Token-Based SSO Authentication](https://dev.liferay.com/discover/deployment/-/knowledge_base/7-0/token-based-single-sign-on-authentication)
+- [Setting Up SAML as an Identity Provider](/discover/deployment/-/knowledge_base/7-0/setting-up-liferay-as-a-saml-identity-provider)
+- [Setting Up SAML as a Service Provider](/discover/deployment/-/knowledge_base/7-0/setting-up-liferay-as-a-saml-service-provider) 
+- [Token-Based SSO Authentication](/discover/deployment/-/knowledge_base/7-0/token-based-single-sign-on-authentication)
