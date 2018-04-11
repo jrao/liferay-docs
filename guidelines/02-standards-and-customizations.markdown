@@ -92,9 +92,24 @@ documenting. -Cody -->
     `images-dxp` folders that are not used in their corresponding Markdown
     articles.
 
--   `check-links`: (no DXP target) Checks LDN links (CE articles only) to ensure
-    they're pointing at an existing LDN article. A list of invalid links are
-    listed if any are found.
+-   `check-links`: (no DXP target) Checks links (CE articles only) on the
+    current checked out liferay-docs branch to ensure all links point to
+    existing header IDs (header IDs are used to formulate links). A list of
+    invalid links are listed if any are found.
+
+    This target can be executed before publishing to the live site since it
+    scans the local liferay-docs repo. This also means that links pointing to
+    articles **not** hosted in the current repo (e.g., a link pointing to 7.0
+    documentation residing in an article hosted on the `master` branch) cannot
+    be validated and, therefore, will not be checked.
+
+    The following options are available for the `check-links` task:
+
+    - `-Dapi.links`: Set this to `true` to check API links hosted on
+      [docs.liferay.com](https://docs.liferay.com/).
+    - `-Dlegacy.links`: Set this to `true` to check legacy links already
+      published to LDN. This checks all links pointing to articles in the
+      current branch **and** all legacy links hosted on LDN.
 
 -   `dist-article-ce`: Creates a ZIP file for importing the specified article
     (``-Darticle=...``), its images, and supporting structure to a Knowledge
@@ -132,7 +147,7 @@ below:
 **CE Docs**
 
 - `@product@` = Liferay Portal
-- `@product-ver@` = Liferay Portal CE 7.0
+- `@product-ver@` = Liferay Portal CE 7.1
 - `@ide@` = IDE
 - `@app-ref@` = https://docs.liferay.com/ce/apps
 - `@platform-ref@` = https://docs.liferay.com/ce/portal
@@ -140,7 +155,7 @@ below:
 **DXP Docs**
 
 - `@product@` = Liferay DXP
-- `@product-ver@` = Liferay Digital Enterprise 7.0
+- `@product-ver@` = Liferay Digital Enterprise 7.1
 - `@ide@` = Developer Studio
 - `@app-ref@` = https://docs.liferay.com/dxp/apps
 - `@platform-ref@` = https://docs.liferay.com/dxp/digital-enterprise
