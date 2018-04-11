@@ -2,7 +2,7 @@
 
 You can install Blade CLI using the Liferay Workspace installer. This installs
 JPM and Blade CLI into your user home folder and optionally initializes a
-[Liferay Workspace](/develop/tutorials/-/knowledge_base/7-0/liferay-workspace)
+[Liferay Workspace](/develop/tutorials/-/knowledge_base/7-1/liferay-workspace)
 folder.
 
 +$$$
@@ -12,13 +12,13 @@ folder.
 Since the installer only installs Blade CLI to your user home folder, your
 previous global installation would always override the installer's installation.
 Therefore, always follow the
-[Updating Blade CLI](/develop/tutorials/-/knowledge_base/7-0/updating-blade-cli)
+[Updating Blade CLI](/develop/tutorials/-/knowledge_base/7-1/updating-blade-cli)
 tutorial to update your Blade CLI instance.
 
 $$$
 
 If you need to configure proxy settings for Blade CLI, follow the
-[Installing Blade CLI with Proxy Requirements](/develop/tutorials/-/knowledge_base/7-0/setting-blade-cli-proxy-requirments)
+[Installing Blade CLI with Proxy Requirements](/develop/tutorials/-/knowledge_base/7-1/setting-blade-cli-proxy-requirments)
 
 Follow the steps below to download and install Blade CLI:
 
@@ -51,7 +51,22 @@ That's it! Blade CLI is installed on your machine! If you specified a location
 to initialize a Liferay Workspace folder, that is also available.
 
 Blade CLI offers many
-[`create` templates](/develop/reference/-/knowledge_base/7-0/project-templates)
+[templates](/develop/reference/-/knowledge_base/7-1/project-templates)
 to help build @product-ver@ applications. It also offers various ways to deploy
 those apps and interact with your Liferay server. Be sure to explore more Blade
 CLI tutorials to learn how.
+
+## Installer Issues on macOS [](id=installer-issues-on-macos)
+
+If you're using macOS, you could experience an issue where the `blade` command
+is not available in your terminal:
+
+    command not found: blade
+
+This is caused by the installer being unable to add JPM's `bin` folder to your
+user path. JPM is a Java package manager used in Blade CLI. To add the required
+`bin` folder, execute the following command in your terminal:
+
+    echo 'export PATH="$PATH:$HOME/Library/PackageManager/bin"' >> ~/.bash_profile
+
+Once you restart your terminal, the `blade` command should be available.

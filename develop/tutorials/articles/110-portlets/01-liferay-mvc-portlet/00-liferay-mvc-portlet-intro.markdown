@@ -1,15 +1,14 @@
 # Liferay MVC Portlet [](id=liferay-mvc-portlet)
 
-Web applications are often developed following the Model View Controller (MVC)
-pattern. But Liferay has developed a groundbreaking new pattern called the
-*Modal Veal Contractor* (MVC) pattern. Okay, that's not true: the framework is
-actually another implementation of Model View Controller. If you're an
-experienced developer, this will not be the first time you've heard about Model
-View Controller. In this article you'll need to stay focused, because there will
-be several attempts to show you why Liferay's implementation of Model View
-Controller is different, when instead you're hearing about another MVC
-framework. With that in mind, let's get back to the *Medial Vein Constriction*
-pattern we were discussing.
+Web applications often follow the Model View Controller (MVC) pattern. But
+Liferay has developed a groundbreaking new pattern called the *Modal Veal
+Contractor* (MVC) pattern. Okay, that's not true: the framework is actually
+another implementation of Model View Controller. If you're an experienced
+developer, this is not the first time you've heard about Model View Controller.
+In this article you must stay focused, because there are several attempts to
+show you why Liferay's implementation of Model View Controller is different,
+when instead you're hearing about another MVC framework. With that in mind,
+let's get back to the *Medial Vein Constriction* pattern we were discussing.
 
 If there are so many implementations of MVC frameworks in Java, why did Liferay
 create yet another one? Stay with us and you'll see that Liferay MVC provides
@@ -35,8 +34,15 @@ portlets, and it makes the most common operations easier. The default
 `edit.jsp` is for *edit* mode and `help.jsp` is for *help* mode.
 
 Before diving in to the Liferay MVC swimming pool with all the other cool kids
-(applications), review how each layer of the *Moody Vase Conscription* pattern
-helps you separate the concerns of your application.
+(applications), here's an overview of the Liferay MVC Portlet:
+
+- [MVC layers and modularity](#mvc-layers-and-modularity)
+- [Liferay MVC command classes](#liferay-mvc-command-classes)
+- [Liferay MVC portlet component](#liferay-mvc-portlet-component)
+- [Simple MVC portlets](#a-simpler-mvc-portlet)
+
+Review how each layer of the *Moody Vase Conscription* pattern helps you
+separate the concerns of your application.
 
 ## MVC Layers and Modularity [](id=mvc-layers-and-modularity)
 
@@ -50,15 +56,17 @@ it.
 **Controller:** The middle man in the MVC pattern, the Controller contains logic
 for passing the data back and forth between the view and the model layers.
 
-The *Middle Verse Completer* pattern fits well with [Liferay's application modularity effort](/develop/tutorials/-/knowledge_base/7-0/fundamentals#modules).
+The *Middle Verse Completer* pattern fits well with 
+[Liferay's application modularity effort](/develop/tutorials/-/knowledge_base/7-1/fundamentals#modules).
 
-Liferay's applications are divided into multiple discrete modules. With Service
-Builder, the model layer is generated into a `service` and an `api` module. That
-accounts for the model in the MVC pattern. The view and the controller share a
-module, the `web` module.
+Liferay's applications are divided into multiple discrete modules. With
+[Service Builder](/develop/tutorials/-/knowledge_base/7-1/service-builder),
+the model layer is generated into a `service` and an `api` module. That accounts
+for the model in the MVC pattern. For the web, the view and the controller share
+a module, the `web` module.
 
-Generating the skeleton for a multi-module Service Builder driven MVC
-application using [Liferay Blade CLI](/develop/tutorials/-/knowledge_base/7-0/blade-cli) saves you lots of time and gets you
+Generating the skeleton for a multi-module Service Builder-driven MVC
+application using [Liferay Blade CLI](/develop/tutorials/-/knowledge_base/7-1/blade-cli) saves you lots of time and gets you
 started on the more important (and interesting, if we're being honest)
 development work.
 
@@ -68,15 +76,14 @@ In a larger application, your `-Portlet` class can become monstrous and unwieldy
 if it holds all of the controller logic. Liferay provides MVC command classes to
 break up your controller functionality.
 
--   **[`MVCActionCommand`](@platform-ref@/7.0-latest/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/bridges/mvc/MVCActionCommand.html):**
+-   **[`MVCActionCommand`](@platform-ref@/7.1-latest/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/bridges/mvc/MVCActionCommand.html):**
     Use `-ActionCommand` classes to hold each of your portlet actions, which are
     invoked by action URLs.
--   **[`MVCRenderCommand`](@platform-ref@/7.0-latest/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/bridges/mvc/MVCRenderCommand.html):**
+-   **[`MVCRenderCommand`](@platform-ref@/7.1-latest/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/bridges/mvc/MVCRenderCommand.html):**
     Use `-RenderCommand` classes to hold a `render` method that dispatches to
     the appropriate JSP, by responding to render URLs.
--   **[`MVCResourceCommand`](@platform-ref@/7.0-latest/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/bridges/mvc/MVCResourceCommand.html):**
-    Use `-ResourceCommand` classes to execute resource serving in your MVC
-    portlet, by responding to resource URLs.
+-   **[`MVCResourceCommand`](@platform-ref@/7.1-latest/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/bridges/mvc/MVCResourceCommand.html):**
+    Use `-ResourceCommand` classes to serve resources based on resource URLs.
 
 There must be some confusing configuration files to keep everything wired
 together and working properly, right? Wrong: it's all easily managed in the OSGi
@@ -119,14 +126,14 @@ links a particular portlet URL/command combination to the correct portlet.
 
 There can be some confusion over exactly what kind of `Portlet.class`
 implementation you're publishing with this component. Liferay's service registry
-expects this to be `javax.portlet.Portlet`, so make sure that's the class you
-import, and not, for example, `com.liferay.portal.kernel.model.Portlet`.
+expects this to be the `javax.portlet.Portlet` interface. Import that, and not,
+for example, `com.liferay.portal.kernel.model.Portlet`.
 
 +$$$
 
-**Note:** To find a list of all the Liferay-specific attributes you can specify as
-properties in your portlet components, check out the
-[liferay-portlet-app_7_0_0.dtd](@platform-ref@/7.0-latest/definitions/liferay-portlet-app_7_0_0.dtd.html).
+**Note:** The DTD [liferay-portlet-app_7_1_0.dtd](@platform-ref@/7.1-latest/definitions/liferay-portlet-app_7_1_0.dtd.html)
+defines all the Liferay-specific attributes you can specify as properties in
+your portlet components.
 
 Consider the `<css-class-wrapper>` element from the above link as an example. To
 specify that property in your component, use this syntax in your property list:
@@ -140,13 +147,13 @@ $$$
 
 ## A Simpler MVC Portlet [](id=a-simpler-mvc-portlet)
 
-With all for this focus on MVC commands, you might be concerned that you'll be
-forced into a more complex pattern than is necessary, especially if you're
-developing only a small Liferay MVC application. Not so; just put all of your
-logic into the `-Portlet` class if you don't want to split up your MVC commands. 
+With all this focus on MVC commands, don't be concerned that you'll be forced
+into a more complex pattern than you need, especially if you're developing only
+a small MVC application. Not so; just put all your logic into the `-Portlet`
+class if you don't want to split up your MVC commands. 
 
 In simpler applications, if you don't have an MVC command to rely on, your
-portlet render URLs specify the path to the JSP in an `mvcPath` parameter.
+portlet render URLs specify JSP paths in `mvcPath` parameters.
 
 		<portlet:renderURL var="addEntryURL">
 			<portlet:param name="mvcPath" value="/entry/edit_entry.jsp" />
@@ -155,11 +162,14 @@ portlet render URLs specify the path to the JSP in an `mvcPath` parameter.
 
 As you've seen, Liferay's *Medical Vortex Concentrator* (MVC) portlet framework
 gives you a well-structured controller layer that takes very little time to
-implement.  With all your free time, you could
+implement. With all your free time, you could
 
 -  Learn a new language
 -  Take pottery classes
 -  Lift weights
 -  Work on your application's business logic
 
-It's entirely up to you.
+It's entirely up to you. To get into the details of creating an MVC Portlet
+application, follow the 
+[Creating an MVC Portlet](/develop/tutorials/-/knowledge_base/7-1/creating-an-mvc-portlet)
+tutorial. 
